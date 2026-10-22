@@ -1,0 +1,131 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "GC LWC 2026 Dashboard | GDG on Campus MCET",
+  description = "Google Cloud Learn with Communities 2026 - Student Dashboard for GDG on Campus Methodist College of Engineering & Technology, Hyderabad"
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0D1117" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="keywords" content="Google Cloud, Learn with Communities, GDG, MCET, Methodist College, Skill Badges, Cloud Computing, AI, Data" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="header-logo">
+            <div class="google-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <div class="header-title">
+            GDG on Campus - MCET
+            <small>Methodist College of Engineering & Technology</small>
+          </div>
+        </div>
+        <span class="header-badge">LWC 2026</span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Connect With Us -->
+          <div class="footer-section">
+            <h3>📬 Connect With Us</h3>
+            <p>Stay connected and be part of our growing developer community.</p>
+            <ul class="footer-links">
+              <li>
+                <a href="https://www.linkedin.com/company/google-developer-student-club-mcet/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                  <span class="link-icon linkedin">in</span>
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/gdgc_mcet/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                  <span class="link-icon instagram">📷</span>
+                  Instagram (@gdgc_mcet)
+                </a>
+              </li>
+              <li>
+                <a href="https://gdg.community.dev/gdg-on-campus-methodist-college-of-engineering-technology-hyderabad-india/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                  <span class="link-icon gdg">G</span>
+                  GDG Community Page
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/GDGC-MCET" target="_blank" rel="noopener noreferrer" class="footer-link">
+                  <span class="link-icon github">⟨/⟩</span>
+                  GDGC-MCET GitHub
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Resources -->
+          <div class="footer-section">
+            <h3>🔗 Resources</h3>
+            <p>Helpful links and references for your cloud learning journey.</p>
+            <ul class="footer-links">
+              <li>
+                <a href="https://methodist.edu.in/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                  <span class="link-icon web">🌐</span>
+                  MCET Official Website
+                </a>
+              </li>
+              <li>
+                <a href="https://www.skills.google/" target="_blank" rel="noopener noreferrer" class="footer-link">
+                  <span class="link-icon gdg">☁️</span>
+                  Google Skills Boost
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 GDG on Campus - Methodist College of Engineering & Technology, Hyderabad. Powered by Google Cloud.</p>
+          <div class="footer-google-colors">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

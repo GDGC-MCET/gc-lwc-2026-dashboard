@@ -1,0 +1,638 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Skill badge data
+const skillBadges = [
+  {
+    id: 1,
+    name: "The Basics of Google Cloud Compute",
+    description: "Learn core compute concepts including VMs, VPCs, and basic cloud infrastructure setup on Google Cloud.",
+    category: "infra",
+    categoryLabel: "Infrastructure",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 2,
+    name: "Configure Service Accounts and IAM Roles for Google Cloud",
+    description: "Master identity and access management by configuring service accounts, roles, and permissions.",
+    category: "security",
+    categoryLabel: "Security",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 3,
+    name: "Create Your First Gemini Enterprise Application",
+    description: "Build and deploy a production-ready application leveraging Google's Gemini AI model.",
+    category: "ai",
+    categoryLabel: "AI / ML",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 4,
+    name: "Develop AI-Powered Prototypes in Google AI Studio",
+    description: "Rapidly prototype AI applications using Google AI Studio with Gemini models and prompt engineering.",
+    category: "ai",
+    categoryLabel: "AI / ML",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 5,
+    name: "Analyze Images with the Cloud Vision API",
+    description: "Use the Cloud Vision API to detect labels, faces, landmarks, and text in images via REST and client libraries.",
+    category: "ai",
+    categoryLabel: "AI / ML",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 6,
+    name: "Implement Speech and Language Solutions with Pre-trained APIs",
+    description: "Integrate speech-to-text, text-to-speech, and Natural Language API into cloud applications.",
+    category: "ai",
+    categoryLabel: "AI / ML",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 7,
+    name: "Using the Google Cloud Speech API",
+    description: "Transcribe audio, detect languages, and process speech data with the Google Cloud Speech-to-Text API.",
+    category: "ai",
+    categoryLabel: "AI / ML",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 8,
+    name: "Explore Generative AI in Agent Platform",
+    description: "Build conversational agents and generative AI workflows using Google's Agent Builder platform.",
+    category: "ai",
+    categoryLabel: "AI / ML",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 9,
+    name: "Build Real-World AI Applications with Gemini and Imagen",
+    description: "Create multimodal applications combining text generation with Gemini and image generation with Imagen.",
+    category: "ai",
+    categoryLabel: "AI / ML",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+  {
+    id: 10,
+    name: "Build a Website on Google Cloud",
+    description: "Deploy and manage a scalable website using Google Cloud services including App Engine and Cloud Storage.",
+    category: "infra",
+    categoryLabel: "Infrastructure",
+    type: "Skill Badge",
+    url: "https://www.cloudskillsboost.google/paths"
+  },
+];
+
+const milestones = [
+  { icon: "🥉", count: "1 Badge", reward: "Getting Started", desc: "Complete your first skill badge" },
+  { icon: "🥈", count: "5 Badges", reward: "Water Bottle + Stickers", desc: "Halfway milestone" },
+  { icon: "🥇", count: "8 Badges", reward: "T-Shirt + Certificate", desc: "Advanced achiever" },
+  { icon: "🏆", count: "10 Badges", reward: "Developer Kit + Swag Box", desc: "Complete all badges" },
+];
+---
+
+<Layout>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <p class="hero-tagline animate-in">Google Cloud x GDG on Campus</p>
+      <h1 class="animate-in animate-delay-1">Learn with Communities 2026</h1>
+      <p class="hero-subtitle animate-in animate-delay-2">
+        Level up your cloud skills with hands-on labs, earn Google Cloud Skill Badges, 
+        and unlock exclusive rewards with GDG on Campus MCET.
+      </p>
+
+      <div class="hero-stats animate-in animate-delay-3">
+        <div class="hero-stat">
+          <div class="hero-stat-value">10</div>
+          <div class="hero-stat-label">Skill Badges</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">4</div>
+          <div class="hero-stat-label">Reward Tiers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">7</div>
+          <div class="hero-stat-label">Days Left</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">Free</div>
+          <div class="hero-stat-label">Registration</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section class="search-section" id="search">
+    <div class="container">
+      <div class="search-wrapper animate-in animate-delay-4">
+        <div class="search-input-group">
+          <div class="search-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+          </div>
+          <input 
+            type="text" 
+            id="rollno-search" 
+            placeholder="Enter your Roll Number (e.g., 16072X7XXXXX)" 
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="search-btn" id="search-btn">
+            Track Progress
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stages Section -->
+  <section class="stages-section" id="stages">
+    <div class="container">
+      <h2>📋 Your Learning Journey</h2>
+
+      <div class="tab-group">
+        <!-- Tab Navigation -->
+        <nav class="tab-nav" role="tablist" aria-label="Learning journey stages">
+          <button class="tab-btn active" data-tab="1" role="tab" aria-selected="true" aria-controls="tab-panel-1" id="tab-1">
+            <span class="tab-btn-number">1</span>
+            <span class="tab-btn-label">Application Status</span>
+          </button>
+          <button class="tab-btn" data-tab="2" role="tab" aria-selected="false" aria-controls="tab-panel-2" id="tab-2">
+            <span class="tab-btn-number">2</span>
+            <span class="tab-btn-label">Complete the Stages</span>
+          </button>
+          <button class="tab-btn" data-tab="3" role="tab" aria-selected="false" aria-controls="tab-panel-3" id="tab-3">
+            <span class="tab-btn-number">3</span>
+            <span class="tab-btn-label">Earn Badges</span>
+          </button>
+          <button class="tab-btn" data-tab="4" role="tab" aria-selected="false" aria-controls="tab-panel-4" id="tab-4">
+            <span class="tab-btn-number">4</span>
+            <span class="tab-btn-label">Unlock Rewards</span>
+          </button>
+        </nav>
+
+        <!-- Tab Panels -->
+        <div class="tab-panels">
+          <!-- Panel 1: Application Status -->
+          <div class="tab-panel active" id="tab-panel-1" role="tabpanel" aria-labelledby="tab-1">
+            <!-- Invite Post -->
+            <div class="invite-post">
+              <div class="invite-post-header">
+                <span class="emoji">☁️</span>
+                <h3>Level Up Your Cloud Skills!</h3>
+              </div>
+              <div class="invite-post-body">
+                <p>
+                  Ready to explore Google Cloud and build new tech skills? GDG on Campus - MCET brings you an exciting 
+                  learning opportunity through the <strong>Learn with Communities</strong> program!
+                </p>
+
+                <div class="invite-highlights">
+                  <div class="invite-highlight">
+                    <span class="icon">☁️</span>
+                    <div>
+                      <div class="label">Build Skills</div>
+                      <div class="sublabel">Practical training in Cloud Computing, Data & AI</div>
+                    </div>
+                  </div>
+                  <div class="invite-highlight">
+                    <span class="icon">🧪</span>
+                    <div>
+                      <div class="label">Hands-on Labs</div>
+                      <div class="sublabel">Real-world applications and interactive learning</div>
+                    </div>
+                  </div>
+                  <div class="invite-highlight">
+                    <span class="icon">🏆</span>
+                    <div>
+                      <div class="label">Earn Skill Badges</div>
+                      <div class="sublabel">Verifiable Google Cloud credentials</div>
+                    </div>
+                  </div>
+                  <div class="invite-highlight">
+                    <span class="icon">🎁</span>
+                    <div>
+                      <div class="label">Unlock Rewards</div>
+                      <div class="sublabel">Exclusive goodies and community milestones</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- How to Register -->
+            <div class="how-to-register">
+              <h4>📝 How to Register</h4>
+              <ol class="register-steps">
+                <li>
+                  Visit <a href="https://www.skills.google/" target="_blank" rel="noopener noreferrer">skills.google</a> and create your account
+                </li>
+                <li>
+                  Follow the <a href="https://youtu.be/o0nYT08DI64?si=No2w6Su0-PsBz2J-" target="_blank" rel="noopener noreferrer">setup guide video</a> if you need help creating your account
+                </li>
+                <li>
+                  Make your profile <strong>public</strong> and copy your profile link
+                </li>
+                <li>
+                  Register using the QR code provided in the Instagram post or at the campus event
+                </li>
+              </ol>
+            </div>
+
+            <!-- Deadline -->
+            <div class="deadline-banner">
+              <span class="icon">📅</span>
+              <div class="text">
+                <strong>Registration Deadline: 29 October 2026</strong>
+                <br />
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">
+                  Don't miss this opportunity to learn, gain practical experience, earn badges, and grow with the Google Cloud community!
+                </span>
+              </div>
+            </div>
+
+            <!-- Referral & Instagram -->
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center;">
+              <div class="referral-code">
+                <span class="label">Referral Code:</span>
+                <strong>GDGC-MCETH</strong>
+              </div>
+              <a href="https://www.instagram.com/p/Deq6bQElCqJ/" target="_blank" rel="noopener noreferrer" class="instagram-link">
+                📷 View Instagram Post
+              </a>
+            </div>
+          </div>
+
+          <!-- Panel 2: Complete the Stages -->
+          <div class="tab-panel" id="tab-panel-2" role="tabpanel" aria-labelledby="tab-2">
+            <!-- Guide Playlist CTA -->
+            <div class="guide-cta">
+              <div class="guide-cta-icon">▶️</div>
+              <div class="guide-cta-text">
+                <h4>Step-by-Step Guide Playlist</h4>
+                <p>
+                  Follow our curated YouTube playlist for walkthroughs on completing each lab.
+                  <br />
+                  <a href="https://youtube.com/playlist?list=PLNPCsw6Vr8qk&si=hPyt2sJ1jq7jvpU3" target="_blank" rel="noopener noreferrer">
+                    Open Playlist on YouTube →
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Badge Grid -->
+            <h4 style="font-family: var(--font-display); font-weight: 600; margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1rem;">
+              🎖️ Skill Badge Curriculum (10 Badges)
+            </h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+              Complete each badge by finishing the guided labs and passing the challenge lab. Your progress is tracked on your public Google Skills Boost profile.
+            </p>
+
+            <div class="badges-grid">
+              {skillBadges.map((badge) => (
+                <div class={`badge-card ${badge.category}`}>
+                  <div class="badge-card-top">
+                    <span class="badge-number">#{String(badge.id).padStart(2, '0')}</span>
+                    <span class={`badge-category ${badge.category}`}>{badge.categoryLabel}</span>
+                  </div>
+                  <div class="badge-name">{badge.name}</div>
+                  <div class="badge-description">{badge.description}</div>
+                  <div class="badge-footer">
+                    <span class="badge-type">
+                      🎖️ {badge.type}
+                    </span>
+                    <a href={badge.url} target="_blank" rel="noopener noreferrer" class="badge-link">
+                      Open Lab →
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+
+          <!-- Panel 3: Earn Badges -->
+          <div class="tab-panel" id="tab-panel-3" role="tabpanel" aria-labelledby="tab-3">
+            <div class="invite-post">
+              <div class="invite-post-header">
+                <span class="emoji">🏆</span>
+                <h3>Earn Verifiable Google Cloud Skill Badges</h3>
+              </div>
+              <div class="invite-post-body">
+                <p>
+                  Skill Badges are Google Cloud credentials that prove your ability to apply knowledge in real-world scenarios.
+                  Each badge requires completing guided labs followed by a <strong>timed challenge lab</strong> where you work independently.
+                </p>
+              </div>
+            </div>
+
+            <div class="how-to-register" style="margin-top: var(--space-lg);">
+              <h4>🎖️ How to Earn a Skill Badge</h4>
+              <ol class="register-steps">
+                <li>
+                  Open a Skill Badge course on <a href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener noreferrer">Google Cloud Skills Boost</a>
+                </li>
+                <li>
+                  Complete all the <strong>guided labs</strong> in the course (follow instructions step by step)
+                </li>
+                <li>
+                  Pass the <strong>Challenge Lab</strong> at the end (timed, no step-by-step guidance)
+                </li>
+                <li>
+                  The badge automatically appears on your public profile once completed
+                </li>
+              </ol>
+            </div>
+
+            <div class="invite-highlights" style="margin-top: var(--space-lg);">
+              <div class="invite-highlight">
+                <span class="icon">📋</span>
+                <div>
+                  <div class="label">Public Profile Required</div>
+                  <div class="sublabel">Your Google Skills Boost profile must be set to public for badge verification</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">⏱️</span>
+                <div>
+                  <div class="label">Challenge Labs are Timed</div>
+                  <div class="sublabel">You get a fixed time window to complete the final challenge independently</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">🔄</span>
+                <div>
+                  <div class="label">Retries Allowed</div>
+                  <div class="sublabel">If you don't pass the challenge lab, you can retry after a cooldown period</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">✅</span>
+                <div>
+                  <div class="label">Verifiable Credential</div>
+                  <div class="sublabel">Each badge is a shareable, verifiable credential linked to your profile</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="guide-cta" style="margin-top: var(--space-lg);">
+              <div class="guide-cta-icon">▶️</div>
+              <div class="guide-cta-text">
+                <h4>Need Help? Watch the Guide Playlist</h4>
+                <p>
+                  Step-by-step walkthroughs for each lab in the curriculum.
+                  <br />
+                  <a href="https://youtube.com/playlist?list=PLNPCsw6Vr8qk&si=hPyt2sJ1jq7jvpU3" target="_blank" rel="noopener noreferrer">
+                    Open Playlist on YouTube →
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 4: Unlock Rewards -->
+          <div class="tab-panel" id="tab-panel-4" role="tabpanel" aria-labelledby="tab-4">
+            <div class="invite-post">
+              <div class="invite-post-header">
+                <span class="emoji">🎁</span>
+                <h3>Unlock Exclusive Google Rewards</h3>
+              </div>
+              <div class="invite-post-body">
+                <p>
+                  Earn exclusive Google swag by reaching community milestones! The more badges you complete,
+                  the better the rewards. Track your progress and aim for the top tier.
+                </p>
+              </div>
+            </div>
+
+            <h4 style="font-family: var(--font-display); font-weight: 600; margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1rem;">
+              🏅 Reward Milestones
+            </h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+              Complete badges to unlock rewards at each milestone tier.
+            </p>
+
+            <div class="milestones">
+              {milestones.map((m) => (
+                <div class="milestone-card">
+                  <div class="milestone-icon">{m.icon}</div>
+                  <div class="milestone-badge-count">{m.count}</div>
+                  <div class="milestone-reward"><strong>{m.reward}</strong></div>
+                  <div style="font-size: 0.78rem; color: var(--text-tertiary); margin-top: 4px;">{m.desc}</div>
+                </div>
+              ))}
+            </div>
+
+            <div class="invite-highlights" style="margin-top: var(--space-xl);">
+              <div class="invite-highlight">
+                <span class="icon">📦</span>
+                <div>
+                  <div class="label">Physical Swag</div>
+                  <div class="sublabel">T-shirts, water bottles, stickers, and exclusive developer kits</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">📜</span>
+                <div>
+                  <div class="label">Digital Certificates</div>
+                  <div class="sublabel">Shareable credentials for your LinkedIn and portfolio</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">🌟</span>
+                <div>
+                  <div class="label">Community Recognition</div>
+                  <div class="sublabel">Get featured on GDG on Campus MCET channels</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">🚀</span>
+                <div>
+                  <div class="label">Career Boost</div>
+                  <div class="sublabel">Google Cloud skills are in high demand across the industry</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow Navigation -->
+        <div class="tab-arrow-nav">
+          <button class="tab-arrow-btn disabled" id="tab-prev" aria-label="Previous stage">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Previous
+          </button>
+          <span class="tab-arrow-indicator" id="tab-indicator">1 / 4</span>
+          <button class="tab-arrow-btn" id="tab-next" aria-label="Next stage">
+            Next
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Tab group functionality
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  const prevBtn = document.getElementById('tab-prev');
+  const nextBtn = document.getElementById('tab-next');
+  const indicator = document.getElementById('tab-indicator');
+  let currentTab = 1;
+  const totalTabs = 4;
+
+  function switchTab(tabNum: number) {
+    if (tabNum < 1 || tabNum > totalTabs) return;
+    currentTab = tabNum;
+
+    // Update tab buttons
+    tabBtns.forEach(btn => {
+      const isActive = btn.getAttribute('data-tab') === String(tabNum);
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', String(isActive));
+    });
+
+    // Update panels
+    tabPanels.forEach(panel => {
+      const panelId = panel.id;
+      const isActive = panelId === `tab-panel-${tabNum}`;
+      panel.classList.toggle('active', isActive);
+    });
+
+    // Update arrow nav
+    if (prevBtn) prevBtn.classList.toggle('disabled', tabNum === 1);
+    if (nextBtn) nextBtn.classList.toggle('disabled', tabNum === totalTabs);
+    if (indicator) indicator.textContent = `${tabNum} / ${totalTabs}`;
+
+    // Scroll tab group into view smoothly
+    const tabGroup = document.querySelector('.tab-group');
+    if (tabGroup) {
+      const rect = tabGroup.getBoundingClientRect();
+      if (rect.top < 0) {
+        tabGroup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }
+
+  // Tab button clicks
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = Number(btn.getAttribute('data-tab'));
+      switchTab(tab);
+    });
+  });
+
+  // Arrow navigation
+  prevBtn?.addEventListener('click', () => switchTab(currentTab - 1));
+  nextBtn?.addEventListener('click', () => switchTab(currentTab + 1));
+
+  // Keyboard navigation on tab buttons
+  document.querySelector('.tab-nav')?.addEventListener('keydown', (e) => {
+    const event = e as KeyboardEvent;
+    if (event.key === 'ArrowRight') switchTab(currentTab + 1);
+    if (event.key === 'ArrowLeft') switchTab(currentTab - 1);
+  });
+
+  // Search functionality
+  const searchInput = document.getElementById('rollno-search') as HTMLInputElement;
+  const searchBtn = document.getElementById('search-btn') as HTMLButtonElement;
+
+  function handleSearch() {
+    const rollNo = searchInput?.value.trim();
+    if (!rollNo) {
+      searchInput?.focus();
+      return;
+    }
+
+    // Show a friendly message since this is a static dashboard
+    const existing = document.querySelector('.search-result-msg');
+    if (existing) existing.remove();
+
+    const msg = document.createElement('div');
+    msg.className = 'search-result-msg';
+    msg.style.cssText = `
+      max-width: 560px;
+      margin: 16px auto 0;
+      padding: 16px 20px;
+      background: rgba(66, 133, 244, 0.08);
+      border: 1px solid rgba(66, 133, 244, 0.2);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: #8B949E;
+      text-align: center;
+      animation: fadeInUp 0.3s ease-out;
+    `;
+    msg.innerHTML = `
+      <div style="font-size: 1.3rem; margin-bottom: 8px;">🔍</div>
+      <strong style="color: #F0F6FC;">Roll No: ${rollNo.toUpperCase()}</strong>
+      <p style="margin-top: 8px;">Progress tracking will be enabled once your registration is verified. Make sure your Google Skills Boost profile is set to <strong style="color: #34A853;">public</strong>.</p>
+      <p style="margin-top: 8px; font-size: 0.8rem;">Complete the stages below to earn your skill badges!</p>
+    `;
+
+    searchInput.closest('.search-wrapper')?.appendChild(msg);
+  }
+
+  searchBtn?.addEventListener('click', handleSearch);
+  searchInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') handleSearch();
+  });
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+  );
+
+  document.querySelectorAll('.badge-card, .milestone-card').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Countdown timer for deadline
+  function updateCountdown() {
+    const deadline = new Date('2026-10-29T23:59:59+05:30').getTime();
+    const now = new Date().getTime();
+    const diff = deadline - now;
+
+    if (diff <= 0) {
+      const statValue = document.querySelectorAll('.hero-stat-value');
+      if (statValue[2]) statValue[2].textContent = 'Closed';
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const statValue = document.querySelectorAll('.hero-stat-value');
+    if (statValue[2]) statValue[2].textContent = String(days);
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+</script>
