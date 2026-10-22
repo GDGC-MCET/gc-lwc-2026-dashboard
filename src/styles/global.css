@@ -1,5 +1,5 @@
 /* ============================================
-   GC LWC 2026 Dashboard - Global Styles
+   GC LwC 2026 Dashboard - Global Styles
    Google Cloud Inspired Design System
    ============================================ */
 
@@ -1276,23 +1276,14 @@ img {
   }
 
   .tab-nav {
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .tab-nav::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
   }
 
   .tab-btn {
-    flex: 0 0 auto;
-    min-width: 140px;
-    padding: 12px 14px;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 14px;
     font-size: 0.82rem;
-    white-space: nowrap;
     gap: 6px;
   }
 
