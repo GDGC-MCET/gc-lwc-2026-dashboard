@@ -32,8 +32,8 @@ import skillBadges from '../data/skillBadges.json';
           <div class="hero-stat-label">Cloud Credits</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-value">7</div>
-          <div class="hero-stat-label">Days Left to Register</div>
+          <div class="hero-stat-value" id="countdown-value">--</div>
+          <div class="hero-stat-label" id="countdown-label">Loading...</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-value">Free</div>
@@ -570,22 +570,37 @@ import skillBadges from '../data/skillBadges.json';
   });
 
   // Countdown timer for deadline
+  const countdownValue = document.getElementById('countdown-value');
+  const countdownLabel = document.getElementById('countdown-label');
+
   function updateCountdown() {
+    if (!countdownValue || !countdownLabel) return;
+
     const deadline = new Date('2026-10-29T23:59:59+05:30').getTime();
     const now = new Date().getTime();
     const diff = deadline - now;
 
     if (diff <= 0) {
-      const statValue = document.querySelectorAll('.hero-stat-value');
-      if (statValue[2]) statValue[2].textContent = 'Closed';
+      countdownValue.textContent = 'Closed';
+      countdownLabel.textContent = 'Registrations Closed';
+      countdownValue.style.fontSize = '1.4rem';
       return;
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const statValue = document.querySelectorAll('.hero-stat-value');
-    if (statValue[2]) statValue[2].textContent = String(days);
+    const totalHours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(totalHours / 24);
+    const hours = totalHours % 24;
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (days > 0) {
+      countdownValue.textContent = `${days}d ${hours}h`;
+      countdownLabel.textContent = 'Left to Register';
+    } else {
+      countdownValue.textContent = `${hours}h ${minutes}m`;
+      countdownLabel.textContent = 'Left to Register';
+    }
   }
 
   updateCountdown();
-  setInterval(updateCountdown, 60000);
+  setInterval(updateCountdown, 1000);
 </script>
