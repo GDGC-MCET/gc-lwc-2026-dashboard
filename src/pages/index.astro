@@ -1,6 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+// Approved roll numbers
+const appliedRollNos = [
+  "160723733059","160723733051","160725754063","160725748161",
+  "160726733004","160726748145","160725733119","160726754110",
+  "160726754037","160725733062","160725748012","160726733159",
+  "160725748071","160726754023","160725733070","160724733002",
+  "160726754031","160725748094","160726754006","160726748114",
+  "160726754163","160724748063","160726754080","160726748175",
+  "160725748092","160725733029","160726748099","160725748043",
+  "160726754009","160725748301","160726733017","160726754077",
+  "160726754008","160725748060","160724748045","160726754019",
+  "160725748099","160726733044","160724748062","160726754045",
+  "160726748070","160726754068","160726733041","160725733007",
+  "160723747045","160724748303","160725733181","160725754006",
+  "160726748131","160726733020","160726754147","160726733074",
+  "160726754161","160726748007"
+];
+
 // Skill badge data
 const skillBadges = [
   {
@@ -94,16 +112,14 @@ const skillBadges = [
     url: "https://www.cloudskillsboost.google/paths"
   },
 ];
-
-const milestones = [
-  { icon: "🥉", count: "1 Badge", reward: "Getting Started", desc: "Complete your first skill badge" },
-  { icon: "🥈", count: "5 Badges", reward: "Water Bottle + Stickers", desc: "Halfway milestone" },
-  { icon: "🥇", count: "8 Badges", reward: "T-Shirt + Certificate", desc: "Advanced achiever" },
-  { icon: "🏆", count: "10 Badges", reward: "Developer Kit + Swag Box", desc: "Complete all badges" },
-];
 ---
 
 <Layout>
+  <!-- Roll number data for JS -->
+  <script is:inline define:vars={{ appliedRollNos }}>
+    window.__APPLIED_ROLL_NOS = appliedRollNos;
+  </script>
+
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="container">
@@ -111,7 +127,7 @@ const milestones = [
       <h1 class="animate-in animate-delay-1">Learn with Communities 2026</h1>
       <p class="hero-subtitle animate-in animate-delay-2">
         Level up your cloud skills with hands-on labs, earn Google Cloud Skill Badges, 
-        and unlock exclusive rewards with GDG on Campus MCET.
+        and complete all 10 labs with GDG on Campus MCET.
       </p>
 
       <div class="hero-stats animate-in animate-delay-3">
@@ -120,8 +136,8 @@ const milestones = [
           <div class="hero-stat-label">Skill Badges</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-value">4</div>
-          <div class="hero-stat-label">Reward Tiers</div>
+          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-label">Stages</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-value">7</div>
@@ -179,11 +195,7 @@ const milestones = [
           </button>
           <button class="tab-btn" data-tab="3" role="tab" aria-selected="false" aria-controls="tab-panel-3" id="tab-3">
             <span class="tab-btn-number">3</span>
-            <span class="tab-btn-label">Earn Badges</span>
-          </button>
-          <button class="tab-btn" data-tab="4" role="tab" aria-selected="false" aria-controls="tab-panel-4" id="tab-4">
-            <span class="tab-btn-number">4</span>
-            <span class="tab-btn-label">Unlock Rewards</span>
+            <span class="tab-btn-label">Earn Badges & Rewards</span>
           </button>
         </nav>
 
@@ -327,40 +339,82 @@ const milestones = [
 
           </div>
 
-          <!-- Panel 3: Earn Badges -->
+          <!-- Panel 3: Earn Badges & Rewards -->
           <div class="tab-panel" id="tab-panel-3" role="tabpanel" aria-labelledby="tab-3">
+            <!-- Credit Redemption Guide -->
             <div class="invite-post">
               <div class="invite-post-header">
-                <span class="emoji">🏆</span>
-                <h3>Earn Verifiable Google Cloud Skill Badges</h3>
+                <span class="emoji">💳</span>
+                <h3>Redeem Your Cloud Credits</h3>
               </div>
               <div class="invite-post-body">
                 <p>
-                  Skill Badges are Google Cloud credentials that prove your ability to apply knowledge in real-world scenarios.
-                  Each badge requires completing guided labs followed by a <strong>timed challenge lab</strong> where you work independently.
+                  Once you receive the enrollment email, you need to redeem your <strong>200 credits</strong> first.
+                  Credits act as the currency to complete the labs, as these labs by Google are paid.
                 </p>
               </div>
             </div>
 
+            <div class="guide-cta" style="margin-top: var(--space-lg);">
+              <div class="guide-cta-icon">▶️</div>
+              <div class="guide-cta-text">
+                <h4>How to Redeem Your Credits</h4>
+                <p>
+                  Use this video to navigate your process of redeeming the credits.
+                  <br />
+                  <a href="https://youtu.be/WVdUW1wJwyI?si=NsEKp-8ENY9ahKAh" target="_blank" rel="noopener noreferrer">
+                    Watch Redemption Guide on YouTube →
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Important Note -->
+            <div class="deadline-banner" style="margin-top: var(--space-lg); border-color: rgba(234, 67, 53, 0.3); background: rgba(234, 67, 53, 0.06);">
+              <span class="icon">🔴</span>
+              <div class="text">
+                <strong style="color: var(--gc-red);">You only have to complete the final Challenge Labs for each skill badge!</strong>
+                <br />
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">
+                  That's enough and counts as a submission for a single skill badge. Repeat this process for all 10 badges and you're done.
+                </span>
+              </div>
+            </div>
+
+            <!-- How to Earn -->
             <div class="how-to-register" style="margin-top: var(--space-lg);">
-              <h4>🎖️ How to Earn a Skill Badge</h4>
+              <h4>🎖️ How to Complete a Badge</h4>
               <ol class="register-steps">
                 <li>
-                  Open a Skill Badge course on <a href="https://www.cloudskillsboost.google/" target="_blank" rel="noopener noreferrer">Google Cloud Skills Boost</a>
+                  Redeem your 200 credits from the enrollment email using the <a href="https://youtu.be/WVdUW1wJwyI?si=NsEKp-8ENY9ahKAh" target="_blank" rel="noopener noreferrer">redemption guide</a>
                 </li>
                 <li>
-                  Complete all the <strong>guided labs</strong> in the course (follow instructions step by step)
+                  Open a Skill Badge course from the <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVMEFW24yi5IVcBblZFEK5xMdQyeF9pndf-wxE37BKu5hyOghhSkYiCHW6rSLjNJd5U3OI_E_I9vZi/pubhtml?gid=411469390&single=true" target="_blank" rel="noopener noreferrer">curriculum spreadsheet</a>
                 </li>
                 <li>
-                  Pass the <strong>Challenge Lab</strong> at the end (timed, no step-by-step guidance)
+                  Complete the <strong>final Challenge Lab</strong> for each skill badge
                 </li>
                 <li>
-                  The badge automatically appears on your public profile once completed
+                  Repeat for all 10 badges listed in your enrollment email
                 </li>
               </ol>
             </div>
 
             <div class="invite-highlights" style="margin-top: var(--space-lg);">
+              <div class="invite-highlight">
+                <span class="icon">💰</span>
+                <div>
+                  <div class="label">200 Credits Required</div>
+                  <div class="sublabel">Redeem your credits from the enrollment email before starting the labs</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">🔴</span>
+                <div>
+                  <div class="label">Challenge Labs Only</div>
+                  <div class="sublabel">You only need to pass the final challenge lab for each badge to count</div>
+                </div>
+              </div>
               <div class="invite-highlight">
                 <span class="icon">📋</span>
                 <div>
@@ -369,104 +423,26 @@ const milestones = [
                 </div>
               </div>
               <div class="invite-highlight">
-                <span class="icon">⏱️</span>
+                <span class="icon">🔁</span>
                 <div>
-                  <div class="label">Challenge Labs are Timed</div>
-                  <div class="sublabel">You get a fixed time window to complete the final challenge independently</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">🔄</span>
-                <div>
-                  <div class="label">Retries Allowed</div>
-                  <div class="sublabel">If you don't pass the challenge lab, you can retry after a cooldown period</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">✅</span>
-                <div>
-                  <div class="label">Verifiable Credential</div>
-                  <div class="sublabel">Each badge is a shareable, verifiable credential linked to your profile</div>
+                  <div class="label">10 Badges Total</div>
+                  <div class="sublabel">Complete all 10 skill badges as mentioned in the enrollment email</div>
                 </div>
               </div>
             </div>
 
+            <!-- Curriculum Link -->
             <div class="guide-cta" style="margin-top: var(--space-lg);">
-              <div class="guide-cta-icon">▶️</div>
+              <div class="guide-cta-icon">📊</div>
               <div class="guide-cta-text">
-                <h4>Need Help? Watch the Guide Playlist</h4>
+                <h4>Full Curriculum Spreadsheet</h4>
                 <p>
-                  Step-by-step walkthroughs for each lab in the curriculum.
+                  View the complete list of 10 skill badges you need to complete.
                   <br />
-                  <a href="https://youtube.com/playlist?list=PLNPCsw6Vr8qk&si=hPyt2sJ1jq7jvpU3" target="_blank" rel="noopener noreferrer">
-                    Open Playlist on YouTube →
+                  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVMEFW24yi5IVcBblZFEK5xMdQyeF9pndf-wxE37BKu5hyOghhSkYiCHW6rSLjNJd5U3OI_E_I9vZi/pubhtml?gid=411469390&single=true" target="_blank" rel="noopener noreferrer">
+                    Open Curriculum Spreadsheet →
                   </a>
                 </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Panel 4: Unlock Rewards -->
-          <div class="tab-panel" id="tab-panel-4" role="tabpanel" aria-labelledby="tab-4">
-            <div class="invite-post">
-              <div class="invite-post-header">
-                <span class="emoji">🎁</span>
-                <h3>Unlock Exclusive Google Rewards</h3>
-              </div>
-              <div class="invite-post-body">
-                <p>
-                  Earn exclusive Google swag by reaching community milestones! The more badges you complete,
-                  the better the rewards. Track your progress and aim for the top tier.
-                </p>
-              </div>
-            </div>
-
-            <h4 style="font-family: var(--font-display); font-weight: 600; margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1rem;">
-              🏅 Reward Milestones
-            </h4>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
-              Complete badges to unlock rewards at each milestone tier.
-            </p>
-
-            <div class="milestones">
-              {milestones.map((m) => (
-                <div class="milestone-card">
-                  <div class="milestone-icon">{m.icon}</div>
-                  <div class="milestone-badge-count">{m.count}</div>
-                  <div class="milestone-reward"><strong>{m.reward}</strong></div>
-                  <div style="font-size: 0.78rem; color: var(--text-tertiary); margin-top: 4px;">{m.desc}</div>
-                </div>
-              ))}
-            </div>
-
-            <div class="invite-highlights" style="margin-top: var(--space-xl);">
-              <div class="invite-highlight">
-                <span class="icon">📦</span>
-                <div>
-                  <div class="label">Physical Swag</div>
-                  <div class="sublabel">T-shirts, water bottles, stickers, and exclusive developer kits</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">📜</span>
-                <div>
-                  <div class="label">Digital Certificates</div>
-                  <div class="sublabel">Shareable credentials for your LinkedIn and portfolio</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">🌟</span>
-                <div>
-                  <div class="label">Community Recognition</div>
-                  <div class="sublabel">Get featured on GDG on Campus MCET channels</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">🚀</span>
-                <div>
-                  <div class="label">Career Boost</div>
-                  <div class="sublabel">Google Cloud skills are in high demand across the industry</div>
-                </div>
               </div>
             </div>
           </div>
@@ -480,7 +456,7 @@ const milestones = [
             </svg>
             Previous
           </button>
-          <span class="tab-arrow-indicator" id="tab-indicator">1 / 4</span>
+          <span class="tab-arrow-indicator" id="tab-indicator">1 / 3</span>
           <button class="tab-arrow-btn" id="tab-next" aria-label="Next stage">
             Next
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -501,7 +477,7 @@ const milestones = [
   const nextBtn = document.getElementById('tab-next');
   const indicator = document.getElementById('tab-indicator');
   let currentTab = 1;
-  const totalTabs = 4;
+  const totalTabs = 3;
 
   function switchTab(tabNum: number) {
     if (tabNum < 1 || tabNum > totalTabs) return;
@@ -555,41 +531,66 @@ const milestones = [
     if (event.key === 'ArrowLeft') switchTab(currentTab - 1);
   });
 
-  // Search functionality
+  // Search functionality with roll number lookup
   const searchInput = document.getElementById('rollno-search') as HTMLInputElement;
   const searchBtn = document.getElementById('search-btn') as HTMLButtonElement;
+  const appliedList: string[] = (window as any).__APPLIED_ROLL_NOS || [];
 
   function handleSearch() {
-    const rollNo = searchInput?.value.trim();
+    const rollNo = searchInput?.value.trim().toUpperCase();
     if (!rollNo) {
       searchInput?.focus();
       return;
     }
 
-    // Show a friendly message since this is a static dashboard
     const existing = document.querySelector('.search-result-msg');
     if (existing) existing.remove();
 
+    const isApplied = appliedList.includes(rollNo);
+
     const msg = document.createElement('div');
     msg.className = 'search-result-msg';
-    msg.style.cssText = `
-      max-width: 560px;
-      margin: 16px auto 0;
-      padding: 16px 20px;
-      background: rgba(66, 133, 244, 0.08);
-      border: 1px solid rgba(66, 133, 244, 0.2);
-      border-radius: 12px;
-      font-size: 0.9rem;
-      color: #8B949E;
-      text-align: center;
-      animation: fadeInUp 0.3s ease-out;
-    `;
-    msg.innerHTML = `
-      <div style="font-size: 1.3rem; margin-bottom: 8px;">🔍</div>
-      <strong style="color: #F0F6FC;">Roll No: ${rollNo.toUpperCase()}</strong>
-      <p style="margin-top: 8px;">Progress tracking will be enabled once your registration is verified. Make sure your Google Skills Boost profile is set to <strong style="color: #34A853;">public</strong>.</p>
-      <p style="margin-top: 8px; font-size: 0.8rem;">Complete the stages below to earn your skill badges!</p>
-    `;
+
+    if (isApplied) {
+      msg.style.cssText = `
+        max-width: 560px;
+        margin: 16px auto 0;
+        padding: 16px 20px;
+        background: rgba(52, 168, 83, 0.08);
+        border: 1px solid rgba(52, 168, 83, 0.25);
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #8B949E;
+        text-align: center;
+        animation: fadeInUp 0.3s ease-out;
+      `;
+      msg.innerHTML = `
+        <div style="font-size: 1.3rem; margin-bottom: 8px;">✅</div>
+        <strong style="color: #34A853;">You've applied successfully!</strong>
+        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong></p>
+        <p style="margin-top: 8px;">Check your email for the access code for cloud credits to complete the 10 labs. You will receive it within 2-3 days.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Stage 3</strong> for instructions on redeeming credits and completing badges.</p>
+      `;
+    } else {
+      msg.style.cssText = `
+        max-width: 560px;
+        margin: 16px auto 0;
+        padding: 16px 20px;
+        background: rgba(234, 67, 53, 0.08);
+        border: 1px solid rgba(234, 67, 53, 0.25);
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #8B949E;
+        text-align: center;
+        animation: fadeInUp 0.3s ease-out;
+      `;
+      msg.innerHTML = `
+        <div style="font-size: 1.3rem; margin-bottom: 8px;">❌</div>
+        <strong style="color: #EA4335;">Roll number not found</strong>
+        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong> is not in our applied list.</p>
+        <p style="margin-top: 8px;">If you haven't applied yet, register using the QR code in the Instagram post or check <strong>Stage 1</strong> for details.</p>
+      `;
+    }
 
     searchInput.closest('.search-wrapper')?.appendChild(msg);
   }

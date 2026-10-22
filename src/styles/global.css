@@ -537,22 +537,6 @@ img {
   background: var(--gc-yellow);
 }
 
-.tab-btn[data-tab="4"] .tab-btn-number {
-  background: var(--bg-tertiary);
-  color: var(--text-tertiary);
-  border: 1px solid var(--border-default);
-}
-
-.tab-btn[data-tab="4"].active .tab-btn-number {
-  background: var(--gc-red-muted);
-  color: var(--gc-red);
-  border-color: rgba(234, 67, 53, 0.3);
-}
-
-.tab-btn.active[data-tab="4"]::after {
-  background: var(--gc-red);
-}
-
 .tab-btn-label {
   line-height: 1.3;
 }
