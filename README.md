@@ -7,7 +7,7 @@
 This dashboard helps MCET students navigate their journey in the **Google Cloud Learn with Communities 2026** program. It provides:
 
 - Roll number lookup to check registration status
-- Stage 1: Application Status with registration setup instructions and flyer details
+- Stage 1: Apply Now with registration setup instructions and flyer details
 - Stage 2: Redeem Your Credits with instructions for claiming the 200 cloud credits and video walkthrough
 - Stage 3: Complete the Stages with the 10 Skill Badges curriculum, final challenge lab requirements, and YouTube lab playlist
 - Community connect links and official resources
