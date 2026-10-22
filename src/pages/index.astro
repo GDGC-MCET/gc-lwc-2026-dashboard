@@ -136,12 +136,12 @@ const skillBadges = [
           <div class="hero-stat-label">Skill Badges</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-value">3</div>
-          <div class="hero-stat-label">Stages</div>
+          <div class="hero-stat-value">200</div>
+          <div class="hero-stat-label">Cloud Credits</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-value">7</div>
-          <div class="hero-stat-label">Days Left</div>
+          <div class="hero-stat-label">Days Left to Register</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-value">Free</div>
@@ -191,11 +191,11 @@ const skillBadges = [
           </button>
           <button class="tab-btn" data-tab="2" role="tab" aria-selected="false" aria-controls="tab-panel-2" id="tab-2">
             <span class="tab-btn-number">2</span>
-            <span class="tab-btn-label">Complete the Stages</span>
+            <span class="tab-btn-label">Redeem Your Credits</span>
           </button>
           <button class="tab-btn" data-tab="3" role="tab" aria-selected="false" aria-controls="tab-panel-3" id="tab-3">
             <span class="tab-btn-number">3</span>
-            <span class="tab-btn-label">Earn Badges & Rewards</span>
+            <span class="tab-btn-label">Complete the Stages</span>
           </button>
         </nav>
 
@@ -291,20 +291,188 @@ const skillBadges = [
             </div>
           </div>
 
-          <!-- Panel 2: Complete the Stages -->
+          <!-- Panel 2: Redeem Your Credits -->
           <div class="tab-panel" id="tab-panel-2" role="tabpanel" aria-labelledby="tab-2">
-            <!-- Guide Playlist CTA -->
-            <div class="guide-cta">
+            <!-- Credit Redemption Guide -->
+            <div class="invite-post">
+              <div class="invite-post-header">
+                <span class="emoji">💳</span>
+                <h3>Redeem Your Cloud Credits</h3>
+              </div>
+              <div class="invite-post-body">
+                <p>
+                  To begin your journey of completing the labs and collecting the badges, you will have to redeem your <strong>200 credits</strong> first.
+                  Credits act as the currency to complete the labs, as these Google Cloud labs are paid.
+                </p>
+                <p style="margin-top: var(--space-sm); color: var(--text-secondary); font-size: 0.9rem;">
+                  Access codes are dispatched directly to your registered email address within 2-3 days of applying.
+                </p>
+              </div>
+            </div>
+
+            <div class="guide-cta" style="margin-top: var(--space-lg);">
               <div class="guide-cta-icon">▶️</div>
               <div class="guide-cta-text">
-                <h4>Step-by-Step Guide Playlist</h4>
+                <h4>Video Guide: How to Redeem Your Credits</h4>
                 <p>
-                  Follow our curated YouTube playlist for walkthroughs on completing each lab.
+                  Use this walkthrough video to navigate the process of redeeming your credits step-by-step:
                   <br />
-                  <a href="https://youtube.com/playlist?list=PLNPCsw6Vr8qk&si=hPyt2sJ1jq7jvpU3" target="_blank" rel="noopener noreferrer">
-                    Open Playlist on YouTube →
+                  <a href="https://youtu.be/WVdUW1wJwyI?si=NsEKp-8ENY9ahKAh" target="_blank" rel="noopener noreferrer">
+                    Watch Redemption Guide on YouTube →
                   </a>
                 </p>
+              </div>
+            </div>
+
+            <!-- Credit Steps -->
+            <div class="how-to-register" style="margin-top: var(--space-lg);">
+              <h4>💳 Step-by-Step Credit Redemption</h4>
+              <ol class="register-steps">
+                <li>
+                  Check your inbox for the official enrollment email containing your 200 Cloud Credits access code
+                </li>
+                <li>
+                  Sign in to your account at <a href="https://www.skills.google/" target="_blank" rel="noopener noreferrer">skills.google</a> (ensure it is the same account you registered with)
+                </li>
+                <li>
+                  Follow the <a href="https://youtu.be/WVdUW1wJwyI?si=NsEKp-8ENY9ahKAh" target="_blank" rel="noopener noreferrer">video guide</a> to input and redeem your access code
+                </li>
+                <li>
+                  Verify that your credit balance reflects 200 credits in your Google Skills Boost profile
+                </li>
+                <li>
+                  Once your credits are ready, head over to <strong>Stage 3</strong> to complete the badges
+                </li>
+              </ol>
+            </div>
+
+            <div class="invite-highlights" style="margin-top: var(--space-lg);">
+              <div class="invite-highlight">
+                <span class="icon">💰</span>
+                <div>
+                  <div class="label">200 Credits Allocated</div>
+                  <div class="sublabel">Covers all lab costs for the 10 skill badges</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">📩</span>
+                <div>
+                  <div class="label">Delivered via Email</div>
+                  <div class="sublabel">Access code received within 2-3 days after enrollment</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">🔐</span>
+                <div>
+                  <div class="label">Registered Profile</div>
+                  <div class="sublabel">Log into the same Google account submitted during registration</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">🚀</span>
+                <div>
+                  <div class="label">Ready for Stage 3</div>
+                  <div class="sublabel">Proceed to complete the challenge labs once redeemed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Complete the Stages -->
+          <div class="tab-panel" id="tab-panel-3" role="tabpanel" aria-labelledby="tab-3">
+            <!-- Important Note Banner -->
+            <div class="deadline-banner" style="border-color: rgba(234, 67, 53, 0.35); background: rgba(234, 67, 53, 0.08);">
+              <span class="icon">🔴</span>
+              <div class="text">
+                <strong style="color: var(--gc-red);">You only have to complete the final Challenge Labs for each skill badge!</strong>
+                <br />
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">
+                  That is enough and counts as a submission for a single skill badge. Repeat this process for all 10 badges and you are done.
+                </span>
+              </div>
+            </div>
+
+            <!-- Resource CTAs -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-md); margin-top: var(--space-lg);">
+              <div class="guide-cta">
+                <div class="guide-cta-icon">▶️</div>
+                <div class="guide-cta-text">
+                  <h4>Step-by-Step Lab Playlist</h4>
+                  <p>
+                    Walkthrough videos on completing each lab:
+                    <br />
+                    <a href="https://youtube.com/playlist?list=PLNPCsw6Vr8qk&si=hPyt2sJ1jq7jvpU3" target="_blank" rel="noopener noreferrer">
+                      Open Playlist on YouTube →
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div class="guide-cta">
+                <div class="guide-cta-icon">📊</div>
+                <div class="guide-cta-text">
+                  <h4>Curriculum Spreadsheet</h4>
+                  <p>
+                    View the official curriculum sheet with all 10 badges:
+                    <br />
+                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVMEFW24yi5IVcBblZFEK5xMdQyeF9pndf-wxE37BKu5hyOghhSkYiCHW6rSLjNJd5U3OI_E_I9vZi/pubhtml?gid=411469390&single=true" target="_blank" rel="noopener noreferrer">
+                      Open Curriculum Spreadsheet →
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- How to Complete the Badges -->
+            <div class="how-to-register" style="margin-top: var(--space-lg);">
+              <h4>🎖️ How to Complete the 10 Badges</h4>
+              <ol class="register-steps">
+                <li>
+                  Confirm your 200 credits are redeemed from <strong>Stage 2</strong>
+                </li>
+                <li>
+                  Open each Skill Badge course from the curriculum below or the <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVMEFW24yi5IVcBblZFEK5xMdQyeF9pndf-wxE37BKu5hyOghhSkYiCHW6rSLjNJd5U3OI_E_I9vZi/pubhtml?gid=411469390&single=true" target="_blank" rel="noopener noreferrer">curriculum spreadsheet</a>
+                </li>
+                <li>
+                  Complete the <strong>final Challenge Lab</strong> for each skill badge
+                </li>
+                <li>
+                  Ensure your Google Skills Boost profile is set to <strong>public</strong> so each badge is verifiable
+                </li>
+                <li>
+                  Repeat for all 10 badges to fulfill the Learn with Communities requirements
+                </li>
+              </ol>
+            </div>
+
+            <div class="invite-highlights" style="margin-top: var(--space-lg);">
+              <div class="invite-highlight">
+                <span class="icon">🔴</span>
+                <div>
+                  <div class="label">Challenge Labs Only</div>
+                  <div class="sublabel">Only the final challenge lab is required for badge submission</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">🔁</span>
+                <div>
+                  <div class="label">10 Badges Total</div>
+                  <div class="sublabel">Complete all 10 skill badges to finish the curriculum</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">📋</span>
+                <div>
+                  <div class="label">Public Profile Required</div>
+                  <div class="sublabel">Keep your Google Skills Boost profile public for verification</div>
+                </div>
+              </div>
+              <div class="invite-highlight">
+                <span class="icon">⏱️</span>
+                <div>
+                  <div class="label">Self-Paced Learning</div>
+                  <div class="sublabel">Work through the labs and walkthrough videos at your own pace</div>
+                </div>
               </div>
             </div>
 
@@ -313,7 +481,7 @@ const skillBadges = [
               🎖️ Skill Badge Curriculum (10 Badges)
             </h4>
             <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
-              Complete each badge by finishing the guided labs and passing the challenge lab. Your progress is tracked on your public Google Skills Boost profile.
+              Complete each badge by passing the final challenge lab. Your achievements reflect on your public Google Skills Boost profile.
             </p>
 
             <div class="badges-grid">
@@ -335,115 +503,6 @@ const skillBadges = [
                   </div>
                 </div>
               ))}
-            </div>
-
-          </div>
-
-          <!-- Panel 3: Earn Badges & Rewards -->
-          <div class="tab-panel" id="tab-panel-3" role="tabpanel" aria-labelledby="tab-3">
-            <!-- Credit Redemption Guide -->
-            <div class="invite-post">
-              <div class="invite-post-header">
-                <span class="emoji">💳</span>
-                <h3>Redeem Your Cloud Credits</h3>
-              </div>
-              <div class="invite-post-body">
-                <p>
-                  Once you receive the enrollment email, you need to redeem your <strong>200 credits</strong> first.
-                  Credits act as the currency to complete the labs, as these labs by Google are paid.
-                </p>
-              </div>
-            </div>
-
-            <div class="guide-cta" style="margin-top: var(--space-lg);">
-              <div class="guide-cta-icon">▶️</div>
-              <div class="guide-cta-text">
-                <h4>How to Redeem Your Credits</h4>
-                <p>
-                  Use this video to navigate your process of redeeming the credits.
-                  <br />
-                  <a href="https://youtu.be/WVdUW1wJwyI?si=NsEKp-8ENY9ahKAh" target="_blank" rel="noopener noreferrer">
-                    Watch Redemption Guide on YouTube →
-                  </a>
-                </p>
-              </div>
-            </div>
-
-            <!-- Important Note -->
-            <div class="deadline-banner" style="margin-top: var(--space-lg); border-color: rgba(234, 67, 53, 0.3); background: rgba(234, 67, 53, 0.06);">
-              <span class="icon">🔴</span>
-              <div class="text">
-                <strong style="color: var(--gc-red);">You only have to complete the final Challenge Labs for each skill badge!</strong>
-                <br />
-                <span style="color: var(--text-secondary); font-size: 0.85rem;">
-                  That's enough and counts as a submission for a single skill badge. Repeat this process for all 10 badges and you're done.
-                </span>
-              </div>
-            </div>
-
-            <!-- How to Earn -->
-            <div class="how-to-register" style="margin-top: var(--space-lg);">
-              <h4>🎖️ How to Complete a Badge</h4>
-              <ol class="register-steps">
-                <li>
-                  Redeem your 200 credits from the enrollment email using the <a href="https://youtu.be/WVdUW1wJwyI?si=NsEKp-8ENY9ahKAh" target="_blank" rel="noopener noreferrer">redemption guide</a>
-                </li>
-                <li>
-                  Open a Skill Badge course from the <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVMEFW24yi5IVcBblZFEK5xMdQyeF9pndf-wxE37BKu5hyOghhSkYiCHW6rSLjNJd5U3OI_E_I9vZi/pubhtml?gid=411469390&single=true" target="_blank" rel="noopener noreferrer">curriculum spreadsheet</a>
-                </li>
-                <li>
-                  Complete the <strong>final Challenge Lab</strong> for each skill badge
-                </li>
-                <li>
-                  Repeat for all 10 badges listed in your enrollment email
-                </li>
-              </ol>
-            </div>
-
-            <div class="invite-highlights" style="margin-top: var(--space-lg);">
-              <div class="invite-highlight">
-                <span class="icon">💰</span>
-                <div>
-                  <div class="label">200 Credits Required</div>
-                  <div class="sublabel">Redeem your credits from the enrollment email before starting the labs</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">🔴</span>
-                <div>
-                  <div class="label">Challenge Labs Only</div>
-                  <div class="sublabel">You only need to pass the final challenge lab for each badge to count</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">📋</span>
-                <div>
-                  <div class="label">Public Profile Required</div>
-                  <div class="sublabel">Your Google Skills Boost profile must be set to public for badge verification</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">🔁</span>
-                <div>
-                  <div class="label">10 Badges Total</div>
-                  <div class="sublabel">Complete all 10 skill badges as mentioned in the enrollment email</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Curriculum Link -->
-            <div class="guide-cta" style="margin-top: var(--space-lg);">
-              <div class="guide-cta-icon">📊</div>
-              <div class="guide-cta-text">
-                <h4>Full Curriculum Spreadsheet</h4>
-                <p>
-                  View the complete list of 10 skill badges you need to complete.
-                  <br />
-                  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVMEFW24yi5IVcBblZFEK5xMdQyeF9pndf-wxE37BKu5hyOghhSkYiCHW6rSLjNJd5U3OI_E_I9vZi/pubhtml?gid=411469390&single=true" target="_blank" rel="noopener noreferrer">
-                    Open Curriculum Spreadsheet →
-                  </a>
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -569,7 +628,7 @@ const skillBadges = [
         <strong style="color: #34A853;">You've applied successfully!</strong>
         <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong></p>
         <p style="margin-top: 8px;">Check your email for the access code for cloud credits to complete the 10 labs. You will receive it within 2-3 days.</p>
-        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Stage 3</strong> for instructions on redeeming credits and completing badges.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Stage 2</strong> to redeem your credits, then <strong>Stage 3</strong> to complete the badges.</p>
       `;
     } else {
       msg.style.cssText = `

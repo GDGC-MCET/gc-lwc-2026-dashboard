@@ -4,20 +4,20 @@
 
 ## Overview
 
-This dashboard helps MCET students track their progress in the **Google Cloud Learn with Communities 2026** program. It provides:
+This dashboard helps MCET students navigate their journey in the **Google Cloud Learn with Communities 2026** program. It provides:
 
-- Roll number-based progress search
-- Stage 1: Application Status with registration guide
-- Stage 2: Complete list of 10 Skill Badges with descriptions
-- Reward milestones tracker
-- Community connect links and resources
+- Roll number lookup to check registration status
+- Stage 1: Application Status with registration setup instructions and flyer details
+- Stage 2: Redeem Your Credits with instructions for claiming the 200 cloud credits and video walkthrough
+- Stage 3: Complete the Stages with the 10 Skill Badges curriculum, final challenge lab requirements, and YouTube lab playlist
+- Community connect links and official resources
 
 ## Tech Stack
 
 - **Framework**: [Astro.js](https://astro.build/)
-- **Styling**: Vanilla CSS with custom design system
+- **Styling**: Vanilla CSS with custom Google Cloud design system
 - **Typography**: Google Sans, Inter, JetBrains Mono
-- **Hosting**: Static site (deployable on Vercel, Netlify, GitHub Pages, etc.)
+- **Hosting**: GitHub Pages via automated GitHub Actions workflow
 
 ## Getting Started
 
