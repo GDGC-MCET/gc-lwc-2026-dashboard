@@ -1,23 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// Approved roll numbers
-const appliedRollNos = [
-  "160723733059","160723733051","160725754063","160725748161",
-  "160726733004","160726748145","160725733119","160726754110",
-  "160726754037","160725733062","160725748012","160726733159",
-  "160725748071","160726754023","160725733070","160724733002",
-  "160726754031","160725748094","160726754006","160726748114",
-  "160726754163","160724748063","160726754080","160726748175",
-  "160725748092","160725733029","160726748099","160725748043",
-  "160726754009","160725748301","160726733017","160726754077",
-  "160726754008","160725748060","160724748045","160726754019",
-  "160725748099","160726733044","160724748062","160726754045",
-  "160726748070","160726754068","160726733041","160725733007",
-  "160723747045","160724748303","160725733181","160725754006",
-  "160726748131","160726733020","160726754147","160726733074",
-  "160726754161","160726748007"
-];
+import appliedRollNos from '../data/rollNumbers.json';
 
 // Skill badge data
 const skillBadges = [
@@ -170,7 +154,7 @@ const skillBadges = [
             spellcheck="false"
           />
           <button class="search-btn" id="search-btn">
-            Track Progress
+            Track
           </button>
         </div>
       </div>
@@ -648,6 +632,7 @@ const skillBadges = [
         <strong style="color: #EA4335;">Roll number not found</strong>
         <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong> is not in our applied list.</p>
         <p style="margin-top: 8px;">If you haven't applied yet, register using the QR code in the Instagram post or check <strong>Stage 1</strong> for details.</p>
+        <p style="margin-top: 8px;">If you've already applied, check back later, this dashboard will update soon.</p>
       `;
     }
 
