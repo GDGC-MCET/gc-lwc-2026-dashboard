@@ -281,8 +281,8 @@ img {
   font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 700;
-  line-height: 1.15;
-  padding-bottom: 6px;
+  line-height: 1.25;
+  padding-bottom: 8px;
   margin-bottom: var(--space-md);
   background: linear-gradient(135deg, #FFFFFF, #C5D8F8);
   -webkit-background-clip: text;
@@ -1201,6 +1201,12 @@ img {
     padding: var(--space-2xl) 0 var(--space-xl);
   }
 
+  .hero h1 {
+    font-size: clamp(1.85rem, 6vw, 2.8rem);
+    line-height: 1.25;
+    padding-bottom: 8px;
+  }
+
   .hero-stats {
     gap: var(--space-lg);
   }
@@ -1220,11 +1226,13 @@ img {
 
   .footer-grid {
     grid-template-columns: 1fr;
+    gap: var(--space-xl);
   }
 
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+    gap: var(--space-sm);
   }
 
   .header-badge {
@@ -1232,7 +1240,113 @@ img {
   }
 }
 
+@media (max-width: 640px) {
+  .header-inner {
+    padding: 0 var(--space-md);
+  }
+
+  .header-title {
+    font-size: 0.9rem;
+  }
+
+  .header-title small {
+    font-size: 0.65rem;
+    max-width: 210px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tab-nav {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .tab-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    flex: 0 0 auto;
+    min-width: 140px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    gap: 6px;
+  }
+
+  .tab-btn-number {
+    width: 24px;
+    height: 24px;
+    font-size: 0.72rem;
+  }
+
+  .tab-panel {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .tab-arrow-nav {
+    padding: 12px var(--space-md);
+  }
+
+  .tab-arrow-btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    min-height: 40px;
+  }
+}
+
 @media (max-width: 480px) {
+  .hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+
+  .hero h1 {
+    font-size: clamp(1.65rem, 7vw, 2.2rem);
+    line-height: 1.25;
+    padding-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .hero-stats {
+    gap: var(--space-md);
+  }
+
+  .hero-stat-value {
+    font-size: 1.45rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.75rem;
+  }
+
+  .search-input-group {
+    padding: 4px;
+  }
+
+  .search-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .search-input-group input {
+    font-size: 0.88rem;
+    padding: 6px 0;
+  }
+
+  .search-btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    min-height: 38px;
+  }
+
   .milestones {
     grid-template-columns: 1fr;
   }
@@ -1244,5 +1358,36 @@ img {
   .deadline-banner {
     flex-direction: column;
     text-align: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+  }
+
+  .badge-card {
+    padding: 16px;
+  }
+
+  .badge-name {
+    font-size: 0.9rem;
+  }
+
+  .badge-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badge-link {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+
+  .how-to-register, .invite-post {
+    padding: 16px;
   }
 }

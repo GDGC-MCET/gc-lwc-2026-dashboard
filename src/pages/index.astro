@@ -3,99 +3,7 @@ import Layout from '../layouts/Layout.astro';
 
 import appliedRollNos from '../data/rollNumbers.json';
 
-// Skill badge data
-const skillBadges = [
-  {
-    id: 1,
-    name: "The Basics of Google Cloud Compute",
-    description: "Learn core compute concepts including VMs, VPCs, and basic cloud infrastructure setup on Google Cloud.",
-    category: "infra",
-    categoryLabel: "Infrastructure",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 2,
-    name: "Configure Service Accounts and IAM Roles for Google Cloud",
-    description: "Master identity and access management by configuring service accounts, roles, and permissions.",
-    category: "security",
-    categoryLabel: "Security",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 3,
-    name: "Create Your First Gemini Enterprise Application",
-    description: "Build and deploy a production-ready application leveraging Google's Gemini AI model.",
-    category: "ai",
-    categoryLabel: "AI / ML",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 4,
-    name: "Develop AI-Powered Prototypes in Google AI Studio",
-    description: "Rapidly prototype AI applications using Google AI Studio with Gemini models and prompt engineering.",
-    category: "ai",
-    categoryLabel: "AI / ML",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 5,
-    name: "Analyze Images with the Cloud Vision API",
-    description: "Use the Cloud Vision API to detect labels, faces, landmarks, and text in images via REST and client libraries.",
-    category: "ai",
-    categoryLabel: "AI / ML",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 6,
-    name: "Implement Speech and Language Solutions with Pre-trained APIs",
-    description: "Integrate speech-to-text, text-to-speech, and Natural Language API into cloud applications.",
-    category: "ai",
-    categoryLabel: "AI / ML",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 7,
-    name: "Using the Google Cloud Speech API",
-    description: "Transcribe audio, detect languages, and process speech data with the Google Cloud Speech-to-Text API.",
-    category: "ai",
-    categoryLabel: "AI / ML",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 8,
-    name: "Explore Generative AI in Agent Platform",
-    description: "Build conversational agents and generative AI workflows using Google's Agent Builder platform.",
-    category: "ai",
-    categoryLabel: "AI / ML",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 9,
-    name: "Build Real-World AI Applications with Gemini and Imagen",
-    description: "Create multimodal applications combining text generation with Gemini and image generation with Imagen.",
-    category: "ai",
-    categoryLabel: "AI / ML",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-  {
-    id: 10,
-    name: "Build a Website on Google Cloud",
-    description: "Deploy and manage a scalable website using Google Cloud services including App Engine and Cloud Storage.",
-    category: "infra",
-    categoryLabel: "Infrastructure",
-    type: "Skill Badge",
-    url: "https://www.cloudskillsboost.google/paths"
-  },
-];
+import skillBadges from '../data/skillBadges.json';
 ---
 
 <Layout>
@@ -479,10 +387,10 @@ const skillBadges = [
                   <div class="badge-description">{badge.description}</div>
                   <div class="badge-footer">
                     <span class="badge-type">
-                      🎖️ {badge.type}
+                      {badge.credits === 0 ? "⚡ Free (0 Credits)" : `🪙 ${badge.credits} Credits`}
                     </span>
                     <a href={badge.url} target="_blank" rel="noopener noreferrer" class="badge-link">
-                      Open Lab →
+                      Start Lab →
                     </a>
                   </div>
                 </div>
