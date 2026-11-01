@@ -380,6 +380,11 @@ img {
 
 .hero-stat-value.stat-closed {
   font-size: 1.55rem;
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: var(--gc-red);
+  color: var(--gc-red);
 }
 
 .hero-stat-label {
