@@ -2,14 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 
 import appliedRollNos from '../data/rollNumbers.json';
+import gearRollNos from '../data/gearRollNumbers.json';
 
 import skillBadges from '../data/skillBadges.json';
 ---
 
 <Layout>
   <!-- Roll number data for JS -->
-  <script is:inline define:vars={{ appliedRollNos }}>
+  <script is:inline define:vars={{ appliedRollNos, gearRollNos }}>
     window.__APPLIED_ROLL_NOS = appliedRollNos;
+    window.__GEAR_ROLL_NOS = gearRollNos;
   </script>
 
   <!-- Hero Section -->
@@ -486,6 +488,7 @@ import skillBadges from '../data/skillBadges.json';
   const searchInput = document.getElementById('rollno-search') as HTMLInputElement;
   const searchBtn = document.getElementById('search-btn') as HTMLButtonElement;
   const appliedList: string[] = (window as any).__APPLIED_ROLL_NOS || [];
+  const gearList: string[] = (window as any).__GEAR_ROLL_NOS || [];
 
   function handleSearch() {
     const rollNo = searchInput?.value.trim().toUpperCase();
@@ -497,12 +500,34 @@ import skillBadges from '../data/skillBadges.json';
     const existing = document.querySelector('.search-result-msg');
     if (existing) existing.remove();
 
+    const isGear = gearList.includes(rollNo);
     const isApplied = appliedList.includes(rollNo);
 
     const msg = document.createElement('div');
     msg.className = 'search-result-msg';
 
-    if (isApplied) {
+    if (isGear) {
+      msg.style.cssText = `
+        max-width: 560px;
+        margin: 16px auto 0;
+        padding: 16px 20px;
+        background: rgba(168, 85, 247, 0.08);
+        border: 1px solid rgba(168, 85, 247, 0.35);
+        border-radius: 12px;
+        font-size: 0.9rem;
+        color: #8B949E;
+        text-align: center;
+        animation: fadeInUp 0.3s ease-out;
+      `;
+      msg.innerHTML = `
+        <div style="font-size: 1.3rem; margin-bottom: 8px;">⚙️</div>
+        <strong style="color: #A855F7; font-size: 1.05rem;">You are registered in GEAR!</strong>
+        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong></p>
+        <p style="margin-top: 8px;">You have registered through GEAR for Google Cloud Learn with Communities 2026.</p>
+        <p style="margin-top: 8px;">Check your email for the access code for cloud credits to complete the 10 labs. You will receive it within 2-3 days.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Stage 2</strong> to redeem your credits, then <strong>Stage 3</strong> to complete the badges.</p>
+      `;
+    } else if (isApplied) {
       msg.style.cssText = `
         max-width: 560px;
         margin: 16px auto 0;
@@ -583,7 +608,7 @@ import skillBadges from '../data/skillBadges.json';
     if (diff <= 0) {
       countdownValue.textContent = 'Closed';
       countdownLabel.textContent = 'Registrations Closed';
-      countdownValue.style.fontSize = '1.4rem';
+      countdownValue.classList.add('stat-closed');
       return;
     }
 
