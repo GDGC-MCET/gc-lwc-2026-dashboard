@@ -100,10 +100,9 @@ const schemaData = {
           </div>
         </div>
         <nav class="header-nav">
-          <a href="#leaderboard" class="header-nav-link">🏆 Leaderboard</a>
-          <a href="#search" class="header-nav-link">🔍 Lookup</a>
-          <a href="#stages" class="header-nav-link">📖 Stages</a>
-          <a href="#badges" class="header-nav-link">☁️ Badges</a>
+          <a href={`${baseUrl}#leaderboard`} class="header-nav-link">🏆 Leaderboard</a>
+          <a href={`${baseUrl}#search`} class="header-nav-link">🔍 Lookup</a>
+          <a href={`${baseUrl}#guide`} class="header-nav-link">📖 Guide</a>
         </nav>
         <span class="header-badge">LwC 2026</span>
       </div>
@@ -184,6 +183,41 @@ const schemaData = {
         </div>
       </div>
     </footer>
+    <!-- Smooth scrolling for hash links -->
+    <script is:inline>
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a');
+        if (!link) return;
+        var href = link.getAttribute('href');
+        if (!href) return;
+
+        var hashIndex = href.indexOf('#');
+        if (hashIndex === -1) return;
+
+        var hash = href.substring(hashIndex);
+        if (!hash || hash === '#') return;
+
+        var target = document.querySelector(hash);
+        if (target) {
+          e.preventDefault();
+          history.pushState(null, '', hash);
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+
+      if (window.location.hash) {
+        var initialHash = window.location.hash;
+        var targetEl = document.querySelector(initialHash);
+        if (targetEl) {
+          window.scrollTo(0, 0);
+          window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 120);
+          });
+        }
+      }
+    </script>
   </body>
 </html>
 
