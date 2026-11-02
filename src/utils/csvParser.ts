@@ -3,6 +3,8 @@
  * Supports both 2026 format (GDGC-MCETH [DD Mon].csv) and legacy 2025 format (progress##.csv)
  */
 
+import studentRollMap from '../data/studentRollMap.json';
+
 export interface ParticipantProgress {
   rank: number;
   userName: string;
@@ -218,10 +220,13 @@ export function processProgressData(rows: string[][], fileName: string = 'GDGC-M
     const badgeNamesRaw = (colIndex.badgeNames >= 0 ? row[colIndex.badgeNames] : '') || '';
     const completedBadgeNames = parseCompletedBadgeNames(badgeNamesRaw);
 
-    // Try extracting roll number from email or username
+    // Try extracting roll number from verified mapping, email, or username
+    const mappedRoll = (studentRollMap as any).byEmail?.[userEmail.toLowerCase()] ||
+                       (studentRollMap as any).byName?.[userName] ||
+                       (studentRollMap as any).byName?.[userName.trim()];
     const emailMatch = userEmail.match(/160\d{9}/);
     const nameMatch = userName.match(/160\d{9}/);
-    const rollNumber = emailMatch ? emailMatch[0] : (nameMatch ? nameMatch[0] : undefined);
+    const rollNumber = mappedRoll || (emailMatch ? emailMatch[0] : (nameMatch ? nameMatch[0] : undefined));
 
     const accessCodeRedeemed = redemptionRaw.trim().toLowerCase() === 'yes';
     const isComplete = badgeCount >= 10 || milestoneRaw.toLowerCase().includes('milestone 3') || milestoneRaw.trim().toLowerCase() === 'yes';
