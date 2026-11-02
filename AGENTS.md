@@ -1,3 +1,9 @@
+## Rules & Data Integrity
+
+- **Never invent numbers, statistics, facts, or data**: Ground all metrics, figures, targets, and statistics strictly in verifiable sources, official program materials, or active dataset files. Never fabricate or assume arbitrary targets, goals, or percentages (e.g. swag thresholds, completion targets).
+- **Periodic vs Live Data Accuracy**: Never label batch-updated or periodic data reports (such as CSV progress reports) as "live" or "real-time". Always accurately describe them as periodic updates based on official reports.
+- **Ask for Clarification**: If a metric, threshold, or goal is unknown, ask the user directly rather than assuming or inventing.
+
 ## Development
 
 When starting the dev server, use background mode:

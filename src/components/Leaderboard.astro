@@ -9,12 +9,12 @@ const initialData = loadLatestProgressData();
     <!-- Header -->
     <div class="leaderboard-header animate-in">
       <div class="leaderboard-badge">
-        <span class="live-dot"></span>
-        <span>Live Progress Tracking</span>
+        <span class="report-dot"></span>
+        <span>Periodic Progress Report</span>
       </div>
       <h2 class="leaderboard-title">Community Leaderboard</h2>
       <p class="leaderboard-subtitle">
-        Real-time tracking for Google Cloud Learn with Communities 2026 participants at GDG on Campus MCET.
+        Periodic progress updates for Google Cloud Learn with Communities 2026 participants at GDG on Campus MCET, updated as new official reports are released.
       </p>
 
       <div class="last-updated-bar">
@@ -82,35 +82,8 @@ const initialData = loadLatestProgressData();
       </div>
     </div>
 
-    <!-- Community Swag Goal Progress -->
-    <div class="swag-goal-container animate-in animate-delay-2">
-      <div class="swag-goal-header">
-        <div class="swag-goal-title">
-          <span class="swag-icon">🎁</span>
-          <span>Community Swag Milestone Goal</span>
-        </div>
-        <div class="swag-goal-counts">
-          <span id="swag-goal-current">{initialData.completedAll}</span> / <strong>50 Finishers Goal</strong>
-        </div>
-      </div>
-      <div class="swag-progress-bar-bg">
-        <div 
-          class="swag-progress-bar-fill" 
-          id="swag-goal-progress-fill" 
-          style={`width: ${Math.min(100, Math.round((initialData.completedAll / 50) * 100))}%`}
-        ></div>
-      </div>
-      <div class="swag-goal-footer">
-        <span id="swag-goal-message">
-          {initialData.completedAll >= 50 
-            ? "🎉 Community goal unlocked! Everyone who completed qualifies for Google Cloud swags!" 
-            : `💪 Need ${Math.max(0, 50 - initialData.completedAll)} more students to complete all 10 badges to achieve the community reward goal!`}
-        </span>
-      </div>
-    </div>
-
     <!-- Top 3 Champions Podium -->
-    <div class="podium-section animate-in animate-delay-3" id="podium-section">
+    <div class="podium-section animate-in animate-delay-2" id="podium-section">
       <h3 class="podium-heading">🎖️ Top Champions</h3>
       <div class="podium-grid" id="podium-grid">
         <!-- Rendered dynamically or server-rendered fallback -->
@@ -272,7 +245,7 @@ const initialData = loadLatestProgressData();
       <div class="modal-header">
         <div>
           <h3>Upload Progress CSV</h3>
-          <p class="modal-user-email">Upload a newly exported progress CSV to update the live dashboard immediately.</p>
+          <p class="modal-user-email">Upload a newly exported progress CSV to update the dashboard immediately.</p>
         </div>
         <button class="modal-close-btn" id="upload-close-btn">✕</button>
       </div>
@@ -341,9 +314,6 @@ const initialData = loadLatestProgressData();
   const statGearBadges = document.getElementById('stat-gear-badges');
   const lastUpdatedText = document.getElementById('last-updated-text');
   const sourceFileText = document.getElementById('source-file-text');
-  const swagGoalCurrent = document.getElementById('swag-goal-current');
-  const swagGoalProgressFill = document.getElementById('swag-goal-progress-fill');
-  const swagGoalMessage = document.getElementById('swag-goal-message');
   const podiumGrid = document.getElementById('podium-grid');
 
   // Modal Elements
@@ -379,17 +349,6 @@ const initialData = loadLatestProgressData();
     if (statGearBadges) statGearBadges.textContent = currentData.gearBadgeEarned.toString();
     if (lastUpdatedText) lastUpdatedText.textContent = currentData.lastUpdated;
     if (sourceFileText) sourceFileText.textContent = currentData.fileName;
-
-    if (swagGoalCurrent) swagGoalCurrent.textContent = currentData.completedAll.toString();
-    if (swagGoalProgressFill) {
-      const pct = Math.min(100, Math.round((currentData.completedAll / 50) * 100));
-      swagGoalProgressFill.style.width = `${pct}%`;
-    }
-    if (swagGoalMessage) {
-      swagGoalMessage.textContent = currentData.completedAll >= 50
-        ? "🎉 Community goal unlocked! Everyone who completed qualifies for Google Cloud swags!"
-        : `💪 Need ${Math.max(0, 50 - currentData.completedAll)} more students to complete all 10 badges to achieve the community reward goal!`;
-    }
 
     renderPodium();
   }
