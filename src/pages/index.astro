@@ -35,12 +35,16 @@ import Leaderboard from '../components/Leaderboard.astro';
           <div class="hero-stat-label">Cloud Credits</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-value" id="countdown-value">--</div>
-          <div class="hero-stat-label" id="countdown-label">Loading...</div>
+          <div class="hero-stat-value stat-closed">Closed</div>
+          <div class="hero-stat-label">Registrations Closed</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-value">Free</div>
           <div class="hero-stat-label">Registration</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="countdown-value">--</div>
+          <div class="hero-stat-label" id="countdown-label">Time to Complete</div>
         </div>
       </div>
     </div>
@@ -604,24 +608,26 @@ import Leaderboard from '../components/Leaderboard.astro';
     observer.observe(el);
   });
 
-  // Countdown timer for deadline
+  // Countdown timer for completion deadline (15th November 2026)
   const countdownValue = document.getElementById('countdown-value');
   const countdownLabel = document.getElementById('countdown-label');
 
   function updateCountdown() {
     if (!countdownValue || !countdownLabel) return;
 
-    const deadline = new Date('2026-10-27T23:59:59+05:30').getTime();
+    // Deadline: 15 November 2026 23:59:59 IST
+    const deadline = new Date('2026-11-15T23:59:59+05:30').getTime();
     const now = new Date().getTime();
     const diff = deadline - now;
 
     if (diff <= 0) {
-      countdownValue.textContent = 'Closed';
-      countdownLabel.textContent = 'Registrations Closed';
+      countdownValue.textContent = 'Over';
+      countdownLabel.textContent = 'Time to Complete';
       countdownValue.classList.add('stat-closed');
       return;
     }
 
+    countdownValue.classList.remove('stat-closed');
     const totalHours = Math.floor(diff / (1000 * 60 * 60));
     const days = Math.floor(totalHours / 24);
     const hours = totalHours % 24;
@@ -629,11 +635,13 @@ import Leaderboard from '../components/Leaderboard.astro';
 
     if (days > 0) {
       countdownValue.textContent = `${days}d ${hours}h`;
-      countdownLabel.textContent = 'Left to Register';
-    } else {
+    } else if (hours > 0) {
       countdownValue.textContent = `${hours}h ${minutes}m`;
-      countdownLabel.textContent = 'Left to Register';
+    } else {
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      countdownValue.textContent = `${minutes}m ${seconds}s`;
     }
+    countdownLabel.textContent = 'Time to Complete';
   }
 
   updateCountdown();
