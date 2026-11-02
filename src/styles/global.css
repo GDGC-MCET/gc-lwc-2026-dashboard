@@ -213,6 +213,15 @@ img {
   display: flex;
   align-items: center;
   gap: var(--space-md);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.header-brand:hover {
+  text-decoration: none;
+  opacity: 0.88;
 }
 
 .header-logo {

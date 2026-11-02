@@ -85,7 +85,7 @@ const schemaData = {
     <!-- Header -->
     <header class="header">
       <div class="header-inner">
-        <div class="header-brand">
+        <a href={baseUrl} class="header-brand" id="header-brand" aria-label="GDG on Campus MCET - Return to top">
           <div class="header-logo">
             <div class="google-dots">
               <span></span>
@@ -98,7 +98,7 @@ const schemaData = {
             GDG on Campus - MCET
             <small>Methodist College of Engineering & Technology</small>
           </div>
-        </div>
+        </a>
         <nav class="header-nav" aria-label="Primary navigation">
           <a href={`${baseUrl}#search`} class="header-nav-link">🔍 Lookup</a>
           <a href={`${baseUrl}#leaderboard`} class="header-nav-link">🏆 Leaderboard</a>
@@ -266,6 +266,25 @@ const schemaData = {
           });
         }
       }
+      // Brand logo click handler to reset hash and scroll to top
+      var brandLink = document.getElementById('header-brand');
+      if (brandLink) {
+        brandLink.addEventListener('click', function(e) {
+          var currentPath = window.location.pathname.replace(/\/$/, '');
+          var targetPath = new URL(brandLink.href, window.location.origin).pathname.replace(/\/$/, '');
+          if (currentPath === targetPath) {
+            e.preventDefault();
+            if (window.location.hash) {
+              history.pushState(null, '', brandLink.href);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (typeof toggleMobileMenu === 'function') {
+              toggleMobileMenu(false);
+            }
+          }
+        });
+      }
+
       // Mobile menu toggle logic
       var mobileBtn = document.getElementById('mobile-menu-btn');
       var mobileDrawer = document.getElementById('mobile-nav-drawer');
