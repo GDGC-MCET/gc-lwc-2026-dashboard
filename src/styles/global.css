@@ -100,7 +100,7 @@ html {
   scroll-padding-top: calc(var(--header-height) + 20px);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   max-width: 100%;
 }
@@ -111,10 +111,15 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   max-width: 100%;
   position: relative;
+}
+
+main {
+  display: block;
+  padding-top: var(--header-height);
 }
 
 a {
@@ -178,12 +183,15 @@ img {
 
 /* ---- Header / Navbar ---- */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 50;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 90;
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  background: rgba(13, 17, 23, 0.85);
+  background: rgba(13, 17, 23, 0.9);
   border-bottom: 1px solid var(--border-default);
   height: var(--header-height);
   display: flex;
@@ -2252,7 +2260,7 @@ img {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
