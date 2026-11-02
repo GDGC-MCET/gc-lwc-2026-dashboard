@@ -1,0 +1,784 @@
+---
+import { loadLatestProgressData } from '../utils/progressLoader.ts';
+
+const initialData = loadLatestProgressData();
+---
+
+<section class="leaderboard-section" id="leaderboard">
+  <div class="container">
+    <!-- Header -->
+    <div class="leaderboard-header animate-in">
+      <div class="leaderboard-badge">
+        <span class="live-dot"></span>
+        <span>Live Progress Tracking</span>
+      </div>
+      <h2 class="leaderboard-title">Community Leaderboard</h2>
+      <p class="leaderboard-subtitle">
+        Real-time tracking for Google Cloud Learn with Communities 2026 participants at GDG on Campus MCET.
+      </p>
+
+      <div class="last-updated-bar">
+        <div class="updated-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Last Updated: <strong id="last-updated-text">{initialData.lastUpdated}</strong></span>
+        </div>
+        <div class="updated-item source-file">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          <span>Source: <strong id="source-file-text">{initialData.fileName}</strong></span>
+        </div>
+        <button class="upload-trigger-btn" id="open-upload-btn" title="Upload new progress CSV">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span>Upload CSV</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Summary Cards -->
+    <div class="tracker-stats-grid animate-in animate-delay-1">
+      <div class="tracker-stat-card card-green">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-content">
+          <div class="stat-number" id="stat-completed-all">{initialData.completedAll}</div>
+          <div class="stat-title">Finished All 10 Badges</div>
+          <div class="stat-sub">Milestone 3 Champions</div>
+        </div>
+      </div>
+
+      <div class="tracker-stat-card card-blue">
+        <div class="stat-icon">🎓</div>
+        <div class="stat-content">
+          <div class="stat-number" id="stat-total-badges">{initialData.totalBadgesCompleted}</div>
+          <div class="stat-title">Skill Badges Earned</div>
+          <div class="stat-sub">Across {initialData.totalParticipants} Participants</div>
+        </div>
+      </div>
+
+      <div class="tracker-stat-card card-yellow">
+        <div class="stat-icon">🎟️</div>
+        <div class="stat-content">
+          <div class="stat-number" id="stat-credits-redeemed">{initialData.creditsRedeemed} / {initialData.totalParticipants}</div>
+          <div class="stat-title">Credits Redeemed</div>
+          <div class="stat-sub">{Math.round((initialData.creditsRedeemed / (initialData.totalParticipants || 1)) * 100)}% of Enrolled Students</div>
+        </div>
+      </div>
+
+      <div class="tracker-stat-card card-purple">
+        <div class="stat-icon">⚙️</div>
+        <div class="stat-content">
+          <div class="stat-number" id="stat-gear-badges">{initialData.gearBadgeEarned}</div>
+          <div class="stat-title">GEAR Arcade Badges</div>
+          <div class="stat-sub">Gemini Enterprise Agent Ready</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Swag Goal Progress -->
+    <div class="swag-goal-container animate-in animate-delay-2">
+      <div class="swag-goal-header">
+        <div class="swag-goal-title">
+          <span class="swag-icon">🎁</span>
+          <span>Community Swag Milestone Goal</span>
+        </div>
+        <div class="swag-goal-counts">
+          <span id="swag-goal-current">{initialData.completedAll}</span> / <strong>50 Finishers Goal</strong>
+        </div>
+      </div>
+      <div class="swag-progress-bar-bg">
+        <div 
+          class="swag-progress-bar-fill" 
+          id="swag-goal-progress-fill" 
+          style={`width: ${Math.min(100, Math.round((initialData.completedAll / 50) * 100))}%`}
+        ></div>
+      </div>
+      <div class="swag-goal-footer">
+        <span id="swag-goal-message">
+          {initialData.completedAll >= 50 
+            ? "🎉 Community goal unlocked! Everyone who completed qualifies for Google Cloud swags!" 
+            : `💪 Need ${Math.max(0, 50 - initialData.completedAll)} more students to complete all 10 badges to achieve the community reward goal!`}
+        </span>
+      </div>
+    </div>
+
+    <!-- Top 3 Champions Podium -->
+    <div class="podium-section animate-in animate-delay-3" id="podium-section">
+      <h3 class="podium-heading">🎖️ Top Champions</h3>
+      <div class="podium-grid" id="podium-grid">
+        <!-- Rendered dynamically or server-rendered fallback -->
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="leaderboard-toolbar animate-in animate-delay-4">
+      <div class="toolbar-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input 
+          type="text" 
+          id="leaderboard-search" 
+          placeholder="Search by participant name, email, or roll no..." 
+          autocomplete="off"
+        />
+        <button id="clear-search-btn" class="clear-search-btn" style="display: none;" title="Clear search">✕</button>
+      </div>
+
+      <div class="toolbar-filters">
+        <div class="filter-group">
+          <label for="filter-milestone">Milestone:</label>
+          <select id="filter-milestone" class="filter-select">
+            <option value="all">All Milestones</option>
+            <option value="milestone3">Milestone 3 (10 Badges)</option>
+            <option value="milestone2">Milestone 2 (7 Badges)</option>
+            <option value="milestone1">Milestone 1 (4 Badges)</option>
+            <option value="gear">GEAR Track</option>
+            <option value="inprogress">In Progress (1-9)</option>
+            <option value="notstarted">Not Started (0)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filter-redemption">Redemption:</label>
+          <select id="filter-redemption" class="filter-select">
+            <option value="all">All Status</option>
+            <option value="yes">Redeemed (Yes)</option>
+            <option value="no">Pending (No)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="sort-by">Sort:</label>
+          <select id="sort-by" class="filter-select">
+            <option value="rank">Rank / Badges (High to Low)</option>
+            <option value="name">Name (A-Z)</option>
+            <option value="badges-asc">Badges (Low to High)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="page-size">Show:</label>
+          <select id="page-size" class="filter-select">
+            <option value="15">Top 15</option>
+            <option value="25">Top 25</option>
+            <option value="50">Top 50</option>
+            <option value="all" selected>All ({initialData.totalParticipants})</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active filter stats -->
+    <div class="filter-status-row">
+      <span id="showing-count-text">Showing {initialData.totalParticipants} of {initialData.totalParticipants} participants</span>
+      <button id="reset-filters-btn" class="reset-link-btn" style="display: none;">Reset Filters</button>
+    </div>
+
+    <!-- Leaderboard Table Container -->
+    <div class="leaderboard-table-wrapper animate-in animate-delay-4">
+      <div class="leaderboard-table-scroll">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th class="col-rank">Rank</th>
+              <th class="col-user">Participant</th>
+              <th class="col-progress">Badges Progress</th>
+              <th class="col-milestone">Milestone / Track</th>
+              <th class="col-redemption">Access Code</th>
+              <th class="col-action">Details</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard-tbody">
+            <!-- Populated by client script -->
+          </tbody>
+        </table>
+      </div>
+      <div id="no-results-msg" class="no-results-state" style="display: none;">
+        <div class="no-results-icon">🔍</div>
+        <h4>No matching participants found</h4>
+        <p>Try refining your search keyword or clearing the active filters.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details Slide-out / Modal -->
+  <div class="details-modal-overlay" id="details-modal-overlay" style="display: none;">
+    <div class="details-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-rank-badge" id="modal-rank-badge">#1</span>
+          <div>
+            <h3 class="modal-user-name" id="modal-user-name">User Name</h3>
+            <p class="modal-user-email" id="modal-user-email">email@example.com</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="modal-close-btn" title="Close details">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-stat-bar">
+          <div class="modal-stat-pill">
+            <span class="label">Skill Badges:</span>
+            <strong id="modal-badge-count">0 / 10</strong>
+          </div>
+          <div class="modal-stat-pill">
+            <span class="label">Milestone:</span>
+            <strong id="modal-milestone">No Milestone</strong>
+          </div>
+          <div class="modal-stat-pill">
+            <span class="label">Credits:</span>
+            <strong id="modal-redemption">No</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h4>Completed Skill Badges (<span id="modal-badge-list-count">0</span>)</h4>
+          <ul class="modal-badge-list" id="modal-badge-list">
+            <!-- List populated dynamically -->
+          </ul>
+        </div>
+
+        <div class="modal-section" id="modal-gear-section" style="display: none;">
+          <h4>GEAR Digital Badges</h4>
+          <div class="gear-badge-box" id="modal-gear-text"></div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="modal-profile-btn" id="modal-profile-link">
+          <span>View Google Cloud Skills Profile</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload CSV Modal -->
+  <div class="details-modal-overlay" id="upload-modal-overlay" style="display: none;">
+    <div class="upload-modal-card">
+      <div class="modal-header">
+        <div>
+          <h3>Upload Progress CSV</h3>
+          <p class="modal-user-email">Upload a newly exported progress CSV to update the live dashboard immediately.</p>
+        </div>
+        <button class="modal-close-btn" id="upload-close-btn">✕</button>
+      </div>
+
+      <div class="upload-dropzone" id="upload-dropzone">
+        <div class="dropzone-icon">📁</div>
+        <h4>Drag & Drop progress CSV here</h4>
+        <p>Supports <code>GDGC-MCETH [Date].csv</code> or <code>progress##.csv</code></p>
+        <label class="dropzone-browse-btn">
+          Browse File
+          <input type="file" id="csv-file-input" accept=".csv" style="display: none;" />
+        </label>
+      </div>
+
+      <div class="upload-info-box">
+        <strong>💡 Note for Organizers:</strong>
+        <p>Data loaded here is processed instantly in your browser and cached locally. To publish updates permanently to all visitors, commit the new CSV file into <code>src/data/progress/</code>.</p>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button class="reset-link-btn" id="revert-system-csv-btn">Revert to Official Data</button>
+        <button class="secondary-btn" id="cancel-upload-btn">Close</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Inject Server Initial Data for Client Script -->
+<script is:inline define:vars={{ initialData }}>
+  window.__INITIAL_PROGRESS_DATA = initialData;
+</script>
+
+<script>
+  import { parseCSV, processProgressData, type ProgressSummary, type ParticipantProgress } from '../utils/csvParser.ts';
+
+  let currentData: ProgressSummary = (window as any).__INITIAL_PROGRESS_DATA;
+
+  // Check localStorage for uploaded CSV
+  try {
+    const cachedCSV = localStorage.getItem('gdgc_custom_progress_csv');
+    const cachedFileName = localStorage.getItem('gdgc_custom_progress_filename') || 'Custom Upload.csv';
+    if (cachedCSV) {
+      const rows = parseCSV(cachedCSV);
+      currentData = processProgressData(rows, cachedFileName);
+    }
+  } catch (e) {
+    console.error('Failed reading custom progress from storage', e);
+  }
+
+  // Elements
+  const searchInput = document.getElementById('leaderboard-search') as HTMLInputElement;
+  const clearSearchBtn = document.getElementById('clear-search-btn');
+  const filterMilestone = document.getElementById('filter-milestone') as HTMLSelectElement;
+  const filterRedemption = document.getElementById('filter-redemption') as HTMLSelectElement;
+  const sortBy = document.getElementById('sort-by') as HTMLSelectElement;
+  const pageSize = document.getElementById('page-size') as HTMLSelectElement;
+  const tableBody = document.getElementById('leaderboard-tbody');
+  const noResultsMsg = document.getElementById('no-results-msg');
+  const showingCountText = document.getElementById('showing-count-text');
+  const resetFiltersBtn = document.getElementById('reset-filters-btn');
+
+  // Stats Elements
+  const statCompletedAll = document.getElementById('stat-completed-all');
+  const statTotalBadges = document.getElementById('stat-total-badges');
+  const statCreditsRedeemed = document.getElementById('stat-credits-redeemed');
+  const statGearBadges = document.getElementById('stat-gear-badges');
+  const lastUpdatedText = document.getElementById('last-updated-text');
+  const sourceFileText = document.getElementById('source-file-text');
+  const swagGoalCurrent = document.getElementById('swag-goal-current');
+  const swagGoalProgressFill = document.getElementById('swag-goal-progress-fill');
+  const swagGoalMessage = document.getElementById('swag-goal-message');
+  const podiumGrid = document.getElementById('podium-grid');
+
+  // Modal Elements
+  const detailsOverlay = document.getElementById('details-modal-overlay');
+  const modalCloseBtn = document.getElementById('modal-close-btn');
+  const modalRankBadge = document.getElementById('modal-rank-badge');
+  const modalUserName = document.getElementById('modal-user-name');
+  const modalUserEmail = document.getElementById('modal-user-email');
+  const modalBadgeCount = document.getElementById('modal-badge-count');
+  const modalMilestone = document.getElementById('modal-milestone');
+  const modalRedemption = document.getElementById('modal-redemption');
+  const modalBadgeListCount = document.getElementById('modal-badge-list-count');
+  const modalBadgeList = document.getElementById('modal-badge-list');
+  const modalProfileLink = document.getElementById('modal-profile-link') as HTMLAnchorElement;
+  const modalGearSection = document.getElementById('modal-gear-section');
+  const modalGearText = document.getElementById('modal-gear-text');
+
+  // Upload Elements
+  const openUploadBtn = document.getElementById('open-upload-btn');
+  const uploadOverlay = document.getElementById('upload-modal-overlay');
+  const uploadCloseBtn = document.getElementById('upload-close-btn');
+  const cancelUploadBtn = document.getElementById('cancel-upload-btn');
+  const csvFileInput = document.getElementById('csv-file-input') as HTMLInputElement;
+  const uploadDropzone = document.getElementById('upload-dropzone');
+  const revertSystemBtn = document.getElementById('revert-system-csv-btn');
+
+  function updateOverviewStats() {
+    if (statCompletedAll) statCompletedAll.textContent = currentData.completedAll.toString();
+    if (statTotalBadges) statTotalBadges.textContent = currentData.totalBadgesCompleted.toString();
+    if (statCreditsRedeemed) {
+      statCreditsRedeemed.textContent = `${currentData.creditsRedeemed} / ${currentData.totalParticipants}`;
+    }
+    if (statGearBadges) statGearBadges.textContent = currentData.gearBadgeEarned.toString();
+    if (lastUpdatedText) lastUpdatedText.textContent = currentData.lastUpdated;
+    if (sourceFileText) sourceFileText.textContent = currentData.fileName;
+
+    if (swagGoalCurrent) swagGoalCurrent.textContent = currentData.completedAll.toString();
+    if (swagGoalProgressFill) {
+      const pct = Math.min(100, Math.round((currentData.completedAll / 50) * 100));
+      swagGoalProgressFill.style.width = `${pct}%`;
+    }
+    if (swagGoalMessage) {
+      swagGoalMessage.textContent = currentData.completedAll >= 50
+        ? "🎉 Community goal unlocked! Everyone who completed qualifies for Google Cloud swags!"
+        : `💪 Need ${Math.max(0, 50 - currentData.completedAll)} more students to complete all 10 badges to achieve the community reward goal!`;
+    }
+
+    renderPodium();
+  }
+
+  function renderPodium() {
+    if (!podiumGrid) return;
+    const top3 = currentData.top3;
+    if (top3.length === 0) {
+      podiumGrid.innerHTML = '<p style="color: var(--text-tertiary); text-align: center; width: 100%;">No participant data available</p>';
+      return;
+    }
+
+    // Arrangement: 2nd place on left, 1st place in center, 3rd place on right
+    const orderedPodium = [];
+    if (top3[1]) orderedPodium.push({ place: 2, p: top3[1], medal: '🥈', title: '2nd Place', rankClass: 'rank-2' });
+    if (top3[0]) orderedPodium.push({ place: 1, p: top3[0], medal: '🥇', title: '1st Place Champion', rankClass: 'rank-1' });
+    if (top3[2]) orderedPodium.push({ place: 3, p: top3[2], medal: '🥉', title: '3rd Place', rankClass: 'rank-3' });
+
+    podiumGrid.innerHTML = orderedPodium.map(({ place, p, medal, title, rankClass }) => `
+      <div class="podium-card ${rankClass}">
+        <div class="podium-pedestal-top">
+          <div class="podium-medal">${medal}</div>
+          <div class="podium-rank-label">${title}</div>
+        </div>
+        <div class="podium-avatar">
+          ${p.userName.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase()}
+        </div>
+        <div class="podium-name">${p.userName}</div>
+        <div class="podium-badges-pill">
+          <strong>${p.skillBadgesCount} / 10</strong> Badges
+        </div>
+        <div class="podium-milestone">
+          ${p.isComplete ? '<span class="status-pill green">Completed Milestone 3 🎉</span>' : `<span class="status-pill blue">${p.milestone}</span>`}
+        </div>
+        ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
+          <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" class="podium-profile-link">
+            Skills Profile ↗
+          </a>
+        ` : ''}
+      </div>
+    `).join('');
+  }
+
+  function getFilteredAndSortedParticipants(): ParticipantProgress[] {
+    const query = (searchInput?.value || '').trim().toLowerCase();
+    const milestoneVal = filterMilestone?.value || 'all';
+    const redemptionVal = filterRedemption?.value || 'all';
+    const sortVal = sortBy?.value || 'rank';
+
+    let list = [...currentData.participants];
+
+    // Filter by query (Name, Email, Roll Number)
+    if (query) {
+      list = list.filter(p => {
+        return p.userName.toLowerCase().includes(query) ||
+               p.userEmail.toLowerCase().includes(query) ||
+               (p.rollNumber && p.rollNumber.includes(query));
+      });
+    }
+
+    // Filter by milestone
+    if (milestoneVal === 'milestone3') {
+      list = list.filter(p => p.isComplete || p.milestone.toLowerCase().includes('milestone 3'));
+    } else if (milestoneVal === 'milestone2') {
+      list = list.filter(p => p.milestone.toLowerCase().includes('milestone 2') || p.skillBadgesCount >= 7);
+    } else if (milestoneVal === 'milestone1') {
+      list = list.filter(p => p.milestone.toLowerCase().includes('milestone 1') || p.skillBadgesCount >= 4);
+    } else if (milestoneVal === 'gear') {
+      list = list.filter(p => p.gearBadges && p.gearBadges.toLowerCase() !== 'not applicable' && p.gearBadges.toLowerCase() !== 'no badge');
+    } else if (milestoneVal === 'inprogress') {
+      list = list.filter(p => p.skillBadgesCount > 0 && !p.isComplete);
+    } else if (milestoneVal === 'notstarted') {
+      list = list.filter(p => p.skillBadgesCount === 0);
+    }
+
+    // Filter by redemption
+    if (redemptionVal === 'yes') {
+      list = list.filter(p => p.accessCodeRedeemed);
+    } else if (redemptionVal === 'no') {
+      list = list.filter(p => !p.accessCodeRedeemed);
+    }
+
+    // Sort
+    if (sortVal === 'name') {
+      list.sort((a, b) => a.userName.localeCompare(b.userName));
+    } else if (sortVal === 'badges-asc') {
+      list.sort((a, b) => a.skillBadgesCount - b.skillBadgesCount);
+    }
+    // Default 'rank' is already presorted
+
+    return list;
+  }
+
+  function renderTable() {
+    if (!tableBody) return;
+
+    const filtered = getFilteredAndSortedParticipants();
+    const totalFiltered = filtered.length;
+    const totalCount = currentData.participants.length;
+
+    // Handle show count
+    const pageSizeVal = pageSize?.value || 'all';
+    let displayed = filtered;
+    if (pageSizeVal !== 'all') {
+      const limit = parseInt(pageSizeVal, 10);
+      displayed = filtered.slice(0, limit);
+    }
+
+    if (showingCountText) {
+      showingCountText.textContent = `Showing ${displayed.length} of ${totalFiltered} filtered participants (Total: ${totalCount})`;
+    }
+
+    // Toggle clear search button
+    if (clearSearchBtn) {
+      clearSearchBtn.style.display = searchInput?.value ? 'block' : 'none';
+    }
+
+    // Toggle reset filters button
+    const hasActiveFilters = (searchInput?.value !== '') ||
+      (filterMilestone?.value !== 'all') ||
+      (filterRedemption?.value !== 'all') ||
+      (sortBy?.value !== 'rank');
+
+    if (resetFiltersBtn) {
+      resetFiltersBtn.style.display = hasActiveFilters ? 'inline-block' : 'none';
+    }
+
+    if (displayed.length === 0) {
+      tableBody.innerHTML = '';
+      if (noResultsMsg) noResultsMsg.style.display = 'block';
+      return;
+    }
+
+    if (noResultsMsg) noResultsMsg.style.display = 'none';
+
+    tableBody.innerHTML = displayed.map(p => {
+      // Progress bar percentage
+      const pct = Math.min(100, Math.round((p.skillBadgesCount / 10) * 100));
+      let progressColor = 'var(--text-tertiary)';
+      if (p.skillBadgesCount >= 10) progressColor = 'var(--gc-green)';
+      else if (p.skillBadgesCount >= 4) progressColor = 'var(--gc-yellow)';
+      else if (p.skillBadgesCount > 0) progressColor = 'var(--gc-blue)';
+
+      // Mask email for privacy (e.g. bhu***@gmail.com)
+      const maskedEmail = p.userEmail ? p.userEmail.replace(/^(..)(.*)(@.*)$/, (_match, a, _b, c) => `${a}***${c}`) : '';
+
+      // Milestone pill
+      let milestoneBadge = `<span class="badge-tag muted">${p.milestone}</span>`;
+      if (p.isComplete) {
+        milestoneBadge = `<span class="badge-tag green">Milestone 3 🎉</span>`;
+      } else if (p.milestone.includes('Milestone 2')) {
+        milestoneBadge = `<span class="badge-tag yellow">Milestone 2</span>`;
+      } else if (p.milestone.includes('Milestone 1')) {
+        milestoneBadge = `<span class="badge-tag blue">Milestone 1</span>`;
+      }
+
+      // GEAR badge indicator if present
+      let gearIndicator = '';
+      if (p.gearBadges && p.gearBadges !== 'Not applicable' && p.gearBadges !== 'No Badge') {
+        gearIndicator = `<span class="badge-tag purple" title="${p.gearBadges}">⚙️ GEAR</span>`;
+      }
+
+      // Redemption status pill
+      const redemptionBadge = p.accessCodeRedeemed
+        ? `<span class="status-indicator-pill green"><span class="dot"></span> Redeemed</span>`
+        : `<span class="status-indicator-pill muted"><span class="dot"></span> Pending</span>`;
+
+      // Rank display
+      let rankDisplay = `<span class="rank-number">#${p.rank}</span>`;
+      if (p.rank === 1) rankDisplay = `<span class="rank-badge gold" title="1st Place">🥇 1</span>`;
+      else if (p.rank === 2) rankDisplay = `<span class="rank-badge silver" title="2nd Place">🥈 2</span>`;
+      else if (p.rank === 3) rankDisplay = `<span class="rank-badge bronze" title="3rd Place">🥉 3</span>`;
+
+      return `
+        <tr class="leaderboard-row ${p.isComplete ? 'row-complete' : ''}" data-rank="${p.rank}">
+          <td class="col-rank">${rankDisplay}</td>
+          <td class="col-user">
+            <div class="user-meta">
+              <span class="user-name">${p.userName}</span>
+              <div class="user-sub">
+                <span class="user-email">${maskedEmail}</span>
+                ${p.rollNumber ? `<span class="user-roll">${p.rollNumber}</span>` : ''}
+              </div>
+            </div>
+          </td>
+          <td class="col-progress">
+            <div class="progress-wrap">
+              <div class="progress-label">
+                <strong>${p.skillBadgesCount}</strong> / 10 Badges
+                ${p.isComplete ? `<span class="complete-text">✓ Completed</span>` : ''}
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: ${pct}%; background: ${progressColor};"></div>
+              </div>
+            </div>
+          </td>
+          <td class="col-milestone">
+            <div class="tags-cluster">
+              ${milestoneBadge}
+              ${gearIndicator}
+            </div>
+          </td>
+          <td class="col-redemption">${redemptionBadge}</td>
+          <td class="col-action">
+            <div class="action-btn-group">
+              <button class="view-details-btn" data-rank="${p.rank}">
+                Details
+              </button>
+              ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
+                <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" class="profile-icon-btn" title="View Skills Profile">
+                  ↗
+                </a>
+              ` : ''}
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    // Attach click handlers to View Details buttons
+    tableBody.querySelectorAll('.view-details-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const rank = parseInt(target.getAttribute('data-rank') || '0', 10);
+        openParticipantDetails(rank);
+      });
+    });
+  }
+
+  function openParticipantDetails(rank: number) {
+    const p = currentData.participants.find(item => item.rank === rank);
+    if (!p || !detailsOverlay) return;
+
+    if (modalRankBadge) modalRankBadge.textContent = `#${p.rank}`;
+    if (modalUserName) modalUserName.textContent = p.userName;
+    if (modalUserEmail) {
+      modalUserEmail.textContent = p.userEmail ? (p.rollNumber ? `${p.userEmail} • Roll: ${p.rollNumber}` : p.userEmail) : 'Email not provided';
+    }
+    if (modalBadgeCount) modalBadgeCount.textContent = `${p.skillBadgesCount} / 10`;
+    if (modalMilestone) modalMilestone.textContent = p.milestone;
+    if (modalRedemption) modalRedemption.textContent = p.accessCodeRedeemed ? 'Yes (Redeemed)' : 'No (Pending)';
+
+    if (modalBadgeListCount) modalBadgeListCount.textContent = p.completedBadgeNames.length.toString();
+    if (modalBadgeList) {
+      if (p.completedBadgeNames.length > 0) {
+        modalBadgeList.innerHTML = p.completedBadgeNames.map(name => `
+          <li class="badge-item-done">
+            <span class="check-icon">✓</span>
+            <span class="badge-title-text">${name}</span>
+          </li>
+        `).join('');
+      } else {
+        modalBadgeList.innerHTML = `<li class="no-badges-yet">No skill badges recorded as completed yet. Complete labs in Stage 3 to earn badges.</li>`;
+      }
+    }
+
+    if (modalGearSection && modalGearText) {
+      if (p.gearBadges && p.gearBadges !== 'Not applicable' && p.gearBadges !== 'No Badge') {
+        modalGearSection.style.display = 'block';
+        modalGearText.textContent = p.gearBadges;
+      } else {
+        modalGearSection.style.display = 'none';
+      }
+    }
+
+    if (modalProfileLink) {
+      if (p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable') {
+        modalProfileLink.href = p.skillsProfileUrl;
+        modalProfileLink.style.display = 'inline-flex';
+      } else {
+        modalProfileLink.style.display = 'none';
+      }
+    }
+
+    detailsOverlay.style.display = 'flex';
+  }
+
+  function closeDetailsModal() {
+    if (detailsOverlay) detailsOverlay.style.display = 'none';
+  }
+
+  // Event Listeners for Filters
+  searchInput?.addEventListener('input', renderTable);
+  clearSearchBtn?.addEventListener('click', () => {
+    if (searchInput) searchInput.value = '';
+    renderTable();
+    searchInput?.focus();
+  });
+
+  filterMilestone?.addEventListener('change', renderTable);
+  filterRedemption?.addEventListener('change', renderTable);
+  sortBy?.addEventListener('change', renderTable);
+  pageSize?.addEventListener('change', renderTable);
+
+  resetFiltersBtn?.addEventListener('click', () => {
+    if (searchInput) searchInput.value = '';
+    if (filterMilestone) filterMilestone.value = 'all';
+    if (filterRedemption) filterRedemption.value = 'all';
+    if (sortBy) sortBy.value = 'rank';
+    if (pageSize) pageSize.value = 'all';
+    renderTable();
+  });
+
+  // Modal Closers
+  modalCloseBtn?.addEventListener('click', closeDetailsModal);
+  detailsOverlay?.addEventListener('click', (e) => {
+    if (e.target === detailsOverlay) closeDetailsModal();
+  });
+
+  // Upload Modal Open/Close
+  openUploadBtn?.addEventListener('click', () => {
+    if (uploadOverlay) uploadOverlay.style.display = 'flex';
+  });
+  uploadCloseBtn?.addEventListener('click', () => {
+    if (uploadOverlay) uploadOverlay.style.display = 'none';
+  });
+  cancelUploadBtn?.addEventListener('click', () => {
+    if (uploadOverlay) uploadOverlay.style.display = 'none';
+  });
+  uploadOverlay?.addEventListener('click', (e) => {
+    if (e.target === uploadOverlay) uploadOverlay.style.display = 'none';
+  });
+
+  // File Upload Handling
+  function handleCSVUpload(file: File) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const text = e.target?.result as string;
+        if (!text) return;
+        const rows = parseCSV(text);
+        currentData = processProgressData(rows, file.name, new Date(file.lastModified));
+        
+        // Save to localStorage
+        try {
+          localStorage.setItem('gdgc_custom_progress_csv', text);
+          localStorage.setItem('gdgc_custom_progress_filename', file.name);
+        } catch (storageErr) {
+          console.warn('LocalStorage quota exceeded', storageErr);
+        }
+
+        updateOverviewStats();
+        renderTable();
+
+        if (uploadOverlay) uploadOverlay.style.display = 'none';
+        alert(`Successfully loaded: ${file.name} (${currentData.totalParticipants} participants)`);
+      } catch (err: any) {
+        alert('Failed parsing CSV file: ' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  csvFileInput?.addEventListener('change', (e) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files && target.files[0]) {
+      handleCSVUpload(target.files[0]);
+    }
+  });
+
+  // Drag and Drop
+  uploadDropzone?.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadDropzone.classList.add('drag-active');
+  });
+  uploadDropzone?.addEventListener('dragleave', () => {
+    uploadDropzone.classList.remove('drag-active');
+  });
+  uploadDropzone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadDropzone.classList.remove('drag-active');
+    if (e.dataTransfer && e.dataTransfer.files[0]) {
+      handleCSVUpload(e.dataTransfer.files[0]);
+    }
+  });
+
+  // Revert to official system data
+  revertSystemBtn?.addEventListener('click', () => {
+    localStorage.removeItem('gdgc_custom_progress_csv');
+    localStorage.removeItem('gdgc_custom_progress_filename');
+    currentData = (window as any).__INITIAL_PROGRESS_DATA;
+    updateOverviewStats();
+    renderTable();
+    if (uploadOverlay) uploadOverlay.style.display = 'none';
+    alert('Reverted to official system dataset: ' + currentData.fileName);
+  });
+
+  // Initial render
+  updateOverviewStats();
+  renderTable();
+</script>
