@@ -99,12 +99,61 @@ const schemaData = {
             <small>Methodist College of Engineering & Technology</small>
           </div>
         </div>
-        <nav class="header-nav">
+        <nav class="header-nav" aria-label="Primary navigation">
           <a href={`${baseUrl}#search`} class="header-nav-link">🔍 Lookup</a>
           <a href={`${baseUrl}#leaderboard`} class="header-nav-link">🏆 Leaderboard</a>
           <a href={`${baseUrl}#guide`} class="header-nav-link">📖 Guide</a>
         </nav>
-        <span class="header-badge">LwC 2026</span>
+
+        <div class="header-actions">
+          <span class="header-badge">LwC 2026</span>
+          <button 
+            class="mobile-menu-btn" 
+            id="mobile-menu-btn" 
+            aria-label="Toggle navigation menu" 
+            aria-expanded="false" 
+            aria-controls="mobile-nav-drawer"
+          >
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div class="mobile-nav-drawer" id="mobile-nav-drawer" aria-hidden="true">
+        <div class="mobile-nav-inner">
+          <nav class="mobile-nav-links" aria-label="Mobile navigation">
+            <a href={`${baseUrl}#search`} class="mobile-nav-link">
+              <span class="mobile-nav-icon">🔍</span>
+              <span class="mobile-nav-text">
+                <strong>Roll Number Lookup</strong>
+                <small>Check your registration & track status</small>
+              </span>
+            </a>
+            <a href={`${baseUrl}#leaderboard`} class="mobile-nav-link">
+              <span class="mobile-nav-icon">🏆</span>
+              <span class="mobile-nav-text">
+                <strong>Progress Leaderboard</strong>
+                <small>View rankings & badge completions</small>
+              </span>
+            </a>
+            <a href={`${baseUrl}#guide`} class="mobile-nav-link">
+              <span class="mobile-nav-icon">📖</span>
+              <span class="mobile-nav-text">
+                <strong>Learning Guide</strong>
+                <small>Stages 1, 2, and 3 syllabus labs</small>
+              </span>
+            </a>
+          </nav>
+          <div class="mobile-nav-footer">
+            <div class="mobile-nav-status">
+              <span class="status-dot"></span>
+              <span>Google Cloud Learn with Communities 2026</span>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -216,6 +265,61 @@ const schemaData = {
             }, 120);
           });
         }
+      }
+      // Mobile menu toggle logic
+      var mobileBtn = document.getElementById('mobile-menu-btn');
+      var mobileDrawer = document.getElementById('mobile-nav-drawer');
+
+      function toggleMobileMenu(open) {
+        if (!mobileBtn || !mobileDrawer) return;
+        var isOpen = open !== undefined ? open : !mobileDrawer.classList.contains('open');
+        if (isOpen) {
+          mobileDrawer.classList.add('open');
+          mobileBtn.classList.add('active');
+          mobileBtn.setAttribute('aria-expanded', 'true');
+          mobileDrawer.setAttribute('aria-hidden', 'false');
+        } else {
+          mobileDrawer.classList.remove('open');
+          mobileBtn.classList.remove('active');
+          mobileBtn.setAttribute('aria-expanded', 'false');
+          mobileDrawer.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      if (mobileBtn && mobileDrawer) {
+        mobileBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleMobileMenu();
+        });
+
+        // Close when clicking mobile nav link
+        var mobileLinks = mobileDrawer.querySelectorAll('.mobile-nav-link');
+        mobileLinks.forEach(function(link) {
+          link.addEventListener('click', function() {
+            toggleMobileMenu(false);
+          });
+        });
+
+        // Close on outside click
+        document.addEventListener('click', function(e) {
+          if (!mobileDrawer.contains(e.target) && !mobileBtn.contains(e.target)) {
+            toggleMobileMenu(false);
+          }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            toggleMobileMenu(false);
+          }
+        });
+
+        // Close on resize if returning to desktop
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 768 && mobileDrawer.classList.contains('open')) {
+            toggleMobileMenu(false);
+          }
+        });
       }
     </script>
   </body>
