@@ -1,34 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-import appliedRollNos from '../data/rollNumbers.json';
-import gearRollNos from '../data/gearRollNumbers.json';
-
-import skillBadges from '../data/skillBadges.json';
+import appliedRollNos from '../data/rollNumbers.json' with { type: 'json' };
+import gearRollNos from '../data/gearRollNumbers.json' with { type: 'json' };
+import skillBadges from '../data/skillBadges.json' with { type: 'json' };
 import Leaderboard from '../components/Leaderboard.astro';
+import { loadLatestProgressData } from '../utils/progressLoader.ts';
+
+const initialData = loadLatestProgressData();
 ---
 
 <Layout>
-  <!-- Roll number data for JS -->
-  <script is:inline define:vars={{ appliedRollNos, gearRollNos }}>
+  <!-- Roll number & participant data for Client Terminal -->
+  <script is:inline define:vars={{ appliedRollNos, gearRollNos, initialData, skillBadges }}>
     window.__APPLIED_ROLL_NOS = appliedRollNos;
     window.__GEAR_ROLL_NOS = gearRollNos;
+    window.__PROGRESS_DATA = initialData;
+    window.__SKILL_BADGES = skillBadges;
   </script>
 
-  <!-- Hero Section -->
+  <!-- Hero Section / Arena HUD -->
   <section class="hero" id="hero">
     <div class="container">
-      <p class="hero-tagline animate-in">Google Cloud x GDG on Campus</p>
-      <h1 class="animate-in animate-delay-1">Learn with Communities 2026</h1>
+      <div class="hero-status-pill animate-in" style="display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; background: rgba(66, 133, 244, 0.12); border: 1px solid rgba(66, 133, 244, 0.35); border-radius: var(--radius-full); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: #93C5FD; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-md);">
+        <span class="report-dot" style="width: 8px; height: 8px; background: #34D399; border-radius: 50%; box-shadow: 0 0 8px #34D399;"></span>
+        <span>Tournament Arena: Season 2026</span>
+        <span style="opacity: 0.5;">|</span>
+        <span>GDG on Campus MCET</span>
+      </div>
+
+      <h1 class="animate-in animate-delay-1" style="line-height: 1.2; padding-bottom: 8px;">
+        Learn with Communities 2026
+      </h1>
       <p class="hero-subtitle animate-in animate-delay-2">
-        Level up your cloud skills with hands-on labs, earn Google Cloud Skill Badges, 
-        and complete all 10 labs with GDG on Campus MCET.
+        Compete in the Google Cloud Gauntlet. Pass hands-on challenge labs, unlock verifiable Skill Badges, climb division tiers, and earn official rewards.
       </p>
 
       <div class="hero-stats animate-in animate-delay-3">
         <div class="hero-stat">
           <div class="hero-stat-value">10</div>
-          <div class="hero-stat-label">Skill Badges</div>
+          <div class="hero-stat-label">Max Skill Badges</div>
         </div>
         <div class="hero-stat">
           <div class="hero-stat-value">200</div>
@@ -50,10 +61,19 @@ import Leaderboard from '../components/Leaderboard.astro';
     </div>
   </section>
 
-  <!-- Search Section -->
+  <!-- Competitor Terminal & Player Passport Section -->
   <section class="search-section" id="search">
     <div class="container">
       <div class="search-wrapper animate-in animate-delay-4">
+        <div style="text-align: center; margin-bottom: var(--space-md);">
+          <h2 style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; color: var(--text-primary); margin: 0;">
+            🔍 Competitor Terminal & Player Passport
+          </h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+            Search your Roll Number, Email, or Skills UUID to inspect your tournament gamer license, unlocked badge matrix, and combat XP.
+          </p>
+        </div>
+
         <div class="search-input-group">
           <div class="search-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -64,12 +84,12 @@ import Leaderboard from '../components/Leaderboard.astro';
           <input 
             type="text" 
             id="rollno-search" 
-            placeholder="Enter your Roll Number (e.g., 16072X7XXXXX)" 
+            placeholder="Enter Roll Number, Email, or Skills UUID..." 
             autocomplete="off"
             spellcheck="false"
           />
           <button class="search-btn" id="search-btn">
-            Track
+            Inspect Passport
           </button>
         </div>
       </div>
@@ -79,25 +99,30 @@ import Leaderboard from '../components/Leaderboard.astro';
   <!-- Live Tracking Leaderboard Section -->
   <Leaderboard />
 
-  <!-- Stages Section -->
+  <!-- Stages / Campaign Gauntlet Section -->
   <section class="stages-section" id="guide">
     <div class="container">
-      <h2>📋 Your Learning Journey</h2>
+      <div style="text-align: center; margin-bottom: var(--space-lg);">
+        <h2 style="line-height: 1.25; padding-bottom: 6px;">📋 The Campaign Gauntlet</h2>
+        <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 600px; margin: 4px auto 0;">
+          Follow the 3-stage roadmap from initial enrollment to conquering the 10 challenge labs.
+        </p>
+      </div>
 
       <div class="tab-group">
         <!-- Tab Navigation -->
         <nav class="tab-nav" role="tablist" aria-label="Learning journey stages">
           <button class="tab-btn active" data-tab="1" role="tab" aria-selected="true" aria-controls="tab-panel-1" id="tab-1">
             <span class="tab-btn-number">1</span>
-            <span class="tab-btn-label">Apply Now</span>
+            <span class="tab-btn-label">Quest 1: The Induction</span>
           </button>
           <button class="tab-btn" data-tab="2" role="tab" aria-selected="false" aria-controls="tab-panel-2" id="tab-2">
             <span class="tab-btn-number">2</span>
-            <span class="tab-btn-label">Redeem Your Credits</span>
+            <span class="tab-btn-label">Quest 2: Fuel The Forge</span>
           </button>
           <button class="tab-btn" data-tab="3" role="tab" aria-selected="false" aria-controls="tab-panel-3" id="tab-3">
             <span class="tab-btn-number">3</span>
-            <span class="tab-btn-label">Complete the Stages</span>
+            <span class="tab-btn-label">Quest 3: The Gauntlet</span>
           </button>
         </nav>
 
@@ -109,11 +134,11 @@ import Leaderboard from '../components/Leaderboard.astro';
             <div class="invite-post">
               <div class="invite-post-header">
                 <span class="emoji">☁️</span>
-                <h3>Level Up Your Cloud Skills!</h3>
+                <h3>Level Up Your Cloud Skills</h3>
               </div>
               <div class="invite-post-body">
                 <p>
-                  Ready to explore Google Cloud and build new tech skills? GDG on Campus - MCET brings you an exciting 
+                  Ready to explore Google Cloud and build new tech skills? GDG on Campus MCET brings you an exciting 
                   learning opportunity through the <strong>Learn with Communities</strong> program!
                 </p>
 
@@ -243,7 +268,7 @@ import Leaderboard from '../components/Leaderboard.astro';
                   Verify that your credit balance reflects 200 credits in your Google Skills Boost profile
                 </li>
                 <li>
-                  Once your credits are ready, head over to <strong>Stage 3</strong> to complete the badges
+                  Once your credits are ready, head over to <strong>Quest 3</strong> to complete the badges
                 </li>
               </ol>
             </div>
@@ -273,7 +298,7 @@ import Leaderboard from '../components/Leaderboard.astro';
               <div class="invite-highlight">
                 <span class="icon">🚀</span>
                 <div>
-                  <div class="label">Ready for Stage 3</div>
+                  <div class="label">Ready for Quest 3</div>
                   <div class="sublabel">Proceed to complete the challenge labs once redeemed</div>
                 </div>
               </div>
@@ -330,7 +355,7 @@ import Leaderboard from '../components/Leaderboard.astro';
               <h4>🎖️ How to Complete the 10 Badges</h4>
               <ol class="register-steps">
                 <li>
-                  Confirm your 200 credits are redeemed from <strong>Stage 2</strong>
+                  Confirm your 200 credits are redeemed from <strong>Quest 2</strong>
                 </li>
                 <li>
                   Open each Skill Badge course from the curriculum below or the <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTVMEFW24yi5IVcBblZFEK5xMdQyeF9pndf-wxE37BKu5hyOghhSkYiCHW6rSLjNJd5U3OI_E_I9vZi/pubhtml?gid=411469390&single=true" target="_blank" rel="noopener noreferrer">curriculum spreadsheet</a>
@@ -347,40 +372,9 @@ import Leaderboard from '../components/Leaderboard.astro';
               </ol>
             </div>
 
-            <div class="invite-highlights" style="margin-top: var(--space-lg);">
-              <div class="invite-highlight">
-                <span class="icon">🔴</span>
-                <div>
-                  <div class="label">Challenge Labs Only</div>
-                  <div class="sublabel">Only the final challenge lab is required for badge submission</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">🔁</span>
-                <div>
-                  <div class="label">10 Badges Total</div>
-                  <div class="sublabel">Complete all 10 skill badges to finish the curriculum</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">📋</span>
-                <div>
-                  <div class="label">Public Profile Required</div>
-                  <div class="sublabel">Keep your Google Skills Boost profile public for verification</div>
-                </div>
-              </div>
-              <div class="invite-highlight">
-                <span class="icon">⏱️</span>
-                <div>
-                  <div class="label">Self-Paced Learning</div>
-                  <div class="sublabel">Work through the labs and walkthrough videos at your own pace</div>
-                </div>
-              </div>
-            </div>
-
             <!-- Badge Grid -->
-            <h4 style="font-family: var(--font-display); font-weight: 600; margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1rem;">
-              🎖️ Skill Badge Curriculum (10 Badges)
+            <h4 style="font-family: var(--font-display); font-weight: 700; margin-top: var(--space-xl); margin-bottom: var(--space-sm); font-size: 1.1rem; color: var(--text-primary);">
+              🎖️ Skill Badge Curriculum (10 Challenge Quests)
             </h4>
             <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
               Complete each badge by passing the final challenge lab. Your achievements reflect on your public Google Skills Boost profile.
@@ -400,7 +394,7 @@ import Leaderboard from '../components/Leaderboard.astro';
                       {badge.credits === 0 ? "⚡ Free (0 Credits)" : `🪙 ${badge.credits} Credits`}
                     </span>
                     <a href={badge.url} target="_blank" rel="noopener noreferrer" class="badge-link">
-                      Start Lab →
+                      Launch Lab →
                     </a>
                   </div>
                 </div>
@@ -411,14 +405,14 @@ import Leaderboard from '../components/Leaderboard.astro';
 
         <!-- Arrow Navigation -->
         <div class="tab-arrow-nav">
-          <button class="tab-arrow-btn disabled" id="tab-prev" aria-label="Previous stage">
+          <button class="tab-arrow-btn disabled" id="tab-prev" aria-label="Previous quest">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="15 18 9 12 15 6"/>
             </svg>
             Previous
           </button>
           <span class="tab-arrow-indicator" id="tab-indicator">1 / 3</span>
-          <button class="tab-arrow-btn" id="tab-next" aria-label="Next stage">
+          <button class="tab-arrow-btn" id="tab-next" aria-label="Next quest">
             Next
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="9 18 15 12 9 6"/>
@@ -444,26 +438,22 @@ import Leaderboard from '../components/Leaderboard.astro';
     if (tabNum < 1 || tabNum > totalTabs) return;
     currentTab = tabNum;
 
-    // Update tab buttons
     tabBtns.forEach(btn => {
       const isActive = btn.getAttribute('data-tab') === String(tabNum);
       btn.classList.toggle('active', isActive);
       btn.setAttribute('aria-selected', String(isActive));
     });
 
-    // Update panels
     tabPanels.forEach(panel => {
       const panelId = panel.id;
       const isActive = panelId === `tab-panel-${tabNum}`;
       panel.classList.toggle('active', isActive);
     });
 
-    // Update arrow nav
     if (prevBtn) prevBtn.classList.toggle('disabled', tabNum === 1);
     if (nextBtn) nextBtn.classList.toggle('disabled', tabNum === totalTabs);
     if (indicator) indicator.textContent = `${tabNum} / ${totalTabs}`;
 
-    // Scroll tab group into view smoothly
     const tabGroup = document.querySelector('.tab-group');
     if (tabGroup) {
       const rect = tabGroup.getBoundingClientRect();
@@ -473,7 +463,6 @@ import Leaderboard from '../components/Leaderboard.astro';
     }
   }
 
-  // Tab button clicks
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const tab = Number(btn.getAttribute('data-tab'));
@@ -481,35 +470,177 @@ import Leaderboard from '../components/Leaderboard.astro';
     });
   });
 
-  // Arrow navigation
   prevBtn?.addEventListener('click', () => switchTab(currentTab - 1));
   nextBtn?.addEventListener('click', () => switchTab(currentTab + 1));
 
-  // Keyboard navigation on tab buttons
   document.querySelector('.tab-nav')?.addEventListener('keydown', (e) => {
     const event = e as KeyboardEvent;
     if (event.key === 'ArrowRight') switchTab(currentTab + 1);
     if (event.key === 'ArrowLeft') switchTab(currentTab - 1);
   });
 
-  // Search functionality with roll number lookup
+  // Competitor Terminal & Player Passport Lookup
   const searchInput = document.getElementById('rollno-search') as HTMLInputElement;
   const searchBtn = document.getElementById('search-btn') as HTMLButtonElement;
   const appliedList: string[] = (window as any).__APPLIED_ROLL_NOS || [];
   const gearList: string[] = (window as any).__GEAR_ROLL_NOS || [];
 
   function handleSearch() {
-    const rollNo = searchInput?.value.trim().toUpperCase();
-    if (!rollNo) {
+    const rawQuery = searchInput?.value.trim();
+    if (!rawQuery) {
       searchInput?.focus();
       return;
     }
 
-    const existing = document.querySelector('.search-result-msg');
+    const query = rawQuery.toLowerCase();
+    const queryUpper = rawQuery.toUpperCase();
+
+    const existing = document.querySelector('.search-result-msg, .player-license-card');
     if (existing) existing.remove();
 
-    const isGear = gearList.includes(rollNo);
-    const isApplied = appliedList.includes(rollNo);
+    const participants = (window as any).__PROGRESS_DATA?.participants || [];
+    const skillBadgesList = (window as any).__SKILL_BADGES || [];
+
+    // Find competitor in progress report
+    const p = participants.find((item: any) => {
+      return (item.rollNumber && item.rollNumber.toUpperCase() === queryUpper) ||
+             (item.userEmail && item.userEmail.toLowerCase() === query) ||
+             (item.uuid && item.uuid.toLowerCase() === query) ||
+             (item.userName && item.userName.toLowerCase() === query);
+    });
+
+    if (p) {
+      const hasGear = Boolean(
+        p.gearBadges &&
+        p.gearBadges.toLowerCase() !== 'not applicable' &&
+        p.gearBadges.toLowerCase() !== 'no badge' &&
+        p.gearBadges !== '0'
+      );
+      const xp = (p.skillBadgesCount * 100) + (hasGear ? 50 : 0) + (p.accessCodeRedeemed ? 25 : 0);
+      const level = Math.max(1, Math.floor(xp / 100));
+
+      let tierName = 'Initiate';
+      let tierIcon = '🛡️';
+      let tierCls = 'tier-initiate';
+      if (p.skillBadgesCount >= 10) { tierName = 'Grandmaster Champion'; tierIcon = '👑'; tierCls = 'tier-champion'; }
+      else if (p.skillBadgesCount >= 7) { tierName = 'Diamond League'; tierIcon = '💎'; tierCls = 'tier-diamond'; }
+      else if (p.skillBadgesCount >= 4) { tierName = 'Gold League'; tierIcon = '🥇'; tierCls = 'tier-gold'; }
+      else if (p.skillBadgesCount >= 1) { tierName = 'Silver Contender'; tierIcon = '🥈'; tierCls = 'tier-silver'; }
+
+      const completedNorm = (p.completedBadgeNames || []).map((b: string) => b.trim().toLowerCase());
+
+      const slotsHtml = skillBadgesList.map((badge: any) => {
+        const bNameNorm = badge.name.trim().toLowerCase();
+        const isUnlocked = completedNorm.some((name: string) => name === bNameNorm || name.includes(bNameNorm) || bNameNorm.includes(name));
+
+        return `
+          <div class="license-badge-slot ${isUnlocked ? 'unlocked' : 'locked'}">
+            <div class="license-slot-left">
+              <span class="license-slot-icon">${isUnlocked ? '🟢' : '🔒'}</span>
+              <span class="license-slot-name" title="${badge.name}">${badge.name}</span>
+            </div>
+            <div class="license-slot-status">
+              ${isUnlocked
+                ? '<span class="license-status-tag pass">PASS ✓</span>'
+                : `<a href="${badge.url}" target="_blank" rel="noopener noreferrer" class="license-status-tag action">Launch Lab →</a>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const pioneerPill = (p.isComplete && p.completedAtReport)
+        ? `<span class="license-achievement-pill" style="color: #FCD34D; border-color: rgba(245, 158, 11, 0.4);">⚡ Pioneer Vanguard (${p.completedAtReport})</span>`
+        : '';
+      const champPill = p.isComplete
+        ? `<span class="license-achievement-pill" style="color: #34D399; border-color: rgba(16, 185, 129, 0.4);">👑 Apex Champion</span>`
+        : '';
+      const gearPill = hasGear
+        ? `<span class="license-achievement-pill" style="color: #C084FC; border-color: rgba(168, 85, 247, 0.4);">⚙️ GEAR Operative</span>`
+        : '';
+      const fuelPill = p.accessCodeRedeemed
+        ? `<span class="license-achievement-pill" style="color: #60A5FA; border-color: rgba(59, 130, 246, 0.4);">🎟️ Fuel Claimed (200 Credits)</span>`
+        : '';
+
+      const card = document.createElement('div');
+      card.className = 'player-license-card';
+      card.innerHTML = `
+        <div class="license-top-hud">
+          <div class="license-player-identity">
+            <div class="license-avatar ${p.isComplete ? 'champion' : ''}">
+              ${p.userName.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase()}
+            </div>
+            <div class="license-names">
+              <span class="license-player-name">${p.userName}</span>
+              <div class="license-meta-pills">
+                <span class="tier-badge ${tierCls}">${tierIcon} ${tierName}</span>
+                ${p.rollNumber ? `<span class="license-roll-pill">Roll: ${p.rollNumber}</span>` : ''}
+              </div>
+            </div>
+          </div>
+
+          <div class="license-rank-callout">
+            <span class="license-rank-value">#${p.rank}</span>
+            <span class="license-rank-lbl">Tournament Rank</span>
+          </div>
+        </div>
+
+        <div class="license-stat-grid">
+          <div class="license-metric-box">
+            <div class="license-metric-value" style="color: #FCD34D;">⚡ ${xp.toLocaleString()}</div>
+            <div class="license-metric-label">Combat XP</div>
+          </div>
+          <div class="license-metric-box">
+            <div class="license-metric-value" style="color: #60A5FA;">LVL ${level}</div>
+            <div class="license-metric-label">Competitor Level</div>
+          </div>
+          <div class="license-metric-box">
+            <div class="license-metric-value" style="color: #34D399;">${p.skillBadgesCount} / 10</div>
+            <div class="license-metric-label">Badges Conquered</div>
+          </div>
+          <div class="license-metric-box">
+            <div class="license-metric-value" style="color: ${p.accessCodeRedeemed ? '#34D399' : '#F87171'};">
+              ${p.accessCodeRedeemed ? '200 Ready' : 'Pending'}
+            </div>
+            <div class="license-metric-label">Fuel Status</div>
+          </div>
+        </div>
+
+        <div class="license-matrix-title">
+          <span>🎖️ 10-Slot Gauntlet Inventory</span>
+          <span style="font-size: 0.75rem; color: var(--text-tertiary);">${p.skillBadgesCount} of 10 Unlocked</span>
+        </div>
+
+        <div class="license-matrix-grid">
+          ${slotsHtml}
+        </div>
+
+        <div class="license-achievements-row">
+          ${champPill}
+          ${pioneerPill}
+          ${gearPill}
+          ${fuelPill}
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.08);">
+          <a href="#leaderboard" style="font-size: 0.82rem; color: var(--gc-blue-light); text-decoration: none; font-weight: 600;">
+            View Global Division Standings ↓
+          </a>
+          ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
+            <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" style="font-size: 0.82rem; color: #34D399; text-decoration: none; font-weight: 600;">
+              Google Skills Profile ↗
+            </a>
+          ` : ''}
+        </div>
+      `;
+
+      searchInput.closest('.search-wrapper')?.appendChild(card);
+      return;
+    }
+
+    // Fallback: Check applied or GEAR lists
+    const isGear = gearList.includes(queryUpper);
+    const isApplied = appliedList.includes(queryUpper);
 
     const msg = document.createElement('div');
     msg.className = 'search-result-msg';
@@ -530,10 +661,10 @@ import Leaderboard from '../components/Leaderboard.astro';
       msg.innerHTML = `
         <div style="font-size: 1.3rem; margin-bottom: 8px;">⚙️</div>
         <strong style="color: #A855F7; font-size: 1.05rem;">You are registered in GEAR!</strong>
-        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong></p>
+        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${queryUpper}</strong></p>
         <p style="margin-top: 8px;">You have registered through GEAR for Google Cloud Learn with Communities 2026.</p>
         <p style="margin-top: 8px;">Check your email for the access code for cloud credits to complete the 10 labs. You will receive it within 2-3 days.</p>
-        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Stage 2</strong> to redeem your credits, then <strong>Stage 3</strong> to complete the badges.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Quest 2</strong> to redeem your credits, then <strong>Quest 3</strong> to complete the badges.</p>
         <div style="margin-top: 14px;">
           <a href="#leaderboard" style="display: inline-block; padding: 6px 14px; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.35); border-radius: 8px; color: #C084FC; font-size: 0.82rem; text-decoration: none; font-weight: 500;">View Progress Leaderboard ↓</a>
         </div>
@@ -554,9 +685,9 @@ import Leaderboard from '../components/Leaderboard.astro';
       msg.innerHTML = `
         <div style="font-size: 1.3rem; margin-bottom: 8px;">✅</div>
         <strong style="color: #34A853;">You've applied successfully!</strong>
-        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong></p>
+        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${queryUpper}</strong></p>
         <p style="margin-top: 8px;">Check your email for the access code for cloud credits to complete the 10 labs. You will receive it within 2-3 days.</p>
-        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Stage 2</strong> to redeem your credits, then <strong>Stage 3</strong> to complete the badges.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Once you get the email, head to <strong>Quest 2</strong> to redeem your credits, then <strong>Quest 3</strong> to complete the badges.</p>
         <div style="margin-top: 14px;">
           <a href="#leaderboard" style="display: inline-block; padding: 6px 14px; background: rgba(52, 168, 83, 0.15); border: 1px solid rgba(52, 168, 83, 0.35); border-radius: 8px; color: var(--gc-green-light); font-size: 0.82rem; text-decoration: none; font-weight: 500;">View Progress Leaderboard ↓</a>
         </div>
@@ -576,10 +707,9 @@ import Leaderboard from '../components/Leaderboard.astro';
       `;
       msg.innerHTML = `
         <div style="font-size: 1.3rem; margin-bottom: 8px;">❌</div>
-        <strong style="color: #EA4335;">Roll number not found</strong>
-        <p style="margin-top: 8px;">Roll No: <strong style="color: #F0F6FC;">${rollNo}</strong> is not in our applied list.</p>
-        <p style="margin-top: 8px;">If you haven't applied yet, register using the QR code in the Instagram post or check <strong>Stage 1</strong> for details.</p>
-        <p style="margin-top: 8px;">If you've already applied, check back later, this dashboard will update soon.</p>
+        <strong style="color: #EA4335;">Competitor not found</strong>
+        <p style="margin-top: 8px;">Identifier: <strong style="color: #F0F6FC;">${rawQuery}</strong> is not verified in our active enrolled roster.</p>
+        <p style="margin-top: 8px;">If you've recently applied or finished badges, please allow official batch progress reports to update.</p>
       `;
     }
 
@@ -591,23 +721,6 @@ import Leaderboard from '../components/Leaderboard.astro';
     if (e.key === 'Enter') handleSearch();
   });
 
-  // Intersection Observer for animations
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-  );
-
-  document.querySelectorAll('.badge-card, .milestone-card').forEach(el => {
-    observer.observe(el);
-  });
-
   // Countdown timer for completion deadline (15th November 2026)
   const countdownValue = document.getElementById('countdown-value');
   const countdownLabel = document.getElementById('countdown-label');
@@ -615,7 +728,6 @@ import Leaderboard from '../components/Leaderboard.astro';
   function updateCountdown() {
     if (!countdownValue || !countdownLabel) return;
 
-    // Deadline: 15 November 2026 23:59:59 IST
     const deadline = new Date('2026-11-15T23:59:59+05:30').getTime();
     const now = new Date().getTime();
     const diff = deadline - now;

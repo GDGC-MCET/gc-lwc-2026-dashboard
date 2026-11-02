@@ -10,11 +10,11 @@ const initialData = loadLatestProgressData();
     <div class="leaderboard-header animate-in">
       <div class="leaderboard-badge">
         <span class="report-dot"></span>
-        <span>Periodic Progress Report</span>
+        <span>Tournament Division Standings</span>
       </div>
-      <h2 class="leaderboard-title">Community Leaderboard</h2>
+      <h2 class="leaderboard-title">Community Arena Leaderboard</h2>
       <p class="leaderboard-subtitle">
-        Periodic progress updates for Google Cloud Learn with Communities 2026 participants at GDG on Campus MCET, updated as new official reports are released.
+        Official periodic division standings for Google Cloud Learn with Communities 2026 competitors at GDG on Campus MCET. Ranked by completed skill badges, early milestone achievements, and arcade bonuses.
       </p>
 
       <div class="last-updated-bar">
@@ -23,35 +23,35 @@ const initialData = loadLatestProgressData();
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          <span>Last Updated: <strong id="last-updated-text">{initialData.lastUpdated}</strong></span>
+          <span>Official Report: <strong id="last-updated-text">{initialData.lastUpdated}</strong></span>
         </div>
         <div class="updated-item source-file">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
           </svg>
-          <span>Source: <strong id="source-file-text">{initialData.fileName}</strong></span>
+          <span>Dataset: <strong id="source-file-text">{initialData.fileName}</strong></span>
         </div>
       </div>
     </div>
 
-    <!-- Stats Summary Cards -->
+    <!-- Arena Telemetry Stats -->
     <div class="tracker-stats-grid animate-in animate-delay-1">
       <div class="tracker-stat-card card-green">
-        <div class="stat-icon">🏆</div>
+        <div class="stat-icon">👑</div>
         <div class="stat-content">
           <div class="stat-number" id="stat-completed-all">{initialData.completedAll}</div>
-          <div class="stat-title">Finished All 10 Badges</div>
-          <div class="stat-sub">Milestone 3 Champions</div>
+          <div class="stat-title">Apex Champions</div>
+          <div class="stat-sub">Completed All 10 Badges</div>
         </div>
       </div>
 
       <div class="tracker-stat-card card-blue">
-        <div class="stat-icon">🎓</div>
+        <div class="stat-icon">⚡</div>
         <div class="stat-content">
           <div class="stat-number" id="stat-total-badges">{initialData.totalBadgesCompleted}</div>
-          <div class="stat-title">Skill Badges Earned</div>
-          <div class="stat-sub">Across {initialData.totalParticipants} Participants</div>
+          <div class="stat-title">Badges Conquered</div>
+          <div class="stat-sub">Across {initialData.totalParticipants} Competitors</div>
         </div>
       </div>
 
@@ -59,8 +59,8 @@ const initialData = loadLatestProgressData();
         <div class="stat-icon">🎟️</div>
         <div class="stat-content">
           <div class="stat-number" id="stat-credits-redeemed">{initialData.creditsRedeemed} / {initialData.totalParticipants}</div>
-          <div class="stat-title">Credits Redeemed</div>
-          <div class="stat-sub">{Math.round((initialData.creditsRedeemed / (initialData.totalParticipants || 1)) * 100)}% of Enrolled Students</div>
+          <div class="stat-title">Fuel Claimed</div>
+          <div class="stat-sub">{Math.round((initialData.creditsRedeemed / (initialData.totalParticipants || 1)) * 100)}% Credits Redeemed</div>
         </div>
       </div>
 
@@ -68,17 +68,75 @@ const initialData = loadLatestProgressData();
         <div class="stat-icon">⚙️</div>
         <div class="stat-content">
           <div class="stat-number" id="stat-gear-badges">{initialData.gearBadgeEarned}</div>
-          <div class="stat-title">GEAR Arcade Badges</div>
-          <div class="stat-sub">Gemini Enterprise Agent Ready</div>
+          <div class="stat-title">GEAR Operatives</div>
+          <div class="stat-sub">Gemini Enterprise Arcade Badges</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Swag Gauntlet Progress Card -->
+    <div class="gauntlet-meter-card animate-in animate-delay-2">
+      <div class="gauntlet-header">
+        <div class="gauntlet-title-group">
+          <h3>
+            <span>🛡️</span> Community Swag Gauntlet Progress
+          </h3>
+          <p>Collective badge milestones unlocked across the GDG on Campus MCET chapter</p>
+        </div>
+        <div class="gauntlet-stats-inline">
+          <div class="gauntlet-stat-box">
+            <div class="gauntlet-stat-num" id="gauntlet-badges-count">{initialData.totalBadgesCompleted}</div>
+            <div class="gauntlet-stat-lbl">Badges Earned</div>
+          </div>
+          <div class="gauntlet-stat-box">
+            <div class="gauntlet-stat-num" style="color: #60A5FA;">{initialData.totalParticipants}</div>
+            <div class="gauntlet-stat-lbl">Roster Size</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gauntlet-track-wrap">
+        <div class="gauntlet-track">
+          <div 
+            class="gauntlet-fill" 
+            id="gauntlet-fill" 
+            style={`width: ${Math.min(100, Math.round((initialData.totalBadgesCompleted / (initialData.totalParticipants * 10 || 1)) * 100 * 5))}%;`}
+          ></div>
+        </div>
+        <div class="gauntlet-milestones">
+          <div class="gauntlet-milestone active">
+            <span>Milestone 1</span>
+            <small>4 Badges Tier</small>
+          </div>
+          <div class="gauntlet-milestone active">
+            <span>Milestone 2</span>
+            <small>7 Badges Tier</small>
+          </div>
+          <div class="gauntlet-milestone active">
+            <span>Milestone 3</span>
+            <small>10 Badges Tier (Apex)</small>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Top 3 Champions Podium -->
-    <div class="podium-section animate-in animate-delay-2" id="podium-section">
-      <h3 class="podium-heading">🎖️ Top Champions</h3>
+    <div class="podium-section animate-in animate-delay-3" id="podium-section">
+      <div style="text-align: center; margin-bottom: var(--space-md);">
+        <h3 class="podium-heading">🏆 Podium of Champions</h3>
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">
+          Highest ranked competitors sorted by verified completion and earliest report achievement
+        </p>
+      </div>
+
       <div class="podium-grid" id="podium-grid">
-        <!-- Rendered dynamically or server-rendered fallback -->
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div style="text-align: center;">
+        <button id="celebrate-btn" class="podium-celebrate-btn" title="Celebrate the champions with confetti">
+          <span>🎉</span> Celebrate Champions
+        </button>
       </div>
     </div>
 
@@ -92,7 +150,7 @@ const initialData = loadLatestProgressData();
         <input 
           type="text" 
           id="leaderboard-search" 
-          placeholder="Search by participant name, email, or roll no..." 
+          placeholder="Search by participant name, roll no, email, or UUID..." 
           autocomplete="off"
         />
         <button id="clear-search-btn" class="clear-search-btn" style="display: none;" title="Clear search">✕</button>
@@ -100,20 +158,20 @@ const initialData = loadLatestProgressData();
 
       <div class="toolbar-filters">
         <div class="filter-group">
-          <label for="filter-milestone">Milestone:</label>
-          <select id="filter-milestone" class="filter-select">
-            <option value="all">All Milestones</option>
-            <option value="milestone3">Milestone 3 (10 Badges)</option>
-            <option value="milestone2">Milestone 2 (7 Badges)</option>
-            <option value="milestone1">Milestone 1 (4 Badges)</option>
-            <option value="gear">GEAR Track</option>
-            <option value="inprogress">In Progress (1-9)</option>
-            <option value="notstarted">Not Started (0)</option>
+          <label for="filter-tier">Division Tier:</label>
+          <select id="filter-tier" class="filter-select">
+            <option value="all">All Divisions</option>
+            <option value="champion">👑 Grandmaster (10 Badges)</option>
+            <option value="diamond">💎 Diamond League (7-9 Badges)</option>
+            <option value="gold">🥇 Gold League (4-6 Badges)</option>
+            <option value="silver">🥈 Silver League (1-3 Badges)</option>
+            <option value="gear">⚙️ GEAR Operatives</option>
+            <option value="initiate">🛡️ Initiates (0 Badges)</option>
           </select>
         </div>
 
         <div class="filter-group">
-          <label for="filter-redemption">Redemption:</label>
+          <label for="filter-redemption">Credit Fuel:</label>
           <select id="filter-redemption" class="filter-select">
             <option value="all">All Status</option>
             <option value="yes">Redeemed (Yes)</option>
@@ -122,10 +180,10 @@ const initialData = loadLatestProgressData();
         </div>
 
         <div class="filter-group">
-          <label for="sort-by">Sort:</label>
+          <label for="sort-by">Sort Ladder:</label>
           <select id="sort-by" class="filter-select">
-            <option value="rank">Rank / Badges (High to Low)</option>
-            <option value="name">Name (A-Z)</option>
+            <option value="rank">Tournament Rank (Early & High Badges)</option>
+            <option value="name">Competitor Name (A-Z)</option>
             <option value="badges-asc">Badges (Low to High)</option>
           </select>
         </div>
@@ -142,85 +200,103 @@ const initialData = loadLatestProgressData();
       </div>
     </div>
 
-    <!-- Active filter stats -->
+    <!-- Active filter stats & Quick Tier Filters -->
+    <div class="tier-filter-tabs">
+      <button class="tier-filter-btn active" data-tier-filter="all">All Players</button>
+      <button class="tier-filter-btn" data-tier-filter="champion">👑 Champions ({initialData.completedAll})</button>
+      <button class="tier-filter-btn" data-tier-filter="diamond">💎 Diamond (7-9)</button>
+      <button class="tier-filter-btn" data-tier-filter="gold">🥇 Gold (4-6)</button>
+      <button class="tier-filter-btn" data-tier-filter="gear">⚙️ GEAR Agents ({initialData.gearBadgeEarned})</button>
+      <button class="tier-filter-btn" data-tier-filter="redeemed">🎟️ Redeemed Fuel</button>
+    </div>
+
     <div class="filter-status-row">
-      <span id="showing-count-text">Showing {initialData.totalParticipants} of {initialData.totalParticipants} participants</span>
+      <span id="showing-count-text">Showing {initialData.totalParticipants} of {initialData.totalParticipants} competitors</span>
       <button id="reset-filters-btn" class="reset-link-btn" style="display: none;">Reset Filters</button>
     </div>
 
-    <!-- Leaderboard Table Container -->
-    <div class="leaderboard-table-wrapper animate-in animate-delay-4">
-      <div class="leaderboard-table-scroll">
-        <table class="leaderboard-table">
-          <thead>
-            <tr>
-              <th class="col-rank">Rank</th>
-              <th class="col-user">Participant</th>
-              <th class="col-progress">Badges Progress</th>
-              <th class="col-milestone">Milestone / Track</th>
-              <th class="col-redemption">Access Code</th>
-              <th class="col-action">Details</th>
-            </tr>
-          </thead>
-          <tbody id="leaderboard-tbody">
-            <!-- Populated by client script -->
-          </tbody>
-        </table>
-      </div>
+    <!-- Leaderboard Table -->
+    <div class="table-container animate-in animate-delay-4">
+      <table class="leaderboard-table" id="leaderboard-table">
+        <thead>
+          <tr>
+            <th class="col-rank">Rank</th>
+            <th class="col-user">Competitor</th>
+            <th class="col-progress">XP & Gauntlet Progress</th>
+            <th class="col-milestone">Division & Badges</th>
+            <th class="col-redemption">Fuel Status</th>
+            <th class="col-action">Dossier</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-tbody">
+          <!-- Rendered dynamically -->
+        </tbody>
+      </table>
+
+      <!-- Empty state -->
       <div id="no-results-msg" class="no-results-state" style="display: none;">
-        <div class="no-results-icon">🔍</div>
-        <h4>No matching participants found</h4>
-        <p>Try refining your search keyword or clearing the active filters.</p>
+        <div class="empty-icon">🔍</div>
+        <h3>No Competitors Found</h3>
+        <p>No competitors match the active division filter or search query.</p>
+        <button id="clear-filters-empty-btn" class="retry-btn">Clear All Filters</button>
       </div>
     </div>
   </div>
 
-  <!-- Details Slide-out / Modal -->
-  <div class="details-modal-overlay" id="details-modal-overlay" style="display: none;">
+  <!-- Player Dossier Modal Overlay -->
+  <div class="details-modal-overlay" id="details-modal-overlay" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-user-name">
     <div class="details-modal-card">
       <div class="modal-header">
+        <div class="modal-rank-badge" id="modal-rank-badge">#1</div>
         <div class="modal-title-wrap">
-          <span class="modal-rank-badge" id="modal-rank-badge">#1</span>
-          <div>
-            <h3 class="modal-user-name" id="modal-user-name">User Name</h3>
-            <p class="modal-user-email" id="modal-user-email">email@example.com</p>
-          </div>
+          <h3 id="modal-user-name">Competitor Name</h3>
+          <p id="modal-user-email">email@example.com</p>
         </div>
-        <button class="modal-close-btn" id="modal-close-btn" title="Close details">✕</button>
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">✕</button>
       </div>
 
-      <div class="modal-body">
-        <div class="modal-stat-bar">
-          <div class="modal-stat-pill">
-            <span class="label">Skill Badges:</span>
-            <strong id="modal-badge-count">0 / 10</strong>
-          </div>
-          <div class="modal-stat-pill">
-            <span class="label">Milestone:</span>
-            <strong id="modal-milestone">No Milestone</strong>
-          </div>
-          <div class="modal-stat-pill">
-            <span class="label">Credits:</span>
-            <strong id="modal-redemption">No</strong>
-          </div>
+      <div class="modal-stat-bar">
+        <div class="modal-stat">
+          <span class="lbl">Division Tier</span>
+          <strong id="modal-tier-badge" class="tier-badge tier-champion">👑 Champion</strong>
+        </div>
+        <div class="modal-stat">
+          <span class="lbl">Total XP</span>
+          <strong id="modal-xp-value" style="color: #FCD34D;">1,000 XP</strong>
+        </div>
+        <div class="modal-stat">
+          <span class="lbl">Skill Badges</span>
+          <strong id="modal-badge-count">10 / 10</strong>
+        </div>
+        <div class="modal-stat">
+          <span class="lbl">Fuel Claimed</span>
+          <strong id="modal-redemption">Yes (Redeemed)</strong>
+        </div>
+      </div>
+
+      <div class="modal-body-content">
+        <!-- Milestone status banner -->
+        <div class="modal-milestone-banner" id="modal-milestone-banner" style="margin-bottom: var(--space-md); padding: 10px 14px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px;">
+          <span style="font-size: 0.85rem; color: #34D399; font-weight: 600;" id="modal-milestone-text">Milestone 3 (Recorded: 01 Nov 2026)</span>
         </div>
 
-        <div class="modal-section">
-          <h4>Completed Skill Badges (<span id="modal-badge-list-count">0</span>)</h4>
+        <!-- GEAR Section if applicable -->
+        <div class="modal-gear-callout" id="modal-gear-section" style="display: none; margin-bottom: var(--space-md); padding: 10px 14px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px;">
+          <span style="color: #C084FC; font-weight: 600; font-size: 0.85rem;">⚙️ GEAR Arcade Digital Badge: <span id="modal-gear-text">Earned</span></span>
+        </div>
+
+        <!-- Verified Badges List -->
+        <div class="modal-badges-section">
+          <h4>Verified Completed Badges (<span id="modal-badge-list-count">0</span>)</h4>
           <ul class="modal-badge-list" id="modal-badge-list">
-            <!-- List populated dynamically -->
+            <!-- Badges list rendered here -->
           </ul>
-        </div>
-
-        <div class="modal-section" id="modal-gear-section" style="display: none;">
-          <h4>GEAR Digital Badges</h4>
-          <div class="gear-badge-box" id="modal-gear-text"></div>
         </div>
       </div>
 
       <div class="modal-footer">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="modal-profile-btn" id="modal-profile-link">
-          <span>View Google Cloud Skills Profile</span>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="profile-link-btn" id="modal-profile-link">
+          <span>Google Skills Profile</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
             <polyline points="15 3 21 3 21 9"></polyline>
@@ -239,13 +315,14 @@ const initialData = loadLatestProgressData();
 
 <script>
   import type { ProgressSummary, ParticipantProgress } from '../utils/csvParser.ts';
+  import confetti from 'canvas-confetti';
 
   const currentData: ProgressSummary = (window as any).__INITIAL_PROGRESS_DATA;
 
   // Elements
   const searchInput = document.getElementById('leaderboard-search') as HTMLInputElement;
   const clearSearchBtn = document.getElementById('clear-search-btn');
-  const filterMilestone = document.getElementById('filter-milestone') as HTMLSelectElement;
+  const filterTier = document.getElementById('filter-tier') as HTMLSelectElement;
   const filterRedemption = document.getElementById('filter-redemption') as HTMLSelectElement;
   const sortBy = document.getElementById('sort-by') as HTMLSelectElement;
   const pageSize = document.getElementById('page-size') as HTMLSelectElement;
@@ -253,6 +330,10 @@ const initialData = loadLatestProgressData();
   const noResultsMsg = document.getElementById('no-results-msg');
   const showingCountText = document.getElementById('showing-count-text');
   const resetFiltersBtn = document.getElementById('reset-filters-btn');
+  const clearFiltersEmptyBtn = document.getElementById('clear-filters-empty-btn');
+  const podiumGrid = document.getElementById('podium-grid');
+  const celebrateBtn = document.getElementById('celebrate-btn');
+  const tierFilterBtns = document.querySelectorAll('.tier-filter-btn');
 
   // Stats Elements
   const statCompletedAll = document.getElementById('stat-completed-all');
@@ -261,7 +342,6 @@ const initialData = loadLatestProgressData();
   const statGearBadges = document.getElementById('stat-gear-badges');
   const lastUpdatedText = document.getElementById('last-updated-text');
   const sourceFileText = document.getElementById('source-file-text');
-  const podiumGrid = document.getElementById('podium-grid');
 
   // Modal Elements
   const detailsOverlay = document.getElementById('details-modal-overlay');
@@ -269,8 +349,10 @@ const initialData = loadLatestProgressData();
   const modalRankBadge = document.getElementById('modal-rank-badge');
   const modalUserName = document.getElementById('modal-user-name');
   const modalUserEmail = document.getElementById('modal-user-email');
+  const modalTierBadge = document.getElementById('modal-tier-badge');
+  const modalXpValue = document.getElementById('modal-xp-value');
   const modalBadgeCount = document.getElementById('modal-badge-count');
-  const modalMilestone = document.getElementById('modal-milestone');
+  const modalMilestoneText = document.getElementById('modal-milestone-text');
   const modalRedemption = document.getElementById('modal-redemption');
   const modalBadgeListCount = document.getElementById('modal-badge-list-count');
   const modalBadgeList = document.getElementById('modal-badge-list');
@@ -278,67 +360,82 @@ const initialData = loadLatestProgressData();
   const modalGearSection = document.getElementById('modal-gear-section');
   const modalGearText = document.getElementById('modal-gear-text');
 
-  function updateOverviewStats() {
-    if (statCompletedAll) statCompletedAll.textContent = currentData.completedAll.toString();
-    if (statTotalBadges) statTotalBadges.textContent = currentData.totalBadgesCompleted.toString();
-    if (statCreditsRedeemed) {
-      statCreditsRedeemed.textContent = `${currentData.creditsRedeemed} / ${currentData.totalParticipants}`;
-    }
-    if (statGearBadges) statGearBadges.textContent = currentData.gearBadgeEarned.toString();
-    if (lastUpdatedText) lastUpdatedText.textContent = currentData.lastUpdated;
-    if (sourceFileText) sourceFileText.textContent = currentData.fileName;
+  let activeQuickFilter = 'all';
 
-    renderPodium();
+  function calculateXp(p: ParticipantProgress): number {
+    const hasGear = Boolean(
+      p.gearBadges &&
+      p.gearBadges.toLowerCase() !== 'not applicable' &&
+      p.gearBadges.toLowerCase() !== 'no badge' &&
+      p.gearBadges !== '0'
+    );
+    return (p.skillBadgesCount * 100) + (hasGear ? 50 : 0) + (p.accessCodeRedeemed ? 25 : 0);
+  }
+
+  function getTierInfo(badgeCount: number) {
+    if (badgeCount >= 10) return { id: 'champion', name: 'Champion', icon: '👑', cls: 'tier-champion' };
+    if (badgeCount >= 7) return { id: 'diamond', name: 'Diamond', icon: '💎', cls: 'tier-diamond' };
+    if (badgeCount >= 4) return { id: 'gold', name: 'Gold', icon: '🥇', cls: 'tier-gold' };
+    if (badgeCount >= 1) return { id: 'silver', name: 'Silver', icon: '🥈', cls: 'tier-silver' };
+    return { id: 'initiate', name: 'Initiate', icon: '🛡️', cls: 'tier-initiate' };
   }
 
   function renderPodium() {
     if (!podiumGrid) return;
     const top3 = currentData.top3;
     if (top3.length === 0) {
-      podiumGrid.innerHTML = '<p style="color: var(--text-tertiary); text-align: center; width: 100%;">No participant data available</p>';
+      podiumGrid.innerHTML = '<p style="color: var(--text-tertiary); text-align: center; width: 100%;">No competitor data available</p>';
       return;
     }
 
-    // Arrangement: 2nd place on left, 1st place in center, 3rd place on right
     const orderedPodium = [];
-    if (top3[1]) orderedPodium.push({ place: 2, p: top3[1], medal: '🥈', title: '2nd Place', rankClass: 'rank-2' });
+    if (top3[1]) orderedPodium.push({ place: 2, p: top3[1], medal: '🥈', title: '2nd Place Silver', rankClass: 'rank-2' });
     if (top3[0]) orderedPodium.push({ place: 1, p: top3[0], medal: '🥇', title: '1st Place Champion', rankClass: 'rank-1' });
-    if (top3[2]) orderedPodium.push({ place: 3, p: top3[2], medal: '🥉', title: '3rd Place', rankClass: 'rank-3' });
+    if (top3[2]) orderedPodium.push({ place: 3, p: top3[2], medal: '🥉', title: '3rd Place Bronze', rankClass: 'rank-3' });
 
-    podiumGrid.innerHTML = orderedPodium.map(({ place, p, medal, title, rankClass }) => `
-      <div class="podium-card ${rankClass}">
-        <div class="podium-pedestal-top">
-          <div class="podium-medal">${medal}</div>
-          <div class="podium-rank-label">${title}</div>
+    podiumGrid.innerHTML = orderedPodium.map(({ place, p, medal, title, rankClass }) => {
+      const xp = calculateXp(p);
+      const isPioneer = p.isComplete && p.completedAtReport;
+
+      return `
+        <div class="podium-card ${rankClass}">
+          <div class="podium-pedestal-top">
+            <div class="podium-medal">${medal}</div>
+            <div class="podium-rank-label">${title}</div>
+          </div>
+          <div class="podium-avatar">
+            ${p.userName.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase()}
+          </div>
+          <div class="podium-name">${p.userName}</div>
+          <div class="podium-badges-pill">
+            <strong>${p.skillBadgesCount} / 10</strong> Badges
+          </div>
+          <div class="podium-xp-pill">
+            ⚡ ${xp.toLocaleString()} XP
+          </div>
+          <div class="podium-milestone">
+            ${p.isComplete ? `<span class="status-pill green">Completed Milestone 3 🎉</span>` : `<span class="status-pill blue">${p.milestone}</span>`}
+            ${isPioneer ? `<span class="podium-date-pill">Achieved: ${p.completedAtReport}</span>` : ''}
+          </div>
+          ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
+            <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" class="podium-profile-link">
+              Skills Profile ↗
+            </a>
+          ` : ''}
         </div>
-        <div class="podium-avatar">
-          ${p.userName.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase()}
-        </div>
-        <div class="podium-name">${p.userName}</div>
-        <div class="podium-badges-pill">
-          <strong>${p.skillBadgesCount} / 10</strong> Badges
-        </div>
-        <div class="podium-milestone">
-          ${p.isComplete ? `<span class="status-pill green">Completed Milestone 3 🎉</span>${p.completedAtReport ? `<span class="podium-date-pill">Achieved: ${p.completedAtReport}</span>` : ''}` : `<span class="status-pill blue">${p.milestone}</span>`}
-        </div>
-        ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
-          <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" class="podium-profile-link">
-            Skills Profile ↗
-          </a>
-        ` : ''}
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function getFilteredAndSortedParticipants(): ParticipantProgress[] {
     const query = (searchInput?.value || '').trim().toLowerCase();
-    const milestoneVal = filterMilestone?.value || 'all';
+    const tierVal = filterTier?.value || 'all';
     const redemptionVal = filterRedemption?.value || 'all';
     const sortVal = sortBy?.value || 'rank';
 
     let list = [...currentData.participants];
 
-    // Filter by query (Name, Email, Roll Number)
+    // Search filter
     if (query) {
       list = list.filter(p => {
         return p.userName.toLowerCase().includes(query) ||
@@ -348,22 +445,35 @@ const initialData = loadLatestProgressData();
       });
     }
 
-    // Filter by milestone
-    if (milestoneVal === 'milestone3') {
-      list = list.filter(p => p.isComplete || p.milestone.toLowerCase().includes('milestone 3'));
-    } else if (milestoneVal === 'milestone2') {
-      list = list.filter(p => p.milestone.toLowerCase().includes('milestone 2') || p.skillBadgesCount >= 7);
-    } else if (milestoneVal === 'milestone1') {
-      list = list.filter(p => p.milestone.toLowerCase().includes('milestone 1') || p.skillBadgesCount >= 4);
-    } else if (milestoneVal === 'gear') {
-      list = list.filter(p => p.gearBadges && p.gearBadges.toLowerCase() !== 'not applicable' && p.gearBadges.toLowerCase() !== 'no badge');
-    } else if (milestoneVal === 'inprogress') {
-      list = list.filter(p => p.skillBadgesCount > 0 && !p.isComplete);
-    } else if (milestoneVal === 'notstarted') {
-      list = list.filter(p => p.skillBadgesCount === 0);
+    // Quick filter bar priority
+    if (activeQuickFilter === 'champion') {
+      list = list.filter(p => p.skillBadgesCount >= 10);
+    } else if (activeQuickFilter === 'diamond') {
+      list = list.filter(p => p.skillBadgesCount >= 7 && p.skillBadgesCount < 10);
+    } else if (activeQuickFilter === 'gold') {
+      list = list.filter(p => p.skillBadgesCount >= 4 && p.skillBadgesCount < 7);
+    } else if (activeQuickFilter === 'gear') {
+      list = list.filter(p => p.gearBadges && p.gearBadges.toLowerCase() !== 'not applicable' && p.gearBadges.toLowerCase() !== 'no badge' && p.gearBadges !== '0');
+    } else if (activeQuickFilter === 'redeemed') {
+      list = list.filter(p => p.accessCodeRedeemed);
+    } else {
+      // Standard dropdown tier filter
+      if (tierVal === 'champion') {
+        list = list.filter(p => p.skillBadgesCount >= 10);
+      } else if (tierVal === 'diamond') {
+        list = list.filter(p => p.skillBadgesCount >= 7 && p.skillBadgesCount < 10);
+      } else if (tierVal === 'gold') {
+        list = list.filter(p => p.skillBadgesCount >= 4 && p.skillBadgesCount < 7);
+      } else if (tierVal === 'silver') {
+        list = list.filter(p => p.skillBadgesCount >= 1 && p.skillBadgesCount < 4);
+      } else if (tierVal === 'gear') {
+        list = list.filter(p => p.gearBadges && p.gearBadges.toLowerCase() !== 'not applicable' && p.gearBadges.toLowerCase() !== 'no badge' && p.gearBadges !== '0');
+      } else if (tierVal === 'initiate') {
+        list = list.filter(p => p.skillBadgesCount === 0);
+      }
     }
 
-    // Filter by redemption
+    // Redemption dropdown filter
     if (redemptionVal === 'yes') {
       list = list.filter(p => p.accessCodeRedeemed);
     } else if (redemptionVal === 'no') {
@@ -376,7 +486,6 @@ const initialData = loadLatestProgressData();
     } else if (sortVal === 'badges-asc') {
       list.sort((a, b) => a.skillBadgesCount - b.skillBadgesCount);
     }
-    // Default 'rank' is already presorted
 
     return list;
   }
@@ -388,7 +497,6 @@ const initialData = loadLatestProgressData();
     const totalFiltered = filtered.length;
     const totalCount = currentData.participants.length;
 
-    // Handle show count
     const pageSizeVal = pageSize?.value || 'all';
     let displayed = filtered;
     if (pageSizeVal !== 'all') {
@@ -397,18 +505,17 @@ const initialData = loadLatestProgressData();
     }
 
     if (showingCountText) {
-      showingCountText.textContent = `Showing ${displayed.length} of ${totalFiltered} filtered participants (Total: ${totalCount})`;
+      showingCountText.textContent = `Showing ${displayed.length} of ${totalFiltered} competitors (Roster: ${totalCount})`;
     }
 
-    // Toggle clear search button
     if (clearSearchBtn) {
       clearSearchBtn.style.display = searchInput?.value ? 'block' : 'none';
     }
 
-    // Toggle reset filters button
     const hasActiveFilters = (searchInput?.value !== '') ||
-      (filterMilestone?.value !== 'all') ||
+      (filterTier?.value !== 'all') ||
       (filterRedemption?.value !== 'all') ||
+      (activeQuickFilter !== 'all') ||
       (sortBy?.value !== 'rank');
 
     if (resetFiltersBtn) {
@@ -424,49 +531,46 @@ const initialData = loadLatestProgressData();
     if (noResultsMsg) noResultsMsg.style.display = 'none';
 
     tableBody.innerHTML = displayed.map(p => {
-      // Progress bar percentage
       const pct = Math.min(100, Math.round((p.skillBadgesCount / 10) * 100));
-      let progressColor = 'var(--text-tertiary)';
-      if (p.skillBadgesCount >= 10) progressColor = 'var(--gc-green)';
-      else if (p.skillBadgesCount >= 4) progressColor = 'var(--gc-yellow)';
-      else if (p.skillBadgesCount > 0) progressColor = 'var(--gc-blue)';
+      const tier = getTierInfo(p.skillBadgesCount);
+      const xp = calculateXp(p);
 
-      // Mask email for privacy (e.g. bhu***@gmail.com)
       const maskedEmail = p.userEmail ? p.userEmail.replace(/^(..)(.*)(@.*)$/, (_match, a, _b, c) => `${a}***${c}`) : '';
 
-      // Milestone pill
-      let milestoneBadge = `<span class="badge-tag muted">${p.milestone}</span>`;
-      if (p.isComplete) {
-        milestoneBadge = `<span class="badge-tag green">Milestone 3 🎉</span>`;
-      } else if (p.milestone.includes('Milestone 2')) {
-        milestoneBadge = `<span class="badge-tag yellow">Milestone 2</span>`;
-      } else if (p.milestone.includes('Milestone 1')) {
-        milestoneBadge = `<span class="badge-tag blue">Milestone 1</span>`;
-      }
+      // 10 micro-pip track
+      const pips = Array.from({ length: 10 }, (_, i) => {
+        const isFilled = i < p.skillBadgesCount;
+        return `<span class="mini-slot-pip ${isFilled ? 'filled' : ''}"></span>`;
+      }).join('');
 
-      // GEAR badge indicator if present
-      let gearIndicator = '';
-      if (p.gearBadges && p.gearBadges !== 'Not applicable' && p.gearBadges !== 'No Badge') {
-        gearIndicator = `<span class="badge-tag purple" title="${p.gearBadges}">⚙️ GEAR</span>`;
-      }
-
-      // Redemption status pill
-      const redemptionBadge = p.accessCodeRedeemed
-        ? `<span class="status-indicator-pill green"><span class="dot"></span> Redeemed</span>`
-        : `<span class="status-indicator-pill muted"><span class="dot"></span> Pending</span>`;
-
-      // Rank display
       let rankDisplay = `<span class="rank-number">#${p.rank}</span>`;
-      if (p.rank === 1) rankDisplay = `<span class="rank-badge gold" title="1st Place">🥇 1</span>`;
+      if (p.rank === 1) rankDisplay = `<span class="rank-badge gold" title="1st Place Champion">🥇 1</span>`;
       else if (p.rank === 2) rankDisplay = `<span class="rank-badge silver" title="2nd Place">🥈 2</span>`;
       else if (p.rank === 3) rankDisplay = `<span class="rank-badge bronze" title="3rd Place">🥉 3</span>`;
+
+      const pioneerTag = p.isComplete && p.completedAtReport ? `
+        <span class="pioneer-badge" title="Early cohort completion in ${p.completedAtReport} report">
+          ⚡ ${p.completedAtReport.split(' ')[0]} ${p.completedAtReport.split(' ')[1]} Pioneer
+        </span>
+      ` : '';
+
+      const gearTag = (p.gearBadges && p.gearBadges.toLowerCase() !== 'not applicable' && p.gearBadges.toLowerCase() !== 'no badge' && p.gearBadges !== '0')
+        ? `<span class="badge-tag purple" title="${p.gearBadges}">⚙️ GEAR</span>`
+        : '';
+
+      const redemptionBadge = p.accessCodeRedeemed
+        ? `<span class="status-indicator-pill green"><span class="dot"></span> 200 Fuel</span>`
+        : `<span class="status-indicator-pill muted"><span class="dot"></span> Pending</span>`;
 
       return `
         <tr class="leaderboard-row ${p.isComplete ? 'row-complete' : ''}" data-rank="${p.rank}" data-uuid="${p.uuid}">
           <td class="col-rank">${rankDisplay}</td>
           <td class="col-user">
             <div class="user-meta">
-              <span class="user-name">${p.userName}</span>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="user-name">${p.userName}</span>
+                <span class="tier-badge ${tier.cls}">${tier.icon} ${tier.name}</span>
+              </div>
               <div class="user-sub">
                 <span class="user-email">${maskedEmail}</span>
                 ${p.rollNumber ? `<span class="user-roll">${p.rollNumber}</span>` : ''}
@@ -476,28 +580,32 @@ const initialData = loadLatestProgressData();
           <td class="col-progress">
             <div class="progress-wrap">
               <div class="progress-label">
-                <strong>${p.skillBadgesCount}</strong> / 10 Badges
-                ${p.isComplete ? `<span class="complete-text">✓ Completed</span>` : ''}
+                <div>
+                  <strong>${p.skillBadgesCount} / 10</strong> Badges
+                  <span class="xp-chip">⚡ ${xp.toLocaleString()} XP</span>
+                </div>
+                ${p.isComplete ? `<span class="complete-text" style="color: #34D399; font-weight: 700;">✓ Apex Done</span>` : ''}
               </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: ${pct}%; background: ${progressColor};"></div>
+              <div class="mini-slot-track">
+                ${pips}
               </div>
             </div>
           </td>
           <td class="col-milestone">
             <div class="tags-cluster">
-              ${milestoneBadge}
-              ${gearIndicator}
+              ${pioneerTag}
+              ${p.isComplete ? `<span class="badge-tag green">Milestone 3</span>` : `<span class="badge-tag muted">${p.milestone}</span>`}
+              ${gearTag}
             </div>
           </td>
           <td class="col-redemption">${redemptionBadge}</td>
           <td class="col-action">
             <div class="action-btn-group">
               <button class="view-details-btn" data-uuid="${p.uuid}" data-rank="${p.rank}">
-                Details
+                Inspect
               </button>
               ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
-                <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" class="profile-icon-btn" title="View Skills Profile">
+                <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" class="profile-icon-btn" title="View Skills Boost Profile">
                   ↗
                 </a>
               ` : ''}
@@ -507,11 +615,10 @@ const initialData = loadLatestProgressData();
       `;
     }).join('');
 
-    // Attach click handlers to View Details buttons
     tableBody.querySelectorAll('.view-details-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const target = e.currentTarget as HTMLElement;
-        const uuid = target.getAttribute('data-uuid');
+        const uuid = target.getAttribute('data-uuid') || '';
         const rank = parseInt(target.getAttribute('data-rank') || '0', 10);
         openParticipantDetails(uuid || rank);
       });
@@ -524,16 +631,27 @@ const initialData = loadLatestProgressData();
       : currentData.participants.find(item => item.rank === (typeof identifier === 'number' ? identifier : parseInt(identifier, 10)));
     if (!p || !detailsOverlay) return;
 
+    const xp = calculateXp(p);
+    const tier = getTierInfo(p.skillBadgesCount);
+
     if (modalRankBadge) modalRankBadge.textContent = `#${p.rank}`;
     if (modalUserName) modalUserName.textContent = p.userName;
     if (modalUserEmail) {
       modalUserEmail.textContent = p.userEmail ? (p.rollNumber ? `${p.userEmail} • Roll: ${p.rollNumber}` : p.userEmail) : 'Email not provided';
     }
-    if (modalBadgeCount) modalBadgeCount.textContent = `${p.skillBadgesCount} / 10`;
-    if (modalMilestone) {
-      modalMilestone.textContent = p.completedAtReport ? `${p.milestone} (Recorded: ${p.completedAtReport})` : p.milestone;
+    if (modalTierBadge) {
+      modalTierBadge.className = `tier-badge ${tier.cls}`;
+      modalTierBadge.textContent = `${tier.icon} ${tier.name}`;
     }
-    if (modalRedemption) modalRedemption.textContent = p.accessCodeRedeemed ? 'Yes (Redeemed)' : 'No (Pending)';
+    if (modalXpValue) modalXpValue.textContent = `${xp.toLocaleString()} XP`;
+    if (modalBadgeCount) modalBadgeCount.textContent = `${p.skillBadgesCount} / 10`;
+    if (modalRedemption) modalRedemption.textContent = p.accessCodeRedeemed ? 'Yes (200 Fuel Ready)' : 'No (Pending)';
+
+    if (modalMilestoneText) {
+      modalMilestoneText.textContent = p.completedAtReport 
+        ? `${p.milestone} (Recorded: ${p.completedAtReport})`
+        : p.milestone;
+    }
 
     if (modalBadgeListCount) modalBadgeListCount.textContent = p.completedBadgeNames.length.toString();
     if (modalBadgeList) {
@@ -545,12 +663,12 @@ const initialData = loadLatestProgressData();
           </li>
         `).join('');
       } else {
-        modalBadgeList.innerHTML = `<li class="no-badges-yet">No skill badges recorded as completed yet. Complete labs in Stage 3 to earn badges.</li>`;
+        modalBadgeList.innerHTML = `<li class="no-badges-yet">No skill badges verified in the active official report yet. Complete labs in Stage 3 to earn badges.</li>`;
       }
     }
 
     if (modalGearSection && modalGearText) {
-      if (p.gearBadges && p.gearBadges !== 'Not applicable' && p.gearBadges !== 'No Badge') {
+      if (p.gearBadges && p.gearBadges !== 'Not applicable' && p.gearBadges !== 'No Badge' && p.gearBadges !== '0') {
         modalGearSection.style.display = 'block';
         modalGearText.textContent = p.gearBadges;
       } else {
@@ -574,7 +692,27 @@ const initialData = loadLatestProgressData();
     if (detailsOverlay) detailsOverlay.style.display = 'none';
   }
 
-  // Event Listeners for Filters
+  // Quick Filter Tabs
+  tierFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tierFilterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeQuickFilter = btn.getAttribute('data-tier-filter') || 'all';
+      renderTable();
+    });
+  });
+
+  // Confetti Trigger
+  celebrateBtn?.addEventListener('click', () => {
+    confetti({
+      particleCount: 120,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#4285F4', '#34A853', '#FBBC04', '#EA4335', '#F59E0B', '#10B981'],
+    });
+  });
+
+  // Filter Listeners
   searchInput?.addEventListener('input', renderTable);
   clearSearchBtn?.addEventListener('click', () => {
     if (searchInput) searchInput.value = '';
@@ -582,19 +720,31 @@ const initialData = loadLatestProgressData();
     searchInput?.focus();
   });
 
-  filterMilestone?.addEventListener('change', renderTable);
+  filterTier?.addEventListener('change', () => {
+    activeQuickFilter = 'all';
+    tierFilterBtns.forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-tier-filter="all"]')?.classList.add('active');
+    renderTable();
+  });
+
   filterRedemption?.addEventListener('change', renderTable);
   sortBy?.addEventListener('change', renderTable);
   pageSize?.addEventListener('change', renderTable);
 
-  resetFiltersBtn?.addEventListener('click', () => {
+  function resetAll() {
     if (searchInput) searchInput.value = '';
-    if (filterMilestone) filterMilestone.value = 'all';
+    if (filterTier) filterTier.value = 'all';
     if (filterRedemption) filterRedemption.value = 'all';
     if (sortBy) sortBy.value = 'rank';
     if (pageSize) pageSize.value = 'all';
+    activeQuickFilter = 'all';
+    tierFilterBtns.forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-tier-filter="all"]')?.classList.add('active');
     renderTable();
-  });
+  }
+
+  resetFiltersBtn?.addEventListener('click', resetAll);
+  clearFiltersEmptyBtn?.addEventListener('click', resetAll);
 
   // Modal Closers
   modalCloseBtn?.addEventListener('click', closeDetailsModal);
@@ -602,8 +752,11 @@ const initialData = loadLatestProgressData();
     if (e.target === detailsOverlay) closeDetailsModal();
   });
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDetailsModal();
+  });
+
   // Initial render
-  updateOverviewStats();
+  renderPodium();
   renderTable();
 </script>
-

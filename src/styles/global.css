@@ -312,6 +312,17 @@ img {
   border: 1px solid rgba(66, 133, 244, 0.2);
 }
 
+.header-badge.arena {
+  background: linear-gradient(135deg, rgba(66, 133, 244, 0.18), rgba(52, 168, 83, 0.15));
+  border: 1px solid rgba(66, 133, 244, 0.4);
+  color: #93C5FD;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  box-shadow: 0 0 10px rgba(66, 133, 244, 0.2);
+}
+
 /* Mobile Menu Button */
 .mobile-menu-btn {
   display: none;
@@ -2722,3 +2733,616 @@ img {
   }
 }
 
+
+/* ========================================================
+   COMPETITIVE GAMIFICATION & ESPORTS ARENA DESIGN SYSTEM
+   High-contrast, tactile, non-synthetic gaming aesthetics
+   ======================================================== */
+
+/* ---- Tier Tokens & Badges ---- */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.tier-badge.tier-champion {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34D399;
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.18);
+}
+
+.tier-badge.tier-diamond {
+  background: rgba(6, 182, 212, 0.12);
+  color: #22D3EE;
+  border-color: rgba(6, 182, 212, 0.35);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.15);
+}
+
+.tier-badge.tier-gold {
+  background: rgba(245, 158, 11, 0.12);
+  color: #FBBF24;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.tier-badge.tier-silver {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60A5FA;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.tier-badge.tier-initiate {
+  background: rgba(100, 116, 139, 0.12);
+  color: #94A3B8;
+  border-color: rgba(100, 116, 139, 0.25);
+}
+
+/* XP Chip */
+.xp-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #FBBF24;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 2px 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+/* Pioneer / Speedrun Vanguard Pill */
+.pioneer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(234, 67, 53, 0.15));
+  color: #FCD34D;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+
+/* ---- Community Gauntlet Meter Card ---- */
+.gauntlet-meter-card {
+  margin: var(--space-xl) auto 0;
+  max-width: 960px;
+  background: linear-gradient(180deg, rgba(22, 27, 34, 0.85) 0%, rgba(13, 17, 23, 0.95) 100%);
+  border: 1px solid rgba(66, 133, 244, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.gauntlet-meter-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4285F4, #34A853, #FBBC04, #EA4335, #A855F7);
+}
+
+.gauntlet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.gauntlet-title-group h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.gauntlet-title-group p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.gauntlet-stats-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.gauntlet-stat-box {
+  text-align: right;
+}
+
+.gauntlet-stat-num {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #34D399;
+}
+
+.gauntlet-stat-lbl {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gauntlet-track-wrap {
+  position: relative;
+  margin-top: var(--space-sm);
+}
+
+.gauntlet-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.gauntlet-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4285F4 0%, #34A853 60%, #10B981 100%);
+  border-radius: var(--radius-full);
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 14px rgba(52, 168, 83, 0.5);
+}
+
+.gauntlet-milestones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.gauntlet-milestone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.gauntlet-milestone.active {
+  color: #FCD34D;
+  font-weight: 700;
+}
+
+/* ---- 3D Tournament Podium Upgrades ---- */
+.podium-celebrate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: var(--space-md) auto 0;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(234, 67, 53, 0.1));
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: var(--radius-full);
+  color: #FCD34D;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+}
+
+.podium-celebrate-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(234, 67, 53, 0.2));
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.3);
+}
+
+.podium-card.rank-1 {
+  position: relative;
+  background: linear-gradient(180deg, rgba(33, 38, 45, 0.95) 0%, rgba(13, 17, 23, 0.98) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(245, 158, 11, 0.2);
+}
+
+/* Aceternity Style Animated Border Glow for Champion */
+.podium-card.rank-1::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, #F59E0B, #10B981, #4285F4, #F59E0B);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: borderRotate 4s linear infinite;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@keyframes borderRotate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.podium-xp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #34D399;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  margin-top: 4px;
+}
+
+/* ---- Player License / Gamer Card Terminal ---- */
+.player-license-card {
+  max-width: 760px;
+  margin: var(--space-xl) auto 0;
+  background: linear-gradient(180deg, rgba(22, 27, 34, 0.95) 0%, rgba(13, 17, 23, 0.98) 100%);
+  border: 1px solid rgba(66, 133, 244, 0.35);
+  border-radius: 16px;
+  padding: var(--space-lg);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 24px rgba(66, 133, 244, 0.15);
+  animation: licenseFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.player-license-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4285F4, #34A853, #FBBC04, #EA4335);
+}
+
+@keyframes licenseFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.license-top-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.license-player-identity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.license-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #1A2234, #2A3650);
+  border: 2px solid #4285F4;
+  box-shadow: 0 0 14px rgba(66, 133, 244, 0.3);
+  color: #FFFFFF;
+}
+
+.license-avatar.champion {
+  border-color: #10B981;
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.4);
+}
+
+.license-names {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.license-player-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.license-meta-pills {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.license-roll-pill {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #93C5FD;
+  background: rgba(59, 130, 246, 0.12);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.license-rank-callout {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.license-rank-value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #FCD34D;
+}
+
+.license-rank-lbl {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* License Stat Grid */
+.license-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.license-metric-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.license-metric-value {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.license-metric-label {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+/* 10-Slot Interactive Badge Matrix */
+.license-matrix-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: var(--space-md) 0 var(--space-sm);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.license-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.license-badge-slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all var(--transition-fast);
+}
+
+.license-badge-slot.unlocked {
+  background: rgba(16, 185, 129, 0.07);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.license-badge-slot.locked {
+  background: rgba(255, 255, 255, 0.015);
+  border-color: rgba(255, 255, 255, 0.04);
+  opacity: 0.85;
+}
+
+.license-slot-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.license-slot-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.license-slot-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.license-slot-status {
+  flex-shrink: 0;
+}
+
+.license-status-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.license-status-tag.pass {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34D399;
+}
+
+.license-status-tag.action {
+  background: rgba(66, 133, 244, 0.15);
+  color: #60A5FA;
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.license-status-tag.action:hover {
+  background: rgba(66, 133, 244, 0.3);
+}
+
+/* Achievements Row */
+.license-achievements-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.license-achievement-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+}
+
+/* Leaderboard Tier Filters */
+.tier-filter-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--space-md);
+}
+
+.tier-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tier-filter-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.tier-filter-btn.active {
+  color: #FFFFFF;
+  background: rgba(66, 133, 244, 0.18);
+  border-color: rgba(66, 133, 244, 0.45);
+  box-shadow: 0 0 10px rgba(66, 133, 244, 0.2);
+}
+
+/* Micro 10-Slot Progress Track in Table */
+.mini-slot-track {
+  display: flex;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.mini-slot-pip {
+  flex: 1;
+  height: 5px;
+  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mini-slot-pip.filled {
+  background: #34D399;
+  box-shadow: 0 0 4px rgba(52, 211, 153, 0.5);
+}
+
+@media (max-width: 768px) {
+  .license-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .license-matrix-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gauntlet-stats-inline {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
