@@ -2048,6 +2048,13 @@ img {
   margin-bottom: 12px;
 }
 
+.podium-date-pill {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
 .podium-profile-link {
   font-size: 0.8rem;
   color: var(--gc-blue-light);

@@ -3,10 +3,17 @@
  * Supports both 2026 format (GDGC-MCETH [DD Mon].csv) and legacy 2025 format (progress##.csv)
  */
 
-import studentRollMap from '../data/studentRollMap.json';
+import studentRollMap from '../data/studentRollMap.json' with { type: 'json' };
+
+export interface ParticipantHistory {
+  completedAtReport?: string;
+  completedAtTimestamp?: number;
+  badgeAchievedTimestamp?: number;
+}
 
 export interface ParticipantProgress {
   rank: number;
+  uuid: string; // Google Skills Profile UUID (Primary Key)
   userName: string;
   userEmail: string;
   rollNumber?: string;
@@ -18,6 +25,9 @@ export interface ParticipantProgress {
   skillBadgesCount: number;
   completedBadgeNames: string[];
   isComplete: boolean;
+  completedAtReport?: string;
+  completedAtTimestamp?: number;
+  badgeAchievedTimestamp?: number;
 }
 
 export interface ProgressSummary {
@@ -32,6 +42,24 @@ export interface ProgressSummary {
   gearBadgeEarned: number;
   participants: ParticipantProgress[];
   top3: ParticipantProgress[];
+}
+
+/**
+ * Extracts the 36-character UUID from a Google Skills Profile URL.
+ * Standardizes to lowercase.
+ */
+export function extractProfileUuid(urlOrId: string): string {
+  if (!urlOrId) return '';
+  const trimmed = urlOrId.trim();
+  const uuidMatch = trimmed.match(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/);
+  if (uuidMatch) {
+    return uuidMatch[0].toLowerCase();
+  }
+  const match = trimmed.match(/public_profiles\/([a-zA-Z0-9-]+)/i);
+  if (match) {
+    return match[1].toLowerCase();
+  }
+  return trimmed.toLowerCase();
 }
 
 /**
@@ -167,9 +195,16 @@ export function extractLastUpdated(fileName: string, mtime?: Date): string {
 }
 
 /**
- * Processes parsed CSV rows into structured summary and sorted participant leaderboard
+ * Processes parsed CSV rows into structured summary and sorted participant leaderboard.
+ * Prioritizes participants who completed early across chronological progress reports.
+ * Uses UUID exclusively as the primary key.
  */
-export function processProgressData(rows: string[][], fileName: string = 'GDGC-MCETH [01 Nov].csv', mtime?: Date): ProgressSummary {
+export function processProgressData(
+  rows: string[][],
+  fileName: string = 'GDGC-MCETH [01 Nov].csv',
+  mtime?: Date,
+  historyMap?: Map<string, ParticipantHistory>
+): ProgressSummary {
   if (rows.length < 2) {
     return {
       lastUpdated: extractLastUpdated(fileName, mtime),
@@ -220,19 +255,24 @@ export function processProgressData(rows: string[][], fileName: string = 'GDGC-M
     const badgeNamesRaw = (colIndex.badgeNames >= 0 ? row[colIndex.badgeNames] : '') || '';
     const completedBadgeNames = parseCompletedBadgeNames(badgeNamesRaw);
 
-    // Try extracting roll number from verified mapping, email, or username
-    const mappedRoll = (studentRollMap as any).byEmail?.[userEmail.toLowerCase()] ||
-                       (studentRollMap as any).byName?.[userName] ||
-                       (studentRollMap as any).byName?.[userName.trim()];
-    const emailMatch = userEmail.match(/160\d{9}/);
-    const nameMatch = userName.match(/160\d{9}/);
-    const rollNumber = mappedRoll || (emailMatch ? emailMatch[0] : (nameMatch ? nameMatch[0] : undefined));
+    // Primary Key: Google Skills Boost Profile UUID
+    const uuid = extractProfileUuid(skillsProfileUrl);
+
+    // Roll number lookup ONLY by UUID (Primary Key)
+    const rollNumber = (studentRollMap as any).byUuid?.[uuid];
 
     const accessCodeRedeemed = redemptionRaw.trim().toLowerCase() === 'yes';
     const isComplete = badgeCount >= 10 || milestoneRaw.toLowerCase().includes('milestone 3') || milestoneRaw.trim().toLowerCase() === 'yes';
 
+    // Historical milestone tracking from chronological progress reports
+    const history = historyMap?.get(uuid);
+    const completedAtReport = history?.completedAtReport;
+    const completedAtTimestamp = history?.completedAtTimestamp;
+    const badgeAchievedTimestamp = history?.badgeAchievedTimestamp;
+
     participants.push({
       rank: 0, // will assign after sorting
+      uuid,
       userName,
       userEmail,
       rollNumber,
@@ -244,15 +284,20 @@ export function processProgressData(rows: string[][], fileName: string = 'GDGC-M
       skillBadgesCount: badgeCount,
       completedBadgeNames,
       isComplete,
+      completedAtReport,
+      completedAtTimestamp,
+      badgeAchievedTimestamp,
     });
   }
 
   // Sort participants by:
-  // 1. Skill badges count descending
-  // 2. Milestone rank (Milestone 3 > Milestone 2 > Milestone 1 > No Milestone)
-  // 3. GEAR badges completed
-  // 4. Redemption status
-  // 5. User name alphabetically
+  // 1. Skill badges count descending (10 > 9 > 8 ...)
+  // 2. Early Completion: Participants who completed all 10 badges in an earlier report rank higher
+  // 3. Early badge progression: Participants who reached their current badge count earlier rank higher
+  // 4. Milestone rank (Milestone 3 > Milestone 2 > Milestone 1 > No Milestone)
+  // 5. GEAR badges completed
+  // 6. Redemption status (Yes > No)
+  // 7. Tie-breaker: Alphabetical by user name
   const milestoneScore = (m: string) => {
     const lower = m.toLowerCase();
     if (lower.includes('milestone 3') || lower === 'yes') return 3;
@@ -267,19 +312,40 @@ export function processProgressData(rows: string[][], fileName: string = 'GDGC-M
   };
 
   participants.sort((a, b) => {
+    // 1. Skill badges count descending
     if (b.skillBadgesCount !== a.skillBadgesCount) {
       return b.skillBadgesCount - a.skillBadgesCount;
     }
+
+    // 2. Early Completion priority:
+    // If both completed all 10 badges / isComplete, whoever reached it in an earlier report ranks higher
+    if (a.isComplete && b.isComplete) {
+      const timeA = a.completedAtTimestamp ?? Infinity;
+      const timeB = b.completedAtTimestamp ?? Infinity;
+      if (timeA !== timeB) {
+        return timeA - timeB; // smaller timestamp = earlier date = higher rank
+      }
+    }
+
+    // 3. Early badge progression priority for same badge counts
+    if (a.badgeAchievedTimestamp && b.badgeAchievedTimestamp && a.badgeAchievedTimestamp !== b.badgeAchievedTimestamp) {
+      return a.badgeAchievedTimestamp - b.badgeAchievedTimestamp;
+    }
+
+    // 4. Milestone rank
     const mScoreDiff = milestoneScore(b.milestone) - milestoneScore(a.milestone);
     if (mScoreDiff !== 0) return mScoreDiff;
 
+    // 5. GEAR badges completed
     const gScoreDiff = gearScore(b.gearBadges) - gearScore(a.gearBadges);
     if (gScoreDiff !== 0) return gScoreDiff;
 
+    // 6. Redemption status
     if (b.accessCodeRedeemed !== a.accessCodeRedeemed) {
       return (b.accessCodeRedeemed ? 1 : 0) - (a.accessCodeRedeemed ? 1 : 0);
     }
 
+    // 7. Tie-breaker: Alphabetical by user name
     return a.userName.localeCompare(b.userName);
   });
 
@@ -312,4 +378,3 @@ export function processProgressData(rows: string[][], fileName: string = 'GDGC-M
     top3,
   };
 }
-

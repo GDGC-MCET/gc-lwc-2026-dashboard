@@ -319,7 +319,7 @@ const initialData = loadLatestProgressData();
           <strong>${p.skillBadgesCount} / 10</strong> Badges
         </div>
         <div class="podium-milestone">
-          ${p.isComplete ? '<span class="status-pill green">Completed Milestone 3 🎉</span>' : `<span class="status-pill blue">${p.milestone}</span>`}
+          ${p.isComplete ? `<span class="status-pill green">Completed Milestone 3 🎉</span>${p.completedAtReport ? `<span class="podium-date-pill">Achieved: ${p.completedAtReport}</span>` : ''}` : `<span class="status-pill blue">${p.milestone}</span>`}
         </div>
         ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
           <a href="${p.skillsProfileUrl}" target="_blank" rel="noopener noreferrer" class="podium-profile-link">
@@ -343,7 +343,8 @@ const initialData = loadLatestProgressData();
       list = list.filter(p => {
         return p.userName.toLowerCase().includes(query) ||
                p.userEmail.toLowerCase().includes(query) ||
-               (p.rollNumber && p.rollNumber.includes(query));
+               (p.rollNumber && p.rollNumber.includes(query)) ||
+               (p.uuid && p.uuid.toLowerCase().includes(query));
       });
     }
 
@@ -461,7 +462,7 @@ const initialData = loadLatestProgressData();
       else if (p.rank === 3) rankDisplay = `<span class="rank-badge bronze" title="3rd Place">🥉 3</span>`;
 
       return `
-        <tr class="leaderboard-row ${p.isComplete ? 'row-complete' : ''}" data-rank="${p.rank}">
+        <tr class="leaderboard-row ${p.isComplete ? 'row-complete' : ''}" data-rank="${p.rank}" data-uuid="${p.uuid}">
           <td class="col-rank">${rankDisplay}</td>
           <td class="col-user">
             <div class="user-meta">
@@ -492,7 +493,7 @@ const initialData = loadLatestProgressData();
           <td class="col-redemption">${redemptionBadge}</td>
           <td class="col-action">
             <div class="action-btn-group">
-              <button class="view-details-btn" data-rank="${p.rank}">
+              <button class="view-details-btn" data-uuid="${p.uuid}" data-rank="${p.rank}">
                 Details
               </button>
               ${p.skillsProfileUrl && p.skillsProfileUrl !== 'Not applicable' ? `
@@ -510,14 +511,17 @@ const initialData = loadLatestProgressData();
     tableBody.querySelectorAll('.view-details-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const target = e.currentTarget as HTMLElement;
+        const uuid = target.getAttribute('data-uuid');
         const rank = parseInt(target.getAttribute('data-rank') || '0', 10);
-        openParticipantDetails(rank);
+        openParticipantDetails(uuid || rank);
       });
     });
   }
 
-  function openParticipantDetails(rank: number) {
-    const p = currentData.participants.find(item => item.rank === rank);
+  function openParticipantDetails(identifier: string | number) {
+    const p = typeof identifier === 'string' && identifier.includes('-')
+      ? currentData.participants.find(item => item.uuid === identifier)
+      : currentData.participants.find(item => item.rank === (typeof identifier === 'number' ? identifier : parseInt(identifier, 10)));
     if (!p || !detailsOverlay) return;
 
     if (modalRankBadge) modalRankBadge.textContent = `#${p.rank}`;
@@ -526,7 +530,9 @@ const initialData = loadLatestProgressData();
       modalUserEmail.textContent = p.userEmail ? (p.rollNumber ? `${p.userEmail} • Roll: ${p.rollNumber}` : p.userEmail) : 'Email not provided';
     }
     if (modalBadgeCount) modalBadgeCount.textContent = `${p.skillBadgesCount} / 10`;
-    if (modalMilestone) modalMilestone.textContent = p.milestone;
+    if (modalMilestone) {
+      modalMilestone.textContent = p.completedAtReport ? `${p.milestone} (Recorded: ${p.completedAtReport})` : p.milestone;
+    }
     if (modalRedemption) modalRedemption.textContent = p.accessCodeRedeemed ? 'Yes (Redeemed)' : 'No (Pending)';
 
     if (modalBadgeListCount) modalBadgeListCount.textContent = p.completedBadgeNames.length.toString();
