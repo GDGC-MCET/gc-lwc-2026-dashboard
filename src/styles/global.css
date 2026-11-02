@@ -1613,28 +1613,6 @@ img {
   color: var(--text-primary);
 }
 
-.upload-trigger-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(66, 133, 244, 0.12);
-  border: 1px solid rgba(66, 133, 244, 0.35);
-  color: var(--gc-blue-light);
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.upload-trigger-btn:hover {
-  background: var(--gc-blue);
-  color: #fff;
-  border-color: var(--gc-blue);
-  transform: translateY(-1px);
-}
-
 /* Tracker Stats Cards */
 .tracker-stats-grid {
   display: grid;
@@ -2268,7 +2246,7 @@ img {
   animation: fadeIn 0.2s ease-out;
 }
 
-.details-modal-card, .upload-modal-card {
+.details-modal-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
@@ -2456,88 +2434,6 @@ img {
 
 .modal-profile-btn:hover {
   background: var(--gc-blue-dark);
-}
-
-/* Upload Modal & Dropzone */
-.upload-dropzone {
-  border: 2px dashed var(--border-accent);
-  border-radius: var(--radius-lg);
-  padding: 32px 20px;
-  text-align: center;
-  margin: 20px;
-  background: rgba(66, 133, 244, 0.03);
-  transition: all var(--transition-fast);
-}
-
-.upload-dropzone.drag-active {
-  border-color: var(--gc-green);
-  background: rgba(52, 168, 83, 0.08);
-}
-
-.dropzone-icon {
-  font-size: 2.5rem;
-  margin-bottom: 8px;
-}
-
-.upload-dropzone h4 {
-  font-size: 1.05rem;
-  color: var(--text-primary);
-  margin-bottom: 4px;
-}
-
-.upload-dropzone p {
-  font-size: 0.82rem;
-  color: var(--text-tertiary);
-  margin-bottom: 16px;
-}
-
-.dropzone-browse-btn {
-  display: inline-block;
-  background: var(--gc-blue);
-  color: #fff;
-  padding: 8px 18px;
-  border-radius: var(--radius-md);
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.dropzone-browse-btn:hover {
-  background: var(--gc-blue-dark);
-}
-
-.upload-info-box {
-  margin: 0 20px 20px;
-  background: var(--bg-card);
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  font-size: 0.78rem;
-  color: var(--text-secondary);
-  border: 1px solid var(--border-default);
-}
-
-.upload-info-box strong {
-  color: var(--gc-yellow);
-}
-
-.upload-info-box p {
-  margin-top: 4px;
-  line-height: 1.4;
-}
-
-.secondary-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border-default);
-  color: var(--text-primary);
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.secondary-btn:hover {
-  background: var(--bg-card-hover);
 }
 
 /* Responsive Rules for Leaderboard */

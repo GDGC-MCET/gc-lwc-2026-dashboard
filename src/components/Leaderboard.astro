@@ -32,14 +32,6 @@ const initialData = loadLatestProgressData();
           </svg>
           <span>Source: <strong id="source-file-text">{initialData.fileName}</strong></span>
         </div>
-        <button class="upload-trigger-btn" id="open-upload-btn" title="Upload new progress CSV">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          <span>Upload CSV</span>
-        </button>
       </div>
     </div>
 
@@ -238,39 +230,6 @@ const initialData = loadLatestProgressData();
       </div>
     </div>
   </div>
-
-  <!-- Upload CSV Modal -->
-  <div class="details-modal-overlay" id="upload-modal-overlay" style="display: none;">
-    <div class="upload-modal-card">
-      <div class="modal-header">
-        <div>
-          <h3>Upload Progress CSV</h3>
-          <p class="modal-user-email">Upload a newly exported progress CSV to update the dashboard immediately.</p>
-        </div>
-        <button class="modal-close-btn" id="upload-close-btn">✕</button>
-      </div>
-
-      <div class="upload-dropzone" id="upload-dropzone">
-        <div class="dropzone-icon">📁</div>
-        <h4>Drag & Drop progress CSV here</h4>
-        <p>Supports <code>GDGC-MCETH [Date].csv</code> or <code>progress##.csv</code></p>
-        <label class="dropzone-browse-btn">
-          Browse File
-          <input type="file" id="csv-file-input" accept=".csv" style="display: none;" />
-        </label>
-      </div>
-
-      <div class="upload-info-box">
-        <strong>💡 Note for Organizers:</strong>
-        <p>Data loaded here is processed instantly in your browser and cached locally. To publish updates permanently to all visitors, commit the new CSV file into <code>src/data/progress/</code>.</p>
-      </div>
-
-      <div class="modal-footer" style="justify-content: space-between;">
-        <button class="reset-link-btn" id="revert-system-csv-btn">Revert to Official Data</button>
-        <button class="secondary-btn" id="cancel-upload-btn">Close</button>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- Inject Server Initial Data for Client Script -->
@@ -279,21 +238,9 @@ const initialData = loadLatestProgressData();
 </script>
 
 <script>
-  import { parseCSV, processProgressData, type ProgressSummary, type ParticipantProgress } from '../utils/csvParser.ts';
+  import type { ProgressSummary, ParticipantProgress } from '../utils/csvParser.ts';
 
-  let currentData: ProgressSummary = (window as any).__INITIAL_PROGRESS_DATA;
-
-  // Check localStorage for uploaded CSV
-  try {
-    const cachedCSV = localStorage.getItem('gdgc_custom_progress_csv');
-    const cachedFileName = localStorage.getItem('gdgc_custom_progress_filename') || 'Custom Upload.csv';
-    if (cachedCSV) {
-      const rows = parseCSV(cachedCSV);
-      currentData = processProgressData(rows, cachedFileName);
-    }
-  } catch (e) {
-    console.error('Failed reading custom progress from storage', e);
-  }
+  const currentData: ProgressSummary = (window as any).__INITIAL_PROGRESS_DATA;
 
   // Elements
   const searchInput = document.getElementById('leaderboard-search') as HTMLInputElement;
@@ -330,15 +277,6 @@ const initialData = loadLatestProgressData();
   const modalProfileLink = document.getElementById('modal-profile-link') as HTMLAnchorElement;
   const modalGearSection = document.getElementById('modal-gear-section');
   const modalGearText = document.getElementById('modal-gear-text');
-
-  // Upload Elements
-  const openUploadBtn = document.getElementById('open-upload-btn');
-  const uploadOverlay = document.getElementById('upload-modal-overlay');
-  const uploadCloseBtn = document.getElementById('upload-close-btn');
-  const cancelUploadBtn = document.getElementById('cancel-upload-btn');
-  const csvFileInput = document.getElementById('csv-file-input') as HTMLInputElement;
-  const uploadDropzone = document.getElementById('upload-dropzone');
-  const revertSystemBtn = document.getElementById('revert-system-csv-btn');
 
   function updateOverviewStats() {
     if (statCompletedAll) statCompletedAll.textContent = currentData.completedAll.toString();
@@ -656,85 +594,6 @@ const initialData = loadLatestProgressData();
   modalCloseBtn?.addEventListener('click', closeDetailsModal);
   detailsOverlay?.addEventListener('click', (e) => {
     if (e.target === detailsOverlay) closeDetailsModal();
-  });
-
-  // Upload Modal Open/Close
-  openUploadBtn?.addEventListener('click', () => {
-    if (uploadOverlay) uploadOverlay.style.display = 'flex';
-  });
-  uploadCloseBtn?.addEventListener('click', () => {
-    if (uploadOverlay) uploadOverlay.style.display = 'none';
-  });
-  cancelUploadBtn?.addEventListener('click', () => {
-    if (uploadOverlay) uploadOverlay.style.display = 'none';
-  });
-  uploadOverlay?.addEventListener('click', (e) => {
-    if (e.target === uploadOverlay) uploadOverlay.style.display = 'none';
-  });
-
-  // File Upload Handling
-  function handleCSVUpload(file: File) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const text = e.target?.result as string;
-        if (!text) return;
-        const rows = parseCSV(text);
-        currentData = processProgressData(rows, file.name, new Date(file.lastModified));
-        
-        // Save to localStorage
-        try {
-          localStorage.setItem('gdgc_custom_progress_csv', text);
-          localStorage.setItem('gdgc_custom_progress_filename', file.name);
-        } catch (storageErr) {
-          console.warn('LocalStorage quota exceeded', storageErr);
-        }
-
-        updateOverviewStats();
-        renderTable();
-
-        if (uploadOverlay) uploadOverlay.style.display = 'none';
-        alert(`Successfully loaded: ${file.name} (${currentData.totalParticipants} participants)`);
-      } catch (err: any) {
-        alert('Failed parsing CSV file: ' + err.message);
-      }
-    };
-    reader.readAsText(file);
-  }
-
-  csvFileInput?.addEventListener('change', (e) => {
-    const target = e.target as HTMLInputElement;
-    if (target.files && target.files[0]) {
-      handleCSVUpload(target.files[0]);
-    }
-  });
-
-  // Drag and Drop
-  uploadDropzone?.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    uploadDropzone.classList.add('drag-active');
-  });
-  uploadDropzone?.addEventListener('dragleave', () => {
-    uploadDropzone.classList.remove('drag-active');
-  });
-  uploadDropzone?.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadDropzone.classList.remove('drag-active');
-    if (e.dataTransfer && e.dataTransfer.files[0]) {
-      handleCSVUpload(e.dataTransfer.files[0]);
-    }
-  });
-
-  // Revert to official system data
-  revertSystemBtn?.addEventListener('click', () => {
-    localStorage.removeItem('gdgc_custom_progress_csv');
-    localStorage.removeItem('gdgc_custom_progress_filename');
-    currentData = (window as any).__INITIAL_PROGRESS_DATA;
-    updateOverviewStats();
-    renderTable();
-    if (uploadOverlay) uploadOverlay.style.display = 'none';
-    alert('Reverted to official system dataset: ' + currentData.fileName);
   });
 
   // Initial render
