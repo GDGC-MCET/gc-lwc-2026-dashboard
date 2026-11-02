@@ -82,6 +82,55 @@ export function parseCSV(text: string): string[][] {
 }
 
 /**
+ * Safely parses comma- or pipe-separated badge names from the progress report.
+ * Handles known badges with internal commas (e.g. "Store, Process, and Manage Data on Google Cloud - Console")
+ * so they are not erroneously split into separate items.
+ */
+export function parseCompletedBadgeNames(raw: string): string[] {
+  if (!raw || !raw.trim()) return [];
+
+  // If piped (e.g. legacy format)
+  if (raw.includes('|')) {
+    return raw.split('|').map(s => s.trim()).filter(Boolean);
+  }
+
+  // Protect known badges that contain commas
+  const PLACEHOLDER = '___STORE_PROCESS_MANAGE_CONSOLE___';
+  let sanitized = raw.replace(
+    /Store,\s*Process,\s*and\s*Manage\s*Data\s*on\s*Google\s*Cloud\s*-\s*Console/gi,
+    PLACEHOLDER
+  );
+
+  // Also handle without "- Console" if it appears in some exports
+  sanitized = sanitized.replace(
+    /Store,\s*Process,\s*and\s*Manage\s*Data\s*on\s*Google\s*Cloud/gi,
+    PLACEHOLDER
+  );
+
+  const parts = sanitized.split(',').map(s => s.trim()).filter(Boolean);
+
+  const results: string[] = [];
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (part === PLACEHOLDER) {
+      results.push('Store, Process, and Manage Data on Google Cloud - Console');
+    } else if (
+      // Fallback: If already broken into "Store", "Process", and "and Manage Data on Google Cloud..."
+      part.toLowerCase() === 'store' &&
+      parts[i + 1]?.toLowerCase() === 'process' &&
+      parts[i + 2]?.toLowerCase().startsWith('and manage data on google cloud')
+    ) {
+      results.push('Store, Process, and Manage Data on Google Cloud - Console');
+      i += 2;
+    } else {
+      results.push(part);
+    }
+  }
+
+  return results;
+}
+
+/**
  * Extracts a human-readable "Last Updated" string from the CSV filename or date
  */
 export function extractLastUpdated(fileName: string, mtime?: Date): string {
@@ -167,14 +216,7 @@ export function processProgressData(rows: string[][], fileName: string = 'GDGC-M
     const badgeCount = isNaN(badgeCountRaw) ? 0 : badgeCountRaw;
 
     const badgeNamesRaw = (colIndex.badgeNames >= 0 ? row[colIndex.badgeNames] : '') || '';
-    let completedBadgeNames: string[] = [];
-    if (badgeNamesRaw) {
-      if (badgeNamesRaw.includes('|')) {
-        completedBadgeNames = badgeNamesRaw.split('|').map(s => s.trim()).filter(Boolean);
-      } else {
-        completedBadgeNames = badgeNamesRaw.split(',').map(s => s.trim()).filter(Boolean);
-      }
-    }
+    const completedBadgeNames = parseCompletedBadgeNames(badgeNamesRaw);
 
     // Try extracting roll number from email or username
     const emailMatch = userEmail.match(/160\d{9}/);
