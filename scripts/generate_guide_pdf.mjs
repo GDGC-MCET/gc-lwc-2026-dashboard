@@ -404,7 +404,7 @@ const htmlContent = `<!DOCTYPE html>
         </div>
         <div class="meta-item">
           <span class="label">Challenge Deadline</span>
-          <span class="value">15 Nov 2026 23:59 IST</span>
+          <span class="value">23 Nov 2026 23:59 IST</span>
         </div>
       </div>
     </div>
@@ -573,7 +573,7 @@ const htmlContent = `<!DOCTYPE html>
         <ul style="margin-left: 14px; margin-top: 3px; font-size: 7.5pt; line-height: 1.35;">
           <li>Keep your Google Skills Boost profile set to <strong>Public</strong>.</li>
           <li>Confirm each badge displays a checkmark under your earned badges.</li>
-          <li>Final deadline to complete all labs: <strong>15 Nov 2026, 23:59:59 IST</strong>.</li>
+          <li>Final deadline to complete all labs: <strong>23 Nov 2026, 23:59:59 IST</strong>.</li>
           <li>Check chapter rankings on the official community leaderboard.</li>
         </ul>
       </div>

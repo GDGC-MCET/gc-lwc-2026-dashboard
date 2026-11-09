@@ -737,14 +737,14 @@ const initialData = loadLatestProgressData();
     if (e.key === 'Enter') handleSearch();
   });
 
-  // Countdown timer for completion deadline (15th November 2026)
+  // Countdown timer for completion deadline (23rd November 2026)
   const countdownValue = document.getElementById('countdown-value');
   const countdownLabel = document.getElementById('countdown-label');
 
   function updateCountdown() {
     if (!countdownValue || !countdownLabel) return;
 
-    const deadline = new Date('2026-11-15T23:59:59+05:30').getTime();
+    const deadline = new Date('2026-11-23T23:59:59+05:30').getTime();
     const now = new Date().getTime();
     const diff = deadline - now;
 
